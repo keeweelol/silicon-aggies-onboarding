@@ -1,0 +1,23 @@
+# LibreLane / OpenLane run output -- never commit this, it is hundreds of MB
+runs/
+!runs/*/final/gds/*.gds
+*.def
+*.lef
+*.odb
+*.sdc.gen
+
+# simulation output
+sim_build/
+*.vcd
+*.out
+*.vvp
+results.xml
+
+# python
+.venv/
+__pycache__/
+*.pyc
+
+# editors / OS
+.vscode/
+.DS_Store
