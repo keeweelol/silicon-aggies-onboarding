@@ -1,128 +1,68 @@
-# ASIC onboarding, Fall 2026
+# ASIC onboarding
 
-Welcome to ASIC (Aggie Silicon & Integrated Circuits). This repo has everything you need
-for your first six weeks in the org.
-
-You don't need any chip design experience to start. If you've taken a digital logic class,
-or you're taking one now, you know enough. Every guide in here assumes you've never used
-these tools before and walks you through them one command at a time.
-
----
+Everything you need for the ASIC (Aggie Silicon & Integrated Circuits) onboarding rotation.
 
 ## Start here
 
-Do these in order.
+Go through these in order:
 
-1. **Set up your computer.** Follow [`setup/README.md`](setup/README.md). It takes about an
-   hour and a half. Everything after this depends on it, so do it first.
-2. **Block 1: Digital Design.** Build a traffic light controller.
-   Start at [`digital-design/README.md`](digital-design/README.md).
-3. **Block 2: Verification.** Write testbenches and hunt down planted bugs.
-   Start at [`verification/README.md`](verification/README.md).
-4. **Block 3: Physical Design.** Turn your design into a real chip layout.
-   Start at [`physical-design/README.md`](physical-design/README.md).
-5. **Pick your team.** After Block 3 you choose the team you want to join.
+1. [`setup/`](setup/README.md): install the tools on your computer
+2. [`digital-design/`](digital-design/README.md): Block 1, build a traffic light controller
+3. [`verification/`](verification/README.md): Block 2, write testbenches and find bugs
+4. [`physical-design/`](physical-design/README.md): Block 3, turn your design into a chip layout
 
-Each block has a README that tells you what you're building and links to short lessons.
-Work through the lessons in order. Each one ends with a link to the next.
-
----
-
-## What the six weeks look like
-
-Everyone in the new cohort moves through the same block at the same time. Each block is
-two weeks long and has one small project.
-
-| Block | Dates | What you make | Tools you learn |
-|---|---|---|---|
-| 1. Digital Design | Sep 21 to Oct 2 | A traffic light controller written in Verilog | Icarus Verilog, GTKWave |
-| 2. Verification | Oct 5 to Oct 16 | Testbenches that find bugs in a counter and a small memory | Verilator, GTKWave |
-| 3. Physical Design | Oct 19 to Oct 30 | A chip layout of the design you fixed in Block 2 | LibreLane, KLayout |
-
-Every block runs on the same rhythm:
-
-- **Monday of week 1:** a 30-minute kickoff where a lead does the project live. Come to this.
-  It's the easiest way to see what you're aiming for.
-- **The weekend in the middle:** an open lab. Leads are in the room. Bring your laptop and
-  whatever is broken.
-- **Friday of week 2, 11:59 PM:** your pull request is due.
-
-Between those, you work on your own time from the guides in this repo. You can finish
-faster than the schedule. The dates are the slowest you should go, not a pace you have
-to match.
-
-## Calendar
-
-| Date | Event |
-|---|---|
-| Sep 8 (Tue) | IEEE Student Branch first GBM, recruiting pitch |
-| Sep 17 (Thu) | ASIC interest meeting and toolchain install night |
-| Sep 21 to Oct 2 | **Block 1: Digital Design** |
-| Oct 5 to Oct 16 | **Block 2: Verification** |
-| Oct 19 to Oct 30 | **Block 3: Physical Design** |
-| Week of Nov 2 | Team placement. You choose, leads confirm |
-| Nov 2 to Nov 18 | MAC tile design and hardening |
-| Nov 18 | Last day to submit for the internal competition |
-| Around Nov 20 | Internal competition, judged by Dr. Limbrick and an Apple engineer |
-| December 2026 | Tiny Tapeout TTSKY26d closes |
-| June 2027 | Chips come back. Bring-up event |
-
----
-
-## How you turn in work
-
-You turn in every block as a pull request on GitHub. A pull request is a way of saying
-"here are my files, please look at them." A lead reviews it and either merges it or leaves
-comments asking for changes.
-
-Every block works the same way: one folder, one branch, one pull request, with a title like
-`Block 1: Jane Smith (jsmith)`. [SUBMITTING.md](SUBMITTING.md) has the exact file names for
-each block, the steps, and how to respond to review comments. The last lesson of each
-block walks you through it.
-
-We do it this way on purpose. Opening a clean pull request is a skill every engineering job
-expects, and by November you'll have public commits on a chip design project.
-
-## How it's graded
-
-It isn't, really. Every submission is either "done" or "needs another pass." There's no
-curve and no ranking.
-
-A block is done when a lead merges your pull request. That happens when:
-
-- every file on that block's deliverables list is there,
-- a lead can run your work and get the same result you did, and
-- your write-up is in your own words.
-
-Late is fine if you tell a lead before the deadline. What we worry about is people who go
-quiet. If you get stuck in week one and disappear, we can't help you.
-
-## Getting help
-
-Post in the ASIC GroupMe. Include three things:
-
-1. the command you ran,
-2. the full error message (copy and paste the text, don't send a photo of your screen),
-3. your operating system (Windows, Mac, or Linux).
-
-Before you post, check the troubleshooting page for your block. Your error is probably
-already there with a fix.
-
-No question is too basic. Most of the leads learned this stuff less than a year ago and hit
-the same errors you will.
-
----
+Each block's README links to its lessons. Do the lessons in order; each one ends with a
+link to the next.
 
 ## What's in this repo
 
 ```
 silicon-aggies-onboarding/
-├── README.md             you are here
-├── setup/                install the tools (do this first)
-├── digital-design/       Block 1: traffic light controller
-├── verification/         Block 2: find the bug
-├── physical-design/      Block 3: design to layout
-├── submissions/          where your work goes, one folder per person
-├── SUBMITTING.md         how to turn in work, for every block
-└── LEADS.md              how leads run the program (you don't need this)
+├── setup/
+│   ├── README.md              install guide
+│   └── check.sh               checks that every tool is installed
+│
+├── digital-design/            Block 1
+│   ├── README.md              start here for Block 1
+│   ├── lessons/               Lessons 0 to 4
+│   ├── starter/               files you copy into your submission folder
+│   ├── submission-template/   write-up template
+│   ├── TROUBLESHOOTING.md
+│   └── GLOSSARY.md
+│
+├── verification/              Block 2
+│   ├── README.md              start here for Block 2
+│   ├── lessons/               Lessons 0 to 5
+│   ├── golden_counter/        working counter (Lesson 1)
+│   ├── buggy_counter/         counter with bugs (Lesson 2)
+│   ├── golden_counter_sram/   working counter-SRAM (Lesson 3)
+│   ├── buggy_counter_sram/    counter-SRAM with bugs (Lesson 4)
+│   ├── submission-template/   write-up template
+│   ├── TROUBLESHOOTING.md
+│   └── GLOSSARY.md
+│
+├── physical-design/           Block 3
+│   ├── README.md              start here for Block 3
+│   ├── lessons/               Lessons 0 to 6
+│   ├── starter/               config.yaml for LibreLane
+│   ├── submission-template/   write-up template
+│   ├── TROUBLESHOOTING.md
+│   └── GLOSSARY.md
+│
+├── submissions/               your work goes here
+│   ├── digital-design/YOUR-GITHUB-USERNAME/
+│   ├── verification/YOUR-GITHUB-USERNAME/
+│   └── physical-design/YOUR-GITHUB-USERNAME/
+│
+└── SUBMITTING.md              how to turn in work, for every block
 ```
+
+## Where to look
+
+| If you... | Go to |
+|---|---|
+| haven't installed anything yet | [`setup/README.md`](setup/README.md) |
+| got an error | the `TROUBLESHOOTING.md` in that block's folder |
+| don't know what a word means | the `GLOSSARY.md` in that block's folder |
+| are ready to turn in a block | [`SUBMITTING.md`](SUBMITTING.md) |
+| are still stuck | the ASIC GroupMe, with the command you ran, the full error text, and your operating system |
