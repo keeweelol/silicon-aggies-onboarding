@@ -61,38 +61,38 @@ A **root cause** is the actual line that's wrong, not what it looked like from t
 "`count` stuck at 5" is a symptom. "Line 12 checks `if (rst_n)` but reset is active low, so
 it should be `if (!rst_n)`" is a root cause.
 
-## Step 4: Make a branch, save, and upload
+## Step 4: Branch, commit, and push
 
-Same four commands as Block 1:
+These are the same steps as Block 1. [SUBMITTING.md](../../SUBMITTING.md) explains each one.
 
 ```bash
 cd ~/silicon-aggies-onboarding
 git status
+git checkout -b block2-YOUR-GITHUB-USERNAME
+git add submissions/verification/YOUR-GITHUB-USERNAME
+git status
 ```
 
-`git status` should list your `submissions/verification/...` folder. It should **not** list
-any `obj_dir` folders or `.vcd` files. If it does, stop and ask in the GroupMe.
+The first `git status` should say `On branch main`. The second one lists what you're about
+to turn in, under **Changes to be committed**. It should show only files in your folder,
+and **no** `obj_dir` folders or `.vcd` files. If it does, stop and ask in the GroupMe.
 
 ```bash
-git checkout -b block2-yourname
-git add submissions/verification/YOUR-GITHUB-USERNAME
 git commit -m "Block 2: design verification"
-git push -u origin block2-yourname
+git push -u origin block2-YOUR-GITHUB-USERNAME
 ```
 
 ## Step 5: Open the pull request
 
-Exactly like [Block 1, Lesson 4, Step 4](../../digital-design/lessons/04-submit.md#step-4-open-the-pull-request):
-
-1. Go to your fork on GitHub and click **Compare & pull request** on the banner.
-2. Check that it goes from your `block2-yourname` branch into `main` on
+1. Go to your fork on GitHub and click **Compare & pull request**.
+2. Check that it goes from your `block2-...` branch into `main` on
    `zjohnson2005/silicon-aggies-onboarding`.
-3. Title it `Block 2 - Your Name`.
-4. Write a sentence or two for the reviewer.
+3. Title it: `Block 2: Your Name (your-github-username)`
+4. Fill in the form in the description. Drag **both** waveform screenshots into the
+   Screenshots section, keep only the Block 2 checklist, and fill it in.
 5. Click **Create pull request**.
 
-If a lead asks for changes, fix them in the same folder, then `git add`, `git commit`, and
-`git push` again. The pull request updates by itself.
+If a lead asks for changes, see [how to respond](../../SUBMITTING.md#how-to-respond).
 
 ---
 

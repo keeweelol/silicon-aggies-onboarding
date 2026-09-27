@@ -2,79 +2,99 @@
 
 About 20 minutes, and most of that is only the first time.
 
-If you've never used git, that's expected. You need four commands, and you can copy them
-from this page every time until you remember them.
+If you've never used git, that's expected. Every block is turned in the same way, and the
+full steps are in [SUBMITTING.md](../../SUBMITTING.md) at the top of the repo. This lesson
+walks you through it for Block 1.
 
 ---
 
-## Before you start
+## Step 1: Check your work
 
 In your submission folder, run:
 
 ```bash
+cd ~/silicon-aggies-onboarding/submissions/digital-design/YOUR-GITHUB-USERNAME
 make check
 ```
 
-Fix anything it lists. Once it says `READY TO SUBMIT`, continue.
+Fix anything it lists. Once it says `READY TO SUBMIT`, check the file names one more time:
 
-## Step 1: Make a branch
+```bash
+ls
+```
 
-A branch is a separate line of work with its own name. Putting your submission on a branch
-keeps it apart from the main copy of the repo.
+You need these four, spelled exactly like this:
+
+| File | What it is |
+|---|---|
+| `tt_um_traffic_light.v` | your design |
+| `state-diagram.jpg` | photo of your state diagram (`.png` is fine) |
+| `waveform.png` | GTKWave screenshot |
+| `WRITEUP.md` | your write-up |
+
+The other starter files (`Makefile`, `check.py`, and the testbenches) can stay.
+
+## Step 2: Make a branch
+
+A **branch** is a separate line of work with its own name. Each block gets its own branch.
 
 ```bash
 cd ~/silicon-aggies-onboarding
-git checkout -b block1-yourname
-```
-
-Use your real name, like `block1-jsmith`.
-
-## Step 2: Choose what to save, then save it
-
-```bash
 git status
 ```
 
-This lists the files git sees as new or changed. You should see your submission folder.
-If the list has thousands of files, or any file ending in `.vcd` or `.out`, stop and ask
-in the GroupMe. The repo's `.gitignore` file is supposed to hide those.
+The first line should say `On branch main`. Then:
 
-Then:
+```bash
+git checkout -b block1-YOUR-GITHUB-USERNAME
+```
+
+## Step 3: Add your folder, and check what's included
 
 ```bash
 git add submissions/digital-design/YOUR-GITHUB-USERNAME
-git commit -m "Block 1: traffic light controller"
+git status
 ```
 
-`git add` tells git which files to include. `git commit` saves a snapshot of them with a
-short message describing what you did.
+Read the list under **Changes to be committed**. It should only show files in your folder.
+If you see hundreds of files, or files ending in `.vcd` or `.out`, stop and ask in the
+GroupMe.
 
-## Step 3: Upload it
+## Step 4: Commit and push
 
 ```bash
-git push -u origin block1-yourname
+git commit -m "Block 1: traffic light controller"
+git push -u origin block1-YOUR-GITHUB-USERNAME
 ```
 
-This uploads your branch to **your fork** on GitHub. You only need the `-u origin
-block1-yourname` part the first time you push a new branch. After that, `git push` is
-enough.
+`git commit` saves a snapshot of your files with a short message. `git push` uploads your
+branch to your fork on GitHub.
 
-If it asks for a username and password, you skipped the `gh auth login` step in setup. Run
-`gh auth login` now (setup Part A4 explains the answers), then push again.
+If `git push` asks for a password, you skipped `gh auth login` in setup. Run it now (setup
+Part A4 explains the answers), then push again.
 
-## Step 4: Open the pull request
+## Step 5: Open the pull request
 
-1. Go to your fork on GitHub (`github.com/YOUR-GITHUB-USERNAME/silicon-aggies-onboarding`).
-   You should see a yellow banner offering to open a pull request from the branch you just
-   pushed. Click **Compare & pull request**.
-2. No banner? Click the **Pull requests** tab, then **New pull request**.
-3. Check the two boxes at the top. The left side (base) should be the main ASIC repo,
-   `zjohnson2005/silicon-aggies-onboarding`, branch `main`. The right side should be your
-   fork and your `block1-yourname` branch.
-4. For the title, write `Block 1 - Your Name`.
-5. In the description, write a sentence or two for the reviewer: a part you're unsure
-   about, or a stretch goal you tried.
-6. Click **Create pull request**.
+1. Go to your fork on GitHub (`github.com/YOUR-GITHUB-USERNAME/silicon-aggies-onboarding`)
+   and click **Compare & pull request** on the yellow banner.
+2. Check the bar at the top. The left side should be
+   `zjohnson2005/silicon-aggies-onboarding` and `main`. The right side should be your fork
+   and your `block1-...` branch.
+3. Title it exactly like this, with your name and username:
+
+   ```
+   Block 1: Jane Smith (jsmith)
+   ```
+
+4. The description box opens with a short form. Fill in every section:
+   - your name, username, and about how many hours it took,
+   - two or three sentences on what you built,
+   - **drag `waveform.png` from your folder into the Screenshots section** so the lead sees
+     it right away (on Windows, your Ubuntu files are under **Linux** in File Explorer),
+   - the last line of `make check`,
+   - the Block 1 checklist, with an `x` in each box. Delete the Block 2 and Block 3
+     checklists.
+5. Click **Create pull request**.
 
 You've turned in Block 1.
 
@@ -82,12 +102,17 @@ You've turned in Block 1.
 
 ## What happens next
 
-A lead reviews your pull request within 72 hours. One of two things happens.
+A lead reviews your pull request within 72 hours, and GitHub emails you when they do. Either
+it gets **merged** (you're done), or the lead **requests changes** and leaves comments.
 
-**It gets merged.** You're done with Block 1.
+Getting comments is normal. Leads label every comment so you know what matters:
 
-**The lead asks for changes.** Something is missing or broken, and there will be specific
-comments explaining what. Fix them in the same folder, then run:
+- **Must fix:** has to be fixed before the pull request is merged.
+- **Suggestion:** an idea. Up to you.
+- **Question:** reply with an answer.
+- **Nice:** something you did well.
+
+To respond, fix things in the same folder, then:
 
 ```bash
 cd ~/silicon-aggies-onboarding
@@ -96,10 +121,10 @@ git commit -m "Address review comments"
 git push
 ```
 
-The pull request updates by itself. Don't open a new one.
-
-Being asked for changes is normal and doesn't count against you. Every company you'd want to
-work at reviews code this way.
+The pull request updates by itself. Don't open a new one. Reply to each **Must fix**
+comment saying what you changed, then click **re-request review** (the circular arrow next
+to the lead's name, under **Reviewers**). [SUBMITTING.md](../../SUBMITTING.md#6-what-happens-next)
+has more detail.
 
 ---
 
@@ -112,8 +137,8 @@ git commit -m "what you did"    # save a snapshot
 git push                        # upload it
 ```
 
-That covers almost all the git you'll need here. You'll use these again in Blocks 2 and 3,
-and by the third time you won't need to look them up.
+You'll use these again in Blocks 2 and 3, and by the third time you won't need to look
+them up.
 
 ---
 

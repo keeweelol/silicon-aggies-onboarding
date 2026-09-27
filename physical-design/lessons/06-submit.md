@@ -46,39 +46,39 @@ Fill it in, 300 to 500 words. The main part is explaining the six stages from Le
 your own words, with numbers from your own run. A lead can tell when it's copied from the
 lesson, so describe what *your* design went through.
 
-## Step 4: Make a branch, save, and upload
+## Step 4: Branch, commit, and push
+
+Same steps as the last two blocks. [SUBMITTING.md](../../SUBMITTING.md) explains each one.
 
 ```bash
 cd ~/silicon-aggies-onboarding
 git status
-```
-
-**Look at this list carefully.** It should show your `submissions/physical-design/...`
-folder and nothing else. If it shows thousands of files, or anything inside `runs/`, stop
-and ask in the GroupMe. Don't commit the run folder.
-
-```bash
-git checkout -b block3-yourname
+git checkout -b block3-YOUR-GITHUB-USERNAME
 git add submissions/physical-design/YOUR-GITHUB-USERNAME
 git status
 ```
 
-Check the list one more time. It should show about seven files. Then:
+**Read the second `git status` carefully.** Under **Changes to be committed** it should
+show about seven files, all in your folder. If it shows thousands of files, or anything
+inside `runs/`, stop and ask in the GroupMe. Don't commit the run folder.
 
 ```bash
 git commit -m "Block 3: counter-SRAM to layout"
-git push -u origin block3-yourname
+git push -u origin block3-YOUR-GITHUB-USERNAME
 ```
 
 ## Step 5: Open the pull request
 
-Same as the last two blocks:
-
 1. Go to your fork on GitHub and click **Compare & pull request**.
-2. Check it goes from `block3-yourname` into `main` on `zjohnson2005/silicon-aggies-onboarding`.
-3. Title it `Block 3 - Your Name`.
-4. Write a sentence or two for the reviewer.
+2. Check it goes from your `block3-...` branch into `main` on
+   `zjohnson2005/silicon-aggies-onboarding`.
+3. Title it: `Block 3: Your Name (your-github-username)`
+4. Fill in the form in the description. Drag `layout.png` and `layout-zoom.png` into the
+   Screenshots section, fill in the DRC, LVS, and WNS line under Results, and keep only the
+   Block 3 checklist.
 5. Click **Create pull request**.
+
+If a lead asks for changes, see [how to respond](../../SUBMITTING.md#how-to-respond).
 
 ---
 

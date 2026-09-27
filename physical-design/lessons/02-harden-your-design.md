@@ -24,11 +24,11 @@ cp ../../../physical-design/starter/config.yaml .
 
 Now get your **fixed** counter-SRAM from Block 2. You saved it on your Block 2 branch, so
 it isn't in the folder you're looking at right now. This command copies it straight out of
-that branch. Replace `block2-yourname` with your Block 2 branch name, and
-`YOUR-GITHUB-USERNAME` with your username. It's one long line:
+that branch. Replace `YOUR-GITHUB-USERNAME` with your username in both places. It's one
+long line:
 
 ```bash
-git show block2-yourname:submissions/verification/YOUR-GITHUB-USERNAME/buggy_counter_sram/buggy_design/counter_sram.sv > src/counter_sram.sv
+git show block2-YOUR-GITHUB-USERNAME:submissions/verification/YOUR-GITHUB-USERNAME/buggy_counter_sram/buggy_design/counter_sram.sv > src/counter_sram.sv
 ```
 
 Check that it worked:

@@ -215,20 +215,81 @@ Once people do the "turn a knob" lesson, their numbers should differ a little.
 
 ## 6. PR review
 
+Every submission comes in the same shape, so reviews should be fast. Members follow
+[SUBMITTING.md](SUBMITTING.md): one folder per member, fixed file names, a PR title like
+`Block 1: Jane Smith (jsmith)`, and a description form (`.github/pull_request_template.md`)
+with their screenshots, results, and checklist at the top.
+
 Review within 72 hours of the PR opening. A member who waits a week for a review learns that
 deadlines only apply to them, and you won't get that trust back.
 
-**Merge when:** every deliverable is there, it runs, and the write-up is in their own words.
+### Finding your PRs
 
-**Request changes when:** something is missing or broken. Be specific and short. "The
-waveform screenshot doesn't show a pedestrian press. Can you add one?" is a good review. A
-paragraph of encouragement wrapped around a vague concern is not.
+On the repo's **Pull requests** tab, search `is:open "Block 1:"` (or 2 or 3) to see only
+your block. Because titles start with the block number, sorting by title groups them too.
+Add yourself as the reviewer on each one you pick up, so two leads don't review the same PR.
 
-**Never** leave "looks good" on work that doesn't. The rotation is how we place people, and
+### Review in this order
+
+Most PRs take about ten minutes if you go in this order:
+
+1. **The description.** Read the "What I did" section and look at the screenshots. Check the
+   Results line. If the checklist has empty boxes or the Results line shows a failure, you
+   already know your first comment.
+2. **The Files changed tab.** Confirm every file from the block's list in SUBMITTING.md is
+   there, spelled right, and inside `submissions/<block>/<username>/`. Nothing from
+   anywhere else, and no build output (`obj_dir/`, `.vcd`, `runs/`).
+3. **The design or testbench files.** Read them against the block notes above ("In review,
+   look at:"). Leave comments on specific lines.
+4. **The write-up.** Is it in their own words? Does it answer every section? For Blocks 2
+   and 3, does it use their own line numbers and their own metrics?
+5. **Run it, if anything looks off.** Check out the PR with `gh pr checkout <number>`, then
+   run the block's commands. You don't need to run every PR.
+
+### Label every comment
+
+Start every comment with one of these. Members are told what each one means, so they can
+tell at a glance what they need to do.
+
+| Label | Use it for |
+|---|---|
+| **Must fix:** | Missing files, broken builds, failing checks, a write-up that doesn't answer a section. These block the merge. |
+| **Suggestion:** | Anything that would make it better but isn't required. |
+| **Question:** | You want to understand their thinking. Good for write-ups and design choices. |
+| **Nice:** | Something done well. Leave at least one on every PR. |
+
+Keep comments specific and short. Say what's wrong, where, and what "fixed" looks like:
+
+> **Must fix:** `waveform.png` doesn't show a pedestrian press. Add a view that includes
+> one full cycle and one press.
+
+> **Must fix:** Bug 3 in the write-up names the symptom but not the line. Which line of
+> `counter_sram.sv` caused it?
+
+> **Question:** Why did you clear `ped_req` in YELLOW instead of RED? Both pass the tests,
+> but I'm curious what you were thinking.
+
+> **Nice:** Clearing the timer in one place at the bottom of the `case` is cleaner than
+> what most people did.
+
+A paragraph of encouragement wrapped around a vague concern is not a review.
+
+### Finish the review
+
+- **Everything's there and it runs:** click **Review changes**, choose **Approve**, and
+  merge it with **Squash and merge**. Squashing keeps `main` tidy: one commit per submission.
+- **Any Must fix comment:** submit the review as **Request changes**. When the member pushes
+  fixes and re-requests your review, check only the Must fix items, then approve and merge.
+- **Suggestions only:** approve and merge. Don't hold a PR for suggestions.
+
+**Never** approve work that doesn't meet the bar. The rotation is how we place people, and
 inflated reviews break it.
 
-Keep a running spreadsheet: member, block, on time (Y/N), a quality note, and which team they
-seemed to enjoy. That spreadsheet is what we bring to placement week.
+### Track it
+
+Keep a running spreadsheet: member, block, PR link, on time (Y/N), rounds of review, a
+quality note, and which team they seemed to enjoy. That spreadsheet is what we bring to
+placement week.
 
 ## 7. Stragglers
 
@@ -261,6 +322,8 @@ how we taught that block, not about the members.
 | Verify Block 2 exercises build with Verilator 5 on Ubuntu 24.04, macOS, and WSL | | |
 | Run Block 3 `config.yaml` through the full flow on a lab machine and a student laptop | | |
 | Move this repo to an ASIC GitHub organization and turn on PR reviews | | |
+| Add each teaching lead as a collaborator (Settings, then Collaborators) so they can review and merge | Zach | |
+| Turn on "Allow squash merging" in Settings, General, Pull Requests | Zach | |
 | Reserve lab machines for members who can't run LibreLane locally | | |
 | Book room and time for three kickoff demos and three open labs | | |
 | Pin a "how to ask a question" post in the GroupMe | | |

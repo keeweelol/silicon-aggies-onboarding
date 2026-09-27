@@ -71,17 +71,14 @@ to match.
 
 ## How you turn in work
 
-You turn in every project as a pull request on GitHub. A pull request is a way of saying
-"here are my files, please look at them." A lead reviews it and either accepts it or leaves
+You turn in every block as a pull request on GitHub. A pull request is a way of saying
+"here are my files, please look at them." A lead reviews it and either merges it or leaves
 comments asking for changes.
 
-The first time takes about 20 minutes, and Block 1's
-[Lesson 4](digital-design/lessons/04-submit.md) walks you through every click. The short
-version:
-
-1. Fork this repo on GitHub, once, at the start of the semester. (Setup covers this.)
-2. Put your work in `submissions/<block-name>/<your-github-username>/`.
-3. Make a branch, commit, push, and open a pull request.
+Every block works the same way: one folder, one branch, one pull request, with a title like
+`Block 1: Jane Smith (jsmith)`. [SUBMITTING.md](SUBMITTING.md) has the exact file names for
+each block, the steps, and how to respond to review comments. The last lesson of each
+block walks you through it.
 
 We do it this way on purpose. Opening a clean pull request is a skill every engineering job
 expects, and by November you'll have public commits on a chip design project.
@@ -126,5 +123,6 @@ silicon-aggies-onboarding/
 ├── verification/         Block 2: find the bug
 ├── physical-design/      Block 3: design to layout
 ├── submissions/          where your work goes, one folder per person
+├── SUBMITTING.md         how to turn in work, for every block
 └── LEADS.md              how leads run the program (you don't need this)
 ```
