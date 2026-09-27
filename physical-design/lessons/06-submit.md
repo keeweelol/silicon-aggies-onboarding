@@ -1,0 +1,88 @@
+# Lesson 6: Turn in your work
+
+About 45 minutes, mostly the write-up.
+
+---
+
+## Step 1: Copy your final layout out of the run folder
+
+The `runs` folder is hundreds of megabytes, and git ignores it on purpose. You only turn in
+the one `.gds` file, copied next to your config.
+
+Use the run that matches what's in your `config.yaml` right now. If you kept the Lesson 5
+change, that's `second` (or `third`). If you set it back, that's `first`.
+
+```bash
+cd ~/silicon-aggies-onboarding/submissions/physical-design/YOUR-GITHUB-USERNAME
+cp runs/second/final/gds/counter_sram.gds .
+```
+
+(Change `second` to the right run name if needed.)
+
+## Step 2: Check that everything is there
+
+```bash
+ls
+ls src
+```
+
+You should have:
+
+- [ ] `src/counter_sram.sv` (Lesson 2)
+- [ ] `config.yaml`, with your Lesson 5 change if that run passed (Lesson 5)
+- [ ] `counter_sram.gds` (Step 1 above)
+- [ ] `layout.png` and `layout-zoom.png` (Lesson 4)
+- [ ] `metrics.md`, with two columns filled in (Lessons 3 and 5)
+
+## Step 3: Write it up
+
+Copy the template:
+
+```bash
+cp ../../../physical-design/submission-template/WRITEUP.md .
+```
+
+Fill it in, 300 to 500 words. The main part is explaining the six stages from Lesson 0 in
+your own words, with numbers from your own run. A lead can tell when it's copied from the
+lesson, so describe what *your* design went through.
+
+## Step 4: Make a branch, save, and upload
+
+```bash
+cd ~/silicon-aggies-onboarding
+git status
+```
+
+**Look at this list carefully.** It should show your `submissions/physical-design/...`
+folder and nothing else. If it shows thousands of files, or anything inside `runs/`, stop
+and ask in the GroupMe. Don't commit the run folder.
+
+```bash
+git checkout -b block3-yourname
+git add submissions/physical-design/YOUR-GITHUB-USERNAME
+git status
+```
+
+Check the list one more time. It should show about seven files. Then:
+
+```bash
+git commit -m "Block 3: counter-SRAM to layout"
+git push -u origin block3-yourname
+```
+
+## Step 5: Open the pull request
+
+Same as the last two blocks:
+
+1. Go to your fork on GitHub and click **Compare & pull request**.
+2. Check it goes from `block3-yourname` into `main` on `zjohnson2005/silicon-aggies-onboarding`.
+3. Title it `Block 3 - Your Name`.
+4. Write a sentence or two for the reviewer.
+5. Click **Create pull request**.
+
+---
+
+That's the whole rotation. You've written a design, found and fixed bugs in one, and turned
+one into a chip layout. The MAC tile in November uses all three.
+
+Next up is team placement, the week of Nov 2.

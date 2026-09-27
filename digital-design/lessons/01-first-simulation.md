@@ -1,14 +1,17 @@
-# Lesson 1 — Your first simulation
+# Lesson 1: Your first simulation
 
-Goal: run a design that already works, see its output, and open a waveform. You write no
-code in this lesson.
+**Goal:** run a design that already works, read what it prints, and open its waveform. You
+don't write any code in this lesson.
 
-The point is to confirm your tools work **now**, while there's no deadline pressure. If
-something is broken, today is a great day to find out.
+The main point is to prove your tools work now, while there's no deadline pressure. If
+something is broken, today is the best day to find out.
 
 ---
 
-## Step 1 — Get your folder set up
+## Step 1: Set up your folder
+
+Open your terminal (the Ubuntu window on Windows) and run these one at a time. Replace
+`YOUR-GITHUB-USERNAME` with your GitHub username in both places.
 
 ```bash
 cd ~/silicon-aggies-onboarding
@@ -18,22 +21,31 @@ cp ../../../digital-design/starter/* .
 ls
 ```
 
-You should see: `Makefile`, `check.py`, `blinker.v`, `tb_blinker.v`,
-`tt_um_traffic_light.v`, `tb_traffic_light.v`.
+What those do: go to the repo, make a folder with your name, move into it, copy the starter
+files in, and list them.
 
-Everything you do for this block happens in this folder.
+`ls` should show six files: `Makefile`, `check.py`, `blinker.v`, `tb_blinker.v`,
+`tt_um_traffic_light.v`, and `tb_traffic_light.v`.
 
-## Step 2 — Run the blinker
+You'll do everything for this block inside this folder. If you close the terminal and come
+back later, `cd` into it again first:
+
+```bash
+cd ~/silicon-aggies-onboarding/submissions/digital-design/YOUR-GITHUB-USERNAME
+```
+
+## Step 2: Run the blinker
 
 ```bash
 make warmup
 ```
 
-You should get:
+You should see something like this:
 
 ```
+VCD info: dumpfile blinker.vcd opened for output.
 tick   led
-----------
+==========
    0    0
    1    0
    2    0
@@ -46,16 +58,16 @@ tick   led
    ...
 ```
 
-**That's a simulation.** You just ran a piece of hardware that doesn't exist, on a clock
-that doesn't exist, and watched an LED that doesn't exist turn on. The LED flips every 8
-ticks.
+That's a simulation. You just ran a piece of hardware that doesn't physically exist, and
+watched its LED turn on. The LED flips every 8 ticks.
 
-If this failed, stop here and check [TROUBLESHOOTING.md](../TROUBLESHOOTING.md). Do not
-move on with broken tools.
+If you got an error instead, stop here and look it up in
+[TROUBLESHOOTING.md](../TROUBLESHOOTING.md). Don't move on with broken tools.
 
-## Step 3 — Read the design
+## Step 3: Read the design
 
-Open `blinker.v`. It's about fifteen lines. Here's the part that matters:
+Open `blinker.v` in your editor (or run `nano blinker.v`). It's about fifteen lines. This is
+the part that matters:
 
 ```verilog
 reg [2:0] counter;
@@ -75,79 +87,81 @@ end
 assign uo_out[0] = led;
 ```
 
-Everything from Lesson 0 is here: an `always @(posedge clk)` block, an active-low reset,
-`<=` for the assignments, and an `assign` connecting an internal `reg` out to a pin.
+Everything from Lesson 0 is in here: an `always @(posedge clk)` block, an active-low
+reset, `<=` for every assignment, and an `assign` that connects an internal `reg` to an
+output pin.
 
-**A question worth sitting with for a second:** `counter` is 3 bits wide. Three bits can
-hold 0 through 7. So what happens on the tick after it reaches 7? Nothing in the code
-says to wrap it back to 0.
+Here's a question to think about. `counter` is 3 bits wide, so it can hold 0 through 7.
+What happens on the tick after it reaches 7? Nothing in the code says to go back to 0.
 
-It wraps anyway — 7 + 1 in three bits is 0, the same way an odometer rolls over. That's
-not a Verilog rule, it's how binary addition works in fixed-width hardware. **You will use
-this constantly**, and it's also a place bugs hide when you didn't intend it.
+It goes back to 0 anyway. In 3 bits, 7 + 1 is 0, the same way a car's odometer rolls over.
+That's just how fixed-width binary addition works in hardware. You'll rely on this all the
+time, and it's also a place where bugs hide when you didn't mean for it to happen.
 
-## Step 4 — Open the waveform
+## Step 4: Open the waveform
 
-The simulation wrote a file called `blinker.vcd`. That's a recording of every signal at
+The simulation also wrote a file called `blinker.vcd`. It's a recording of every signal at
 every moment. Open it:
 
 ```bash
 gtkwave blinker.vcd &
 ```
 
-The `&` puts it in the background so you get your terminal back.
+The `&` at the end runs GTKWave in the background, so you can keep using your terminal.
 
-**GTKWave is ugly and unintuitive. Here's the ten percent you need:**
+GTKWave isn't pretty, and it isn't obvious how to use it. Here's what you need:
 
-1. Top-left panel lists the modules. Click **`tb_blinker`**, then **`dut`**.
-2. The panel below fills with signal names.
-3. Click `clk`, then ctrl-click `rst_n`, `counter`, and `led`.
-4. Click the **Append** button (or drag them into the big black area).
-5. Press **Shift+Alt+F** to zoom to fit, or click the magnifier-with-a-square icon.
+1. In the top-left panel, click **`tb_blinker`**, then click **`dut`** under it.
+2. The panel below it fills with signal names.
+3. Click `clk`, then hold Ctrl and click `rst_n`, `counter`, and `led`.
+4. Click the **Append** button at the bottom. (You can also drag the signals into the big
+   black area.)
+5. Press **Shift+Alt+F** to zoom so the whole simulation fits. The toolbar button that looks
+   like a magnifying glass with a square does the same thing.
 
-You should now see waves. `clk` ticking, `counter` climbing 0→7 and rolling over, `led`
-flipping every eighth tick.
+Now you should see the signals drawn as waves: `clk` ticking up and down, `counter` climbing
+from 0 to 7 and rolling over, and `led` flipping every eighth tick.
 
-**Zoom in** until you can see individual clock edges. Notice that `counter` changes right
-at the rising edge of `clk`, never in between. That's what `always @(posedge clk)` means,
-drawn as a picture.
+Zoom in until you can see single clock edges. Notice that `counter` only changes exactly
+when `clk` rises, never in between. That's what `always @(posedge clk)` means, drawn as a
+picture.
 
-> **Can't open GTKWave?** On Windows 10 without an X server it won't launch. Use
-> [Surfer](https://surfer-project.org/) in your browser instead — upload the `.vcd` file,
-> no install. Same information.
+> **GTKWave won't open?** On Windows 10 it can't open a window without extra setup. Use
+> [Surfer](https://surfer-project.org/) in your browser instead. Open the site, load your
+> `.vcd` file, and you'll see the same thing.
 
-## Step 5 — Break it on purpose
+## Step 5: Break it on purpose
 
-This is the most useful thing you'll do today.
+This is the most useful part of the lesson.
 
-Open `blinker.v` and change `if (counter == 3'd7)` to `if (counter == 3'd3)`. Save, then:
+1. Open `blinker.v` and change `if (counter == 3'd7)` to `if (counter == 3'd3)`. Save the
+   file.
+2. Run `make warmup` again.
+3. The LED should now flip every 4 ticks instead of 8. In GTKWave, press **Ctrl+Shift+R** (or
+   use File, then Reload Waveform) and check that the picture changed the way you expected.
+4. Change it back to `3'd7`.
 
-```bash
-make warmup
-```
+Now try one more. Change `led <= ~led;` to `led <= 1'b1;`. **Before you run it,** write down
+what you think will happen. Then run it and see if you were right. Change it back when
+you're done.
 
-The LED now flips every 4 ticks instead of 8. Look at the waveform again and confirm the
-picture changed the way you expected.
-
-**Now put it back to `3'd7`.** Then try one more: change `led <= ~led;` to `led <= 1'b1;`
-and predict what happens *before* you run it. Were you right?
-
-That loop — change something, predict the result, run it, check — is the entire job. Not
-just this block. The job.
-
----
-
-## What you should have now
-
-- Your tools work.
-- You've seen a simulation print output.
-- You've opened GTKWave and gotten signals onto the screen.
-- You've changed a design and watched the waveform change.
-
-If any of those is false, sort it out before Lesson 3. Post in `#help` or bring it to
-open lab.
+Change something, predict what will happen, run it, check. You'll do that loop for the
+rest of this block, and for the rest of any hardware job.
 
 ---
 
-**Next:** [Lesson 2 — State machines](02-state-machines.md). The one idea the project is
+## Before you move on
+
+You should be able to say yes to all of these:
+
+- [ ] `make warmup` runs and prints the tick table.
+- [ ] You opened GTKWave (or Surfer) and got signals on the screen.
+- [ ] You changed the design and saw the waveform change.
+
+If any of these isn't true yet, sort it out before Lesson 3. Ask in the GroupMe or bring
+your laptop to open lab.
+
+---
+
+**Next:** [Lesson 2: State machines](02-state-machines.md), the one idea the project is
 built on.

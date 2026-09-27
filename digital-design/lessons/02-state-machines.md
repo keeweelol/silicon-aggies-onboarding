@@ -1,39 +1,39 @@
-# Lesson 2 — State machines
+# Lesson 2: State machines
 
-One idea, and then you draw your design on paper before writing any code.
+One idea, and then you draw your design on paper before you write any code.
 
 ---
 
 ## The idea
 
 A **state machine** is hardware that is always in exactly one of a small number of
-situations, and moves between them based on what happens.
+situations, and moves between them when something happens.
 
-You already know a dozen of them. A microwave is off, cooking, or paused. A vending
-machine is waiting for money, has partial payment, or is dispensing. A traffic light is
+You already know plenty of them. A microwave is off, cooking, or paused. A vending machine is
+waiting for money, holding part of a payment, or giving you your snack. A traffic light is
 green, yellow, or red.
 
-Three pieces, and that's the whole concept:
+A state machine has three parts:
 
-- **States** — the situations it can be in. Exactly one at a time.
-- **Transitions** — what causes it to move from one state to another.
-- **Outputs** — what it does while it's in each state.
+- **States:** the situations it can be in. It's in exactly one at a time.
+- **Transitions:** what makes it move from one state to another.
+- **Outputs:** what it does while it's in each state.
 
-## Why this matters for hardware
+## What it looks like in hardware
 
-A state machine is a **register that holds which state you're in**, plus logic that
-decides the next state, plus logic that drives the outputs. That's it. That's the shape
-of nearly every control circuit ever built, including the ones inside the chip we're
-taping out.
+In hardware, a state machine is a register that remembers which state you're in, some
+logic that decides the next state, and some logic that drives the outputs. Nearly every
+control circuit ever built looks like this, including the ones in the chip we're taping
+out.
 
 In Verilog:
 
 ```verilog
-localparam S_GREEN  = 2'b00;      // name the states
+localparam S_GREEN  = 2'b00;      // give each state a name
 localparam S_YELLOW = 2'b01;
 localparam S_RED    = 2'b10;
 
-reg [1:0] state;                  // the register that remembers which one we're in
+reg [1:0] state;                  // the register that remembers the current state
 
 always @(posedge clk) begin
     if (!rst_n) begin
@@ -51,21 +51,21 @@ end
 assign uo_out[2] = (state == S_GREEN);   // outputs come FROM the state
 ```
 
-Notice the last line. **The outputs are derived from the state, not stored separately.**
-That's important — if you keep a separate `green` register and update it by hand in each
-branch, you'll eventually forget one and get two lights on at once.
+Look at the last line. **The outputs come from the state; they aren't stored separately.**
+If you kept a separate `green` register and updated it by hand in each branch, sooner or
+later you'd miss one and end up with two lights on at once.
 
 ## The timer
 
-Traffic lights don't change on an event, they change after a *duration*. So you need a
-counter running alongside the state:
+A traffic light doesn't change because something happened. It changes after a certain
+amount of time. So you need a counter running next to the state:
 
 ```verilog
 reg [4:0] timer;
 ```
 
-The pattern is: every tick, either the timer goes up, or you change state and reset the
-timer to zero.
+The pattern: on every tick, either the timer goes up by one, or you change state and set
+the timer back to zero.
 
 ```verilog
 S_YELLOW: begin
@@ -78,23 +78,22 @@ S_YELLOW: begin
 end
 ```
 
-**Every path that changes state must also clear the timer.** Miss one and you get a light
-that behaves fine for one cycle and then goes haywire. This is the single most common bug
-in this project.
+**Every path that changes state has to clear the timer too.** If you miss one, the light
+behaves for one cycle and then goes haywire. This is the most common bug in the project.
 
-Why `YELLOW_TIME - 1`? Because the timer starts at 0. Counting 0,1,2,3 is four ticks. If
-you compare against `YELLOW_TIME` you'll get five. Off-by-one errors here are normal and
-the waveform will show you immediately.
+Why `YELLOW_TIME - 1`? Because the timer starts at 0. Counting 0, 1, 2, 3 is four ticks.
+If you compare against `YELLOW_TIME` itself, you get five. Off-by-one mistakes here are
+normal, and the waveform shows them right away.
 
-## Remembering something that only happens for an instant
+## Remembering something that only lasts an instant
 
-Here's the part of the project that requires actual thought.
+This is the part of the project that takes real thought.
 
-The pedestrian button is a **single-cycle pulse**. Somebody presses it, it's high for one
-tick, and then it's gone. It might arrive during yellow, or during red, or in the first
-tick of green.
+The pedestrian button is a **one-tick pulse**. Someone presses it, it's 1 for one clock
+tick, and then it's gone. It could arrive while the light is yellow, or red, or on the very
+first tick of green.
 
-So this does not work:
+So this doesn't work:
 
 ```verilog
 S_GREEN: begin
@@ -102,51 +101,54 @@ S_GREEN: begin
 end
 ```
 
-By the time you're ready to act on it, the pulse is long over. You'd only catch a press
-in the exact tick you happened to be looking.
+By the time the light is ready to act on the press, the pulse is long over. This code only
+catches a press if it happens on the exact tick you're checking.
 
-You need to **remember** it:
+You have to **remember** the press:
 
 ```verilog
 reg ped_req;                       // "somebody pressed, and we owe them a walk"
 
 always @(posedge clk) begin
-    if (ped_button) ped_req <= 1'b1;    // catch it whenever it arrives
-    // ... and clear it somewhere, once you've honored it
+    if (ped_button) ped_req <= 1'b1;    // catch the press whenever it arrives
+    // ... and clear it somewhere, once you've given them their walk
 end
 ```
 
-Now the FSM tests `ped_req`, which stays high until you clear it, instead of `ped_button`,
-which is gone in a flash.
+Now the state machine checks `ped_req`, which stays 1 until you clear it, instead of
+`ped_button`, which disappears after one tick.
 
-**This is the actual lesson of the project.** Catching a brief event and holding it until
-you can deal with it is something you'll do in nearly every design you ever build. It has
-a name — request latching — and now you've done it once.
+This is the main lesson of the project. Catching a brief event and holding onto it until
+you can deal with it comes up in almost every design you'll ever build. It's called
+**request latching**, and after this project you'll have done it once.
 
-The remaining question is *where* to clear it, and that one is yours to work out.
+The question left over is *where* to clear `ped_req`. That one is yours to figure out.
 
 ---
 
 ## Now draw yours
 
-Get paper. Actual paper.
+Get a piece of paper and a pen.
 
-Draw three circles: GREEN, YELLOW, RED. Draw arrows between them. On each arrow, write the
-condition that causes that transition. Inside each circle, write which outputs are on.
+1. Draw three circles and label them GREEN, YELLOW, and RED.
+2. Draw arrows between them for each transition.
+3. On each arrow, write what causes that transition.
+4. Inside each circle, write which outputs are on.
 
-Then answer these on the drawing, in writing:
+Then answer these four questions on the same page:
 
-1. **What makes GREEN → YELLOW happen?** There are two separate reasons. Write both.
-2. **Where does `ped_req` get cleared?** Mark the exact spot.
-3. **Which state does reset land in?**
+1. **What makes GREEN go to YELLOW?** There are two separate reasons. Write both.
+2. **Where does `ped_req` get cleared?** Mark the spot.
+3. **Which state does reset go to?**
 4. **What is `walk` doing in each state?**
 
-Take a photo of it and save it as `state-diagram.jpg` in your submission folder. **This is
-a required deliverable** — leads read it first when reviewing.
+Take a photo of it and save it as `state-diagram.jpg` in your submission folder. It's a
+required deliverable, and it's the first thing a lead looks at when reviewing your work.
 
-It feels like a formality. It isn't. Everybody who skips this and goes straight to typing
-writes their state machine twice. Ten minutes with a pen saves an hour with a keyboard.
+It can feel like busywork. It isn't. People who skip the drawing and go straight to typing
+usually end up writing their state machine twice. Ten minutes with a pen saves an hour at
+the keyboard.
 
 ---
 
-**Next:** [Lesson 3 — Build the traffic light](03-build-it.md). Now you write code.
+**Next:** [Lesson 3: Build the traffic light](03-build-it.md). Now you write code.

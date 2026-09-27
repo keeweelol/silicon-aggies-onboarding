@@ -1,4 +1,4 @@
-// Warm-up design. This one is COMPLETE and WORKING -- you don't edit it.
+// Warm-up design. This one is complete and working, so you don't edit it.
 // Your only job in Lesson 1 is to compile it, run it, and look at the waveform.
 //
 // What it does: counts clock ticks, and flips an LED on and off every 8 ticks.

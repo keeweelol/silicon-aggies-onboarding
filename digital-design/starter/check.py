@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Silicon Aggies -- Block 1 submission checker.
+ASIC Block 1 submission checker.
 
 Run this before you open your pull request:
 
@@ -8,7 +8,7 @@ Run this before you open your pull request:
 
 It checks the same things a lead checks, so you can fix problems before
 anyone else sees them. It does not grade you and it does not send anything
-anywhere -- it just runs on your machine and prints a list.
+anywhere. It just runs on your machine and prints a list.
 """
 
 import glob
@@ -53,7 +53,7 @@ print("  Block 1 submission check")
 print("=" * 55)
 print()
 
-# ---------------------------------------------------------------- files
+# ================================================================ files
 print("FILES")
 
 design = find(["tt_um_traffic_light.v"])
@@ -102,7 +102,7 @@ else:
 
 print()
 
-# ---------------------------------------------------------------- build
+# ================================================================ build
 print("BUILD AND TEST")
 
 if not design:
@@ -146,7 +146,7 @@ else:
 
 print()
 
-# ---------------------------------------------------------------- verdict
+# ================================================================ verdict
 print("=" * 55)
 if not problems:
     print("  READY TO SUBMIT")
@@ -158,12 +158,12 @@ if not problems:
     print()
     print("  Then open the pull request on GitHub.")
 else:
-    print(f"  NOT READY -- {len(problems)} thing(s) to fix")
+    print(f"  NOT READY: {len(problems)} thing(s) to fix")
     print()
     for i, p in enumerate(problems, 1):
         print(f"  {i}. {p}")
     print()
-    print("  Stuck on one of these? Check TROUBLESHOOTING.md, then ask in #help.")
+    print("  Stuck on one of these? Check digital-design/TROUBLESHOOTING.md, then ask in the GroupMe.")
 print("=" * 55)
 print()
 

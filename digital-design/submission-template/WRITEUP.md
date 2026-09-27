@@ -1,19 +1,19 @@
-# Block 1 Write-up — YOUR NAME
+# Block 1 write-up: YOUR NAME
 
-*Delete these instructions before you submit. Target 300–500 words total. Write in your
-own words — a lead can tell when it's paraphrased from the lesson, and the paraphrase is
-worth nothing to you.*
+*Delete these instructions (the lines in italics) before you submit. Aim for 300 to 500
+words total. Write it in your own words. A lead can tell when it's paraphrased from the
+lesson, and a paraphrase doesn't teach you anything.*
 
 ## How my state machine works
 
-*Walk through your state diagram in words. What are the states, what moves between them,
-and what does each one output? Two or three sentences per state is plenty.*
+*Walk through your state diagram in words. What are the states, what moves you between
+them, and what does each one turn on? Two or three sentences per state is plenty.*
 
 <your answer here>
 
 ## Handling the button press
 
-*The button is high for only one clock tick. Why can't you just test `ped_button` inside
+*The button is only high for one clock tick. Why can't you just check `ped_button` inside
 the GREEN state? What did you do instead?*
 
 <your answer here>
@@ -26,18 +26,18 @@ the GREEN state? What did you do instead?*
 
 ## What broke, and how I found it
 
-*The important one. Pick a specific bug you hit. What was the symptom? How did you track
-it down — did the test message point at it, did you find it in the waveform, did you just
-reread your code? What was the actual cause?*
+*This is the most important section. Pick one specific bug you hit. What did you see go
+wrong? How did you track it down: did a test message point at it, did you spot it in the
+waveform, or did you just reread your code? What was the actual cause?*
 
-*"Nothing broke" is not a strong answer. If it genuinely all worked first try, say what
-you'd check first if it hadn't.*
+*"Nothing broke" is a weak answer. If everything worked the first time, say what you would
+have checked first if it hadn't.*
 
 <your answer here>
 
 ## Anything else
 
-*Optional. Stretch goals you tried, something you're unsure about, something you'd do
-differently.*
+*Optional. Stretch goals you tried, something you're unsure about, or something you'd do
+differently next time.*
 
 <your answer here>

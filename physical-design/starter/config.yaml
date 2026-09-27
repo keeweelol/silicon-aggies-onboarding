@@ -1,0 +1,32 @@
+# ASIC Block 3 starter config for LibreLane.
+# Lesson 2 explains every setting in this file.
+# Lines starting with # are comments. LibreLane ignores them.
+
+# The name of your top-level module. It must match the `module` line in your
+# design file exactly.
+DESIGN_NAME: counter_sram
+
+# Your design file. "dir::" means "starting from the folder this config is in."
+VERILOG_FILES: dir::src/counter_sram.sv
+
+# The clock. CLOCK_PERIOD is in nanoseconds. 20 ns is 50 MHz, which is slow on
+# purpose so timing is easy to meet. You'll change this in Lesson 5.
+CLOCK_PORT: clk
+CLOCK_PERIOD: 20
+
+# How tightly to pack the cells. FP_CORE_UTIL is the percent of the chip's core
+# area that gets filled with cells. Higher means a smaller, denser chip, but go
+# too high and there's no room left for wires.
+FP_CORE_UTIL: 40
+PL_TARGET_DENSITY_PCT: 45
+
+# Power grid settings for a small design. These are copied from LibreLane's own
+# small example (librelane/examples/spm). The default grid is sized for much
+# bigger chips and may not fit on one this small. You don't need to change these.
+PDN_VOFFSET: 5
+PDN_HOFFSET: 5
+PDN_VWIDTH: 2
+PDN_HWIDTH: 2
+PDN_VPITCH: 30
+PDN_HPITCH: 30
+PDN_SKIPTRIM: true

@@ -24,7 +24,7 @@ module tb_blinker;
         $dumpvars(0, tb_blinker);
 
         $display("tick   led");
-        $display("----------");
+        $display("==========");
         repeat (3) @(negedge clk);
         rst_n = 1;
 
@@ -34,7 +34,7 @@ module tb_blinker;
         end
 
         $display("");
-        $display("Done. Open the waveform with:  make wave");
+        $display("Done. Open the waveform with:  gtkwave blinker.vcd &");
         $finish;
     end
 

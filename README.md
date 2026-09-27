@@ -1,145 +1,130 @@
-# Silicon Aggies — Fall 2026 Rotation Program
+# ASIC onboarding, Fall 2026
 
-Everything a new member needs to get through their first six weeks, and everything a
-teaching lead needs to run them.
+Welcome to ASIC (Aggie Silicon & Integrated Circuits). This repo has everything you need
+for your first six weeks in the org.
+
+You don't need any chip design experience to start. If you've taken a digital logic class,
+or you're taking one now, you know enough. Every guide in here assumes you've never used
+these tools before and walks you through them one command at a time.
 
 ---
 
-## 1. What the rotation is
+## Start here
 
-Every new member rotates through all three technical areas — Digital Design,
-Verification, and Physical Design — two weeks each, six weeks total. The entire cohort
-moves through the same block at the same time. Members pick the team they want to join
-at the *end* of the rotation, not the beginning.
+Do these in order.
 
-Each block has one project. Each project has a written guide in this repo, a fixed list
-of deliverables, and a definition of done. Finish three small projects on time and you
-are a member in good standing with a team placement.
+1. **Set up your computer.** Follow [`setup/README.md`](setup/README.md). It takes about an
+   hour and a half. Everything after this depends on it, so do it first.
+2. **Block 1: Digital Design.** Build a traffic light controller.
+   Start at [`digital-design/README.md`](digital-design/README.md).
+3. **Block 2: Verification.** Write testbenches and hunt down planted bugs.
+   Start at [`verification/README.md`](verification/README.md).
+4. **Block 3: Physical Design.** Turn your design into a real chip layout.
+   Start at [`physical-design/README.md`](physical-design/README.md).
+5. **Pick your team.** After Block 3 you choose the team you want to join.
 
-## 2. Why rotation instead of letting people pick
+Each block has a README that tells you what you're building and links to short lessons.
+Work through the lessons in order. Each one ends with a link to the next.
 
-Silicon Jackets at Georgia Tech originally let members onboard directly into the subteam
-they were most interested in, then changed to requiring exposure to all three. Their
-reason: when students choose on prior familiarity alone, more than two thirds default to
-digital design. That starves verification and physical design of people, and it leaves
-members with no picture of how the flow fits together.
+---
 
-Rotation costs depth inside each block and buys two things — a better-informed placement
-decision and a healthier distribution across teams. We are taking that trade.
+## What the six weeks look like
 
-There is an operational reason too. Running the whole cohort through the same material
-at the same time means a tooling problem that hits fifty people gets solved once. Rolling
-admission would force us to re-solve the same install problems all semester.
+Everyone in the new cohort moves through the same block at the same time. Each block is
+two weeks long and has one small project.
 
-## 3. What onboarding is actually filtering for
+| Block | Dates | What you make | Tools you learn |
+|---|---|---|---|
+| 1. Digital Design | Sep 21 to Oct 2 | A traffic light controller written in Verilog | Icarus Verilog, GTKWave |
+| 2. Verification | Oct 5 to Oct 16 | Testbenches that find bugs in a counter and a small memory | Verilator, GTKWave |
+| 3. Physical Design | Oct 19 to Oct 30 | A chip layout of the design you fixed in Block 2 | LibreLane, KLayout |
 
-Effort and follow-through, not existing skill.
+Every block runs on the same rhythm:
 
-The projects are deliberately reachable by someone who has taken digital logic and
-nothing else. A member who finishes three small projects on time over six weeks will be
-useful. A member who does not, will not, regardless of how much Verilog they already
-know. Keeping the technical bar low and the completion bar firm is the entire point.
+- **Monday of week 1:** a 30-minute kickoff where a lead does the project live. Come to this.
+  It's the easiest way to see what you're aiming for.
+- **The weekend in the middle:** an open lab. Leads are in the room. Bring your laptop and
+  whatever is broken.
+- **Friday of week 2, 11:59 PM:** your pull request is due.
 
-Nothing here is a competition and nothing is graded on a curve. Every deliverable is
-pass / needs-another-pass.
+Between those, you work on your own time from the guides in this repo. You can finish
+faster than the schedule. The dates are the slowest you should go, not a pace you have
+to match.
 
-## 4. Rotation order and why
-
-**Block 1: Digital Design → Block 2: Verification → Block 3: Physical Design**
-
-This is the order the work actually happens in industry: you describe hardware, you prove
-it does what you claimed, then you turn it into geometry. It also lets each block feed
-the next. The counter you verify in Block 2 is the counter you harden in Block 3, so
-members are never handed a black box they have no relationship with.
-
-> **Decision needed:** the original draft listed Physical Design second. Confirm the
-> order above before September 12 — the guides cross-reference each other and the
-> reordering is a five-minute edit now and an annoying one later.
-
-## 5. Calendar
+## Calendar
 
 | Date | Event |
 |---|---|
-| Sep 8 (Tue) | IEEE Student Branch first GBM — recruiting pitch |
-| Sep 12 (Sat) | **Internal deadline.** Repo, toolchain, and guides frozen |
-| Sep 17 (Thu) | Silicon Aggies interest meeting + toolchain install night |
-| Sep 21 – Oct 2 | **Rotation 1 — Digital Design** |
-| Oct 5 – Oct 16 | **Rotation 2 — Verification** |
-| Oct 19 – Oct 30 | **Rotation 3 — Physical Design** |
-| Week of Nov 2 | Team placement. Members choose, leads confirm |
-| Nov 2 – Nov 18 | MAC tile design and hardening |
-| Nov 18 | Hard submission gate for the internal competition |
-| ~Nov 20 | Internal competition, judged by Dr. Limbrick and an Apple engineer |
+| Sep 8 (Tue) | IEEE Student Branch first GBM, recruiting pitch |
+| Sep 17 (Thu) | ASIC interest meeting and toolchain install night |
+| Sep 21 to Oct 2 | **Block 1: Digital Design** |
+| Oct 5 to Oct 16 | **Block 2: Verification** |
+| Oct 19 to Oct 30 | **Block 3: Physical Design** |
+| Week of Nov 2 | Team placement. You choose, leads confirm |
+| Nov 2 to Nov 18 | MAC tile design and hardening |
+| Nov 18 | Last day to submit for the internal competition |
+| Around Nov 20 | Internal competition, judged by Dr. Limbrick and an Apple engineer |
 | December 2026 | Tiny Tapeout TTSKY26d closes |
-| June 2027 | Chips return. Bring-up event |
+| June 2027 | Chips come back. Bring-up event |
 
-Blocks run Monday to Friday across two weeks. Each opens with a kickoff session and has
-an open lab in the middle. Members work asynchronously in between.
+---
 
-## 6. How the rotation connects to the tapeout
+## How you turn in work
 
-This is not busywork that gets thrown away in November. The rotation exists to make the
-December Tiny Tapeout submission survivable for a first-time designer.
+You turn in every project as a pull request on GitHub. A pull request is a way of saying
+"here are my files, please look at them." A lead reviews it and either accepts it or leaves
+comments asking for changes.
 
-- Every rotation project uses the **same Tiny Tapeout pin contract** as the real tile:
-  `clk`, `rst_n`, `ena`, `ui_in[7:0]`, `uo_out[7:0]`, `uio_in/uio_out/uio_oe[7:0]`, and a
-  `tt_um_` top module name. By November nobody is learning the interface for the first time.
-- Verification uses **cocotb + Icarus Verilog**, which is the harness Tiny Tapeout's own
-  template ships with. The test file a member writes in Block 2 is structurally the test
-  file they submit in November.
-- Physical Design uses **LibreLane on sky130**, the same flow that hardens the tile.
+The first time takes about 20 minutes, and Block 1's
+[Lesson 4](digital-design/lessons/04-submit.md) walks you through every click. The short
+version:
 
-By November 2, a member who completed the rotation has already written an FSM, already
-written a cocotb test, and already produced a GDS. The MAC tile is then a harder instance
-of three things they have each done once.
+1. Fork this repo on GitHub, once, at the start of the semester. (Setup covers this.)
+2. Put your work in `submissions/<block-name>/<your-github-username>/`.
+3. Make a branch, commit, push, and open a pull request.
 
-## 7. Repo layout
+We do it this way on purpose. Opening a clean pull request is a skill every engineering job
+expects, and by November you'll have public commits on a chip design project.
+
+## How it's graded
+
+It isn't, really. Every submission is either "done" or "needs another pass." There's no
+curve and no ranking.
+
+A block is done when a lead merges your pull request. That happens when:
+
+- every file on that block's deliverables list is there,
+- a lead can run your work and get the same result you did, and
+- your write-up is in your own words.
+
+Late is fine if you tell a lead before the deadline. What we worry about is people who go
+quiet. If you get stuck in week one and disappear, we can't help you.
+
+## Getting help
+
+Post in the ASIC GroupMe. Include three things:
+
+1. the command you ran,
+2. the full error message (copy and paste the text, don't send a photo of your screen),
+3. your operating system (Windows, Mac, or Linux).
+
+Before you post, check the troubleshooting page for your block. Your error is probably
+already there with a fix.
+
+No question is too basic. Most of the leads learned this stuff less than a year ago and hit
+the same errors you will.
+
+---
+
+## What's in this repo
 
 ```
 silicon-aggies-onboarding/
-├── README.md                    ← you are here (program plan)
-├── setup/
-│   └── README.md                ← install everything, once, before Sep 17
-├── digital-design/
-│   └── README.md                ← Block 1: Traffic Light Controller
-├── verification/
-│   └── README.md                ← Block 2: Find the Bug
-├── physical-design/
-│   └── README.md                ← Block 3: Counter to Layout
-├── LEADS.md                     ← teaching runbook (leads only)
-└── submissions/
-    └── <block>/<github-username>/
+├── README.md             you are here
+├── setup/                install the tools (do this first)
+├── digital-design/       Block 1: traffic light controller
+├── verification/         Block 2: find the bug
+├── physical-design/      Block 3: design to layout
+├── submissions/          where your work goes, one folder per person
+└── LEADS.md              how leads run the program (you don't need this)
 ```
-
-## 8. How you turn work in
-
-Everything goes through this repo. No email attachments, no Discord DMs, no Google Drive
-folders.
-
-1. Fork this repo to your own GitHub account (once, at the start of the semester).
-2. Make a branch for the block: `git checkout -b block1-yourname`
-3. Put your work in `submissions/digital-design/your-github-username/`
-4. Push, then open a pull request against `main`.
-5. A lead reviews the PR. You either get merged or you get comments and another pass.
-
-This is deliberate. Learning to open a clean pull request is a real deliverable of
-onboarding, the PR review *is* the skill check leads use for placement, and the merged
-history is a record we can show a sponsor or a judge. It also means every member finishes
-the semester with public commits on a chip design project.
-
-## 9. Definition of done, globally
-
-A block is complete when the PR is merged. A PR gets merged when:
-
-- Every file listed in that block's "Deliverables" section is present.
-- The thing runs. A lead can clone your branch and reproduce your result from your README.
-- The write-up is in your own words and explains what you did, not what the tutorial said.
-
-Late is fine if you tell a lead before the deadline. Silent and missing is not.
-
-## 10. Getting unstuck
-
-Post in `#help` with: what you ran, the full error text, and your OS. Not a screenshot of
-a phone photo of a terminal. Leads answer once, in public, so fifty people get the fix.
-
-Before you post, check the "Common problems" table at the bottom of your block's guide.

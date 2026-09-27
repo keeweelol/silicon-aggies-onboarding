@@ -1,242 +1,105 @@
-# Block 3 — Physical Design: Counter to Layout
+# Block 3: Physical Design (from code to layout)
 
-**Two-week rotation block. Oct 19 – Oct 30.**
+**Two weeks, Oct 19 to Oct 30.**
 
-Run the LibreLane tutorial once, then repeat the same process on your own 8-bit counter,
-from code to a finished layout. Pull it up in KLayout and grab a screenshot. Turn in the
-layout files, the screenshot, and a few sentences on what each step did.
-
----
-
-## Why this project
-
-Everything up to now has been text that describes hardware. This block is where the text
-becomes geometry — actual rectangles of metal and silicon at specific coordinates, which
-is what a foundry can build.
-
-This is also the block where members find out whether they like this work. Physical
-design has a different rhythm than RTL: you are not writing much, you are configuring a
-flow, reading reports, and reacting to what the tools tell you. Some people love it and
-some people bounce off it. Both answers are useful for placement.
-
-The output of this block is a `.gds` file. That is the same file format we submit to
-Tiny Tapeout in December. This is not a simulation of the process. It is the process.
+So far your designs have been text. In this block you turn text into geometry: the actual
+rectangles of metal and silicon, at exact positions, that a factory can build. You run the
+ASIC LibreLane tutorial once to learn the tools, then do the same thing to the counter-SRAM
+you fixed in Block 2.
 
 ---
 
-## What "hardening" actually means
+## What you'll make
 
-You are running a sequence of tools, each of which takes the previous one's output and
-adds physical detail. Learn these six names now — they are what the whole industry calls
-these steps, and you will be asked about them in an internship interview.
+A `.gds` file of your counter-SRAM. GDS is the file format chip factories accept, and it's
+the same format we submit to Tiny Tapeout. You'll open it in a layout viewer called KLayout,
+take screenshots, and read the reports the tools produce.
 
-| Stage | Tool | What it does | What comes out |
-|---|---|---|---|
-| **Synthesis** | Yosys | Turns your Verilog into a netlist of actual sky130 standard cells — specific AND gates, flip-flops, buffers that the foundry can build | Gate-level netlist |
-| **Floorplan** | OpenROAD | Decides how big the chip is, where the I/O pins sit, and lays down the power grid | Die and core area, PDN |
-| **Placement** | OpenROAD | Assigns every one of those cells an actual x,y position in a row | Placed netlist |
-| **CTS** | OpenROAD | Builds a clock distribution tree so the clock edge arrives at every flip-flop at nearly the same time | Clock tree, buffers inserted |
-| **Routing** | OpenROAD | Draws the metal wires connecting everything, across five metal layers | Routed design |
-| **Signoff** | OpenROAD / Magic / KLayout / Netgen | Checks timing (STA), design rules (DRC), and that the layout matches the netlist (LVS) | Reports, and `.gds` |
+This block also feels different from the first two. You write almost no code. Instead you
+set up a config file, run a long tool flow, and read what the tools tell you. Some people
+love that and some don't, and both are useful to find out before you pick a team.
 
-Your write-up at the end is you explaining these six rows in your own words, using
-numbers from your own run.
+## What you need to know going in
 
----
+- **Block 2.** You need your fixed `counter_sram.sv`. If you didn't finish Block 2, ask a
+  lead for help getting a working copy.
+- **Nothing about chip layout.** Lesson 0 explains every step in plain language.
 
-## Step by step
+## How the two weeks run
 
-### Step 1 — Run the tutorial exactly as written, change nothing
+| When | What |
+|---|---|
+| Before Oct 19 | Make sure LibreLane is installed (setup Part D). If it won't install, ask a lead for a lab machine **now**. |
+| Monday, week 1 | 30-minute kickoff. A lead starts a run and shows a finished layout. |
+| Week 1 | Lessons 0, 1, and 2: learn the stages, run the tutorial, run your design. |
+| Middle weekend | Open lab. Leads are in the room. |
+| Week 2 | Lessons 3 to 6: read the reports, look at the layout, change one setting, turn it in. |
+| Friday, Oct 30, 11:59 PM | Pull request due. |
 
-```bash
-cd ~/Su26LLEX
-```
+## The lessons
 
-Follow the README start to finish on the example design it ships with. Do not swap in
-your own RTL yet. Do not change any config values. The only goal of this step is to
-prove your toolchain works.
-
-If it fails here, it is an environment problem, not a design problem, and those are two
-completely different conversations. Post in `#help` with the full error.
-
-> **The folder thing:** `Su26LLEX` is a fork of LibreLane, so there is a `librelane/`
-> directory inside it, and tutorial paths look like `librelane/examples/...`. That is
-> correct even though it looks like a mistake.
-
-When it finishes, find the run directory. It looks like `runs/RUN_2026-10-20_.../` and
-contains a numbered folder for every step the flow took. Open it and scroll through the
-folder names. That list *is* the flow. Take thirty seconds to look at it before moving
-on — it is the clearest picture of the process you will get.
-
-### Step 2 — Set up your own design
-
-```bash
-cd ~/silicon-aggies-onboarding
-mkdir -p submissions/physical-design/YOUR-GITHUB-USERNAME/src
-cd submissions/physical-design/YOUR-GITHUB-USERNAME
-
-cp ../../../physical-design/starter/config.json .
-cp ../../verification/YOUR-GITHUB-USERNAME/tt_um_counter.v src/
-```
-
-That second copy is your **fixed** counter from Block 2 — the one you debugged. If you
-harden the broken one, you get a perfectly manufacturable broken chip, which is a real
-thing that happens to real companies.
-
-### Step 3 — Read the config before you run it
-
-Open `config.json`. Four values matter:
-
-- **`CLOCK_PERIOD`** — the target period in nanoseconds. 20 ns is about 50 MHz, deliberately
-  slack. Tighten it later.
-- **`FP_CORE_UTIL`** — what percentage of the core area gets filled with cells. Higher is
-  denser and smaller; too high and the router runs out of room and fails.
-- **`PL_TARGET_DENSITY_PCT`** — placement density. Usually kept a bit below core util.
-- **`VERILOG_FILES`** — must point at your file. `dir::` means "relative to this config."
-
-Change nothing yet. Run it stock first so you have a baseline.
-
-### Step 4 — Run the flow
-
-From inside the LibreLane environment (see the Su26LLEX README for the exact invocation
-for the version we pinned — usually a `nix-shell` then the `librelane` command):
-
-```bash
-librelane config.json
-```
-
-Expect several minutes. It will print each stage as it goes. Watch which stage takes
-longest — that answer is different than most people guess.
-
-### Step 5 — Read the reports, not just the pass/fail
-
-This is the actual skill. Go into your run directory and fill in this table for your
-write-up:
-
-| Metric | Where to find it | Yours |
+| # | Lesson | About how long |
 |---|---|---|
-| Die area (µm²) | final metrics summary | |
-| Standard cell count | synthesis report | |
-| Flip-flop count | synthesis report | |
-| Worst negative slack (WNS) | STA report | |
-| Total negative slack (TNS) | STA report | |
-| Number of nets routed | routing report | |
-| DRC violations | signoff DRC report | |
-| LVS result | signoff LVS report | |
+| 0 | [What "hardening" means](lessons/00-what-hardening-means.md): the six stages | 20 min |
+| 1 | [Run the tutorial](lessons/01-run-the-tutorial.md): prove your tools work | 1 hr (mostly waiting) |
+| 2 | [Harden your design](lessons/02-harden-your-design.md): run the flow on your counter-SRAM | 45 min |
+| 3 | [Read the reports](lessons/03-read-the-reports.md): find the numbers that matter | 45 min |
+| 4 | [Look at the layout](lessons/04-look-at-the-layout.md): KLayout and screenshots | 30 min |
+| 5 | [Change one thing](lessons/05-change-one-thing.md): see what a setting does | 45 min |
+| 6 | [Turn in your work](lessons/06-submit.md): write-up and pull request | 45 min |
 
-LibreLane collects most of these into a metrics file in the `final/` directory. Find it.
-The point of this step is that you learn where the numbers live, because for the rest of
-your career in this field, someone is going to ask you "what's the WNS?" and you need to
-be able to answer in under a minute.
+Keep these open while you work:
 
-**WNS should be positive or zero.** Positive slack means the design meets timing with
-room to spare. Negative means a path is too slow for your clock period and the design
-would not work at that frequency.
+- [TROUBLESHOOTING.md](TROUBLESHOOTING.md): errors you're likely to hit, with fixes.
+- [GLOSSARY.md](GLOSSARY.md): every new term in this block.
 
-### Step 6 — Open it in KLayout
+## Before you start
+
+You need LibreLane from Part D of the [setup guide](../setup/README.md). Check it:
 
 ```bash
-klayout runs/RUN_<your-timestamp>/final/gds/tt_um_counter.gds
+nix --version
+ls ~/Su26LLEX
 ```
 
-Give it a moment. Then:
+If `nix` isn't found, or the `Su26LLEX` folder doesn't exist, go back to setup Part D.
+This block is mostly about getting the tools to run, so get that sorted before Oct 19. If
+Nix won't install on your laptop, tell a lead so they can reserve you a lab machine.
 
-- Turn layers on and off in the right-hand panel. Find the metal layers (met1 through
-  met5) and toggle them one at a time. You are looking at the actual wires.
-- Zoom all the way in until you can see individual standard cells. Those repeating
-  rectangles in rows are your flip-flops and gates.
-- Zoom all the way out. That whole thing is your 8-bit counter.
+> **Windows 10:** KLayout needs to open a window, and WSL on Windows 10 can't do that
+> without extra setup. Plan to do Lesson 4 on a lab machine or a friend's Windows 11 or Mac
+> laptop.
 
-Screenshot it — a full-chip view with all layers on. Save as `layout.png`.
-
-Take a second screenshot zoomed in far enough to see individual cells. Save it as
-`layout-zoom.png`. That one is the picture that makes the point to a person who has never
-seen this before, which makes it useful for recruiting.
-
-### Step 7 — Now change one thing and rerun
-
-Pick one:
-
-- Drop `CLOCK_PERIOD` from 20 to 5 and see whether timing still closes.
-- Raise `FP_CORE_UTIL` from 40 to 70 and see what happens to area and to routing.
-
-Rerun. Record what changed in the metrics table. One or two sentences on what you learned
-goes in the write-up.
-
-This step is the difference between "I ran a tutorial" and "I understand what the knobs
-do."
-
-### Step 8 — Write it up
-
-`WRITEUP.md`, 300–500 words:
-
-- One or two sentences per stage, in your own words, on what that stage did to your
-  design. Reference your own numbers.
-- Your filled-in metrics table.
-- What you changed in Step 7 and what happened.
-- What surprised you.
-
-Do not paraphrase this README back at us. Leads can tell, and the whole value of the
-exercise is in you forming your own description.
-
-### Step 9 — Open the pull request
-
-```bash
-cd ~/silicon-aggies-onboarding
-git checkout -b block3-yourname
-git add submissions/physical-design/YOUR-GITHUB-USERNAME
-git commit -m "Block 3: counter to layout"
-git push -u origin block3-yourname
-```
-
-> **Do not commit the whole run directory.** It is hundreds of MB. Commit the final GDS,
-> your config, your RTL, the screenshots, and the metrics — nothing from intermediate
-> stages. There is a `.gitignore` in the repo root that handles this; if `git status`
-> shows thousands of files, stop and ask.
-
----
-
-## Deliverables
+## What you turn in
 
 In `submissions/physical-design/YOUR-GITHUB-USERNAME/`:
 
-- [ ] `src/tt_um_counter.v` — the RTL you hardened
-- [ ] `config.json` — your config, including the Step 7 change
-- [ ] `tt_um_counter.gds` — the final layout
-- [ ] `layout.png` — full-chip KLayout screenshot
-- [ ] `layout-zoom.png` — zoomed-in screenshot showing individual cells
-- [ ] `metrics.md` — the filled-in table from Step 5, both runs
-- [ ] `WRITEUP.md` — 300–500 words
-- [ ] PR opened by **Friday Oct 30, 11:59 PM**
+- [ ] `src/counter_sram.sv`: the design you hardened
+- [ ] `config.yaml`: your config, including the change from Lesson 5
+- [ ] `counter_sram.gds`: the final layout
+- [ ] `layout.png`: KLayout screenshot of the whole chip
+- [ ] `layout-zoom.png`: KLayout screenshot zoomed in far enough to see single cells
+- [ ] `metrics.md`: the filled-in metrics table, for both runs
+- [ ] `WRITEUP.md`: 300 to 500 words
+- [ ] a pull request, opened by Friday Oct 30
 
-## Definition of done
+**Don't turn in the `runs/` folder.** It's hundreds of megabytes. Lesson 6 shows you how to
+copy out only the file you need.
 
-- The flow completes through signoff with zero DRC violations and LVS clean.
-- WNS is non-negative at your stated clock period.
-- Both screenshots are legible.
-- The write-up describes all six stages using your own numbers.
+## When you're done
 
----
+A lead merges your pull request when:
 
-## Common problems
+- the flow finished all the way through signoff, with zero DRC errors and a clean LVS
+  result (Lesson 3 explains these),
+- worst slack (WNS) is zero or positive at your clock period,
+- both screenshots are readable, and
+- your write-up explains all six stages in your own words, using numbers from your own run.
 
-| Symptom | What is usually wrong |
-|---|---|
-| Nix install fails or runs out of disk | You need ~15 GB free. Use a lab machine — arrange it with a lead *before* the block starts |
-| Flow fails in synthesis | Your Verilog has something non-synthesizable in it. Delays (`#10`), `initial` blocks, and `$display` are simulation-only |
-| "no cells placed" / floorplan errors | `DESIGN_NAME` does not match your module name, or `VERILOG_FILES` path is wrong |
-| Routing fails or takes forever | `FP_CORE_UTIL` too high. Drop it back toward 40 |
-| Negative WNS | Your `CLOCK_PERIOD` is too aggressive for the design. Raise it, then note in the write-up what the fastest closing period was |
-| Antenna violations | Common and usually fixable by the flow's own diode insertion. Note them, ask a lead |
-| KLayout opens a blank window | You opened the wrong file, or all layers are hidden. Check the layer panel on the right |
-| `git status` shows thousands of files | You are about to commit the run directory. Do not. See the note in Step 9 |
+## Getting help
 
-## If you finish early
+Post in the ASIC GroupMe with the command you ran, the full error text (copy and paste it),
+and your operating system. For flow errors, also post the name of the step that failed.
+It's in the last few lines of the output.
 
-1. Harden your Block 1 traffic light controller instead and compare the two — which is
-   bigger, and does the answer match your intuition from the RTL?
-2. Find the critical path in the STA report and trace it back to specific lines of your
-   Verilog.
-3. Sweep `CLOCK_PERIOD` across five values, plot area against achieved frequency, and you
-   have built a two-point Pareto curve. That is exactly the shape of the Code-a-Chip
-   notebook work the org is submitting to ISSCC — come talk to us.
+Check [TROUBLESHOOTING.md](TROUBLESHOOTING.md) first.

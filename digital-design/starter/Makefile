@@ -1,4 +1,4 @@
-# Silicon Aggies -- Block 1
+# ASIC Block 1
 #
 #   make          compile and run the tests
 #   make wave     open the waveform in GTKWave

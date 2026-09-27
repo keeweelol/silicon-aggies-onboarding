@@ -1,6 +1,5 @@
-# LibreLane / OpenLane run output -- never commit this, it is hundreds of MB
+# LibreLane / OpenLane run output. Never commit this; it is hundreds of MB.
 runs/
-!runs/*/final/gds/*.gds
 *.def
 *.lef
 *.odb
@@ -8,6 +7,7 @@ runs/
 
 # simulation output
 sim_build/
+obj_dir/
 *.vcd
 *.out
 *.vvp

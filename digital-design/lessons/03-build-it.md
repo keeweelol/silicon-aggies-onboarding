@@ -1,63 +1,67 @@
-# Lesson 3 — Build the traffic light
+# Lesson 3: Build the traffic light
 
-This is the project. Everything before now was preparation.
+This is the project. You build it in four rounds, running the tests after each one.
+
+Before you start, have your state diagram from Lesson 2 next to you.
 
 ---
 
 ## The spec
 
-Read this carefully. Every sentence is something the tests check.
+A spec (short for specification) is the exact description of what the design must do. Read
+it carefully. The tests check every sentence.
 
 **Normal cycle**, measured in clock ticks:
 
 ```
-GREEN (12) → YELLOW (4) → RED (10) → GREEN → ...
+GREEN (12 ticks) → YELLOW (4 ticks) → RED (10 ticks) → back to GREEN
 ```
 
-**Reset.** `rst_n` is active low and synchronous. On reset the light goes to RED, the
-timer clears, and the pedestrian request clears.
+**Reset.** `rst_n` is active low and synchronous (it takes effect on a clock edge). On
+reset, the light goes to RED, the timer goes to 0, and the pedestrian request is cleared.
 
-**Walk.** The `walk` output is high for the whole RED state, whether or not anyone
+**Walk.** The `walk` output is on for the whole time the light is RED, whether or not anyone
 pressed the button.
 
-**One-hot outputs.** Exactly one of red/yellow/green is on at any tick. Never zero, never
-two.
+**Exactly one light.** Exactly one of red, yellow, and green is on at every tick. Never zero,
+never two.
 
-**The pedestrian button** is a single-cycle pulse on `ui_in[0]`, and it can arrive at any
-time:
+**The pedestrian button** is a one-tick pulse on `ui_in[0]`, and it can come at any time:
 
-- Press during GREEN, at or after tick `MIN_GREEN` (4): cut green short, go to YELLOW.
-- Press during GREEN before tick 4: **remember it**, and act on it the moment tick 4
-  arrives. Cars never get a green shorter than 4 ticks.
-- Press during YELLOW or RED: nothing happens. Walk is already coming.
-- The request clears while the light is RED, so a press during red doesn't carry over and
-  shorten the next green.
+- Pressed during GREEN, at tick `MIN_GREEN` (4) or later: end green early and go to YELLOW.
+- Pressed during GREEN before tick 4: **remember it**, and act on it as soon as tick 4
+  arrives. Cars always get at least 4 ticks of green.
+- Pressed during YELLOW or RED: nothing happens, because a walk is already on its way.
+- The request clears while the light is RED. That way, a press during red doesn't carry
+  over and cut the next green short.
 
 ## Pin map
 
+This table says which pin does what:
+
 ```
 ui_in[0]     pedestrian button
-ui_in[7:1]   unused
+ui_in[7:1]   not used
 
 uo_out[0]    car_red
 uo_out[1]    car_yellow
 uo_out[2]    car_green
 uo_out[3]    walk
-uo_out[7:4]  unused, drive 0
+uo_out[7:4]  not used, set to 0
 
-uio_*        unused this block, tie to 0
-clk, rst_n, ena   standard
+uio_*        not used this block, set to 0
+clk, rst_n, ena   the usual
 ```
 
-This is the real Tiny Tapeout pin contract. You're using it in week one so it's familiar
-by the time we tape out.
+This is the real Tiny Tapeout pin layout. You're using it now so it's familiar by the time
+we tape out.
 
 ---
 
 ## The starter file
 
-Open `tt_um_traffic_light.v`. You already have it in your folder. It gives you the port
-list, the timing constants, the state names, and the registers. There are four TODOs.
+Open `tt_um_traffic_light.v` in your submission folder. It already has the port list, the
+timing constants, the state names, and the registers. You fill in four TODOs.
 
 ```verilog
     localparam GREEN_TIME  = 12;
@@ -76,72 +80,69 @@ list, the timing constants, the state names, and the registers. There are four T
     reg       ped_req;
 ```
 
-**TODO 1** — reset. `state <= S_RED`, `timer <= 0`, `ped_req <= 0`.
+- **TODO 1: reset.** Set `state <= S_RED`, `timer <= 0`, and `ped_req <= 0`.
+- **TODO 2: remember the button press.** Set `ped_req` when the button pulses. Clear it
+  while the light is RED.
+- **TODO 3: the state machine and the timer.** One `case` on `state`. On each tick, either
+  add one to the timer, or change state and set the timer to 0. Include a `default` that
+  goes back to RED.
+- **TODO 4: the outputs.** Drive them from `state`.
 
-**TODO 2** — latch the pedestrian request. Set `ped_req` when the button pulses, clear it
-while RED.
-
-**TODO 3** — the state machine and the timer. One `case` on `state`. Each tick, either
-increment the timer, or change state and clear the timer to 0. Include a `default` that
-sends you back to RED.
-
-**TODO 4** — drive the outputs from `state`.
-
-You write it all in **one** `always @(posedge clk)` block. Use `<=`.
+TODOs 1 to 3 all go in **one** `always @(posedge clk)` block, and you use `<=` for every
+assignment in it. TODO 4 is the `assign` lines near the bottom of the file.
 
 ---
 
-## The build loop
+## Build it in rounds
 
-Don't write all four TODOs and then run it. Write a piece, run it, look. Here's a
-sensible order.
+Don't write all four TODOs and then run it. Write one piece, run the tests, and look at the
+result. This order works well.
 
-### Round 1 — get out of the dark
+### Round 1: turn on a light
 
-Do TODO 1 and TODO 4 only. Skip the state machine entirely. Reset the state to RED and
-drive the outputs from it.
-
-```bash
-make
-```
-
-Test 1 should pass — the light is red after reset and walk is on. Everything else fails.
-That's fine. **You now have a light that turns on**, which is much more progress than it
-sounds.
-
-### Round 2 — make it cycle
-
-Add TODO 3, but only the plain timing. Forget the button completely for now:
-
-- GREEN → YELLOW when `timer == GREEN_TIME - 1`
-- YELLOW → RED when `timer == YELLOW_TIME - 1`
-- RED → GREEN when `timer == RED_TIME - 1`
-
-Run it. Test 2 should now pass — 12, 4, 10.
-
-If your numbers are off by one, that's the `- 1`. If the light flickers between two
-states, you forgot to clear the timer on one of the transitions.
-
-### Round 3 — the button
-
-Add TODO 2, and add the extra exit condition to GREEN.
-
-Green now leaves for yellow when **either** the timer expires **or** `ped_req` is set and
-`timer >= MIN_GREEN - 1`.
-
-Run it. Tests 3, 4, and 5 should pass.
-
-If test 4 fails and says green lasted 12 ticks when it should have lasted 4, your press
-is being forgotten — go back to Lesson 2 and look at the latching section again. That's
-the whole point of the exercise, so it's worth working out rather than being told.
-
-### Round 4 — all ten
+Do TODO 1 and TODO 4 only. Skip the state machine for now. Reset the state to RED, and
+drive the outputs from `state`.
 
 ```bash
 make
 ```
 
-You want:
+TEST 1 should pass: the light is red after reset and walk is on. The rest will fail and
+the run ends with a `TIMEOUT` message. That's expected at this point. You have a light that
+turns on, which is real progress.
+
+### Round 2: make it cycle
+
+Add TODO 3, but only the plain timing. Ignore the button for now:
+
+- GREEN goes to YELLOW when `timer == GREEN_TIME - 1`
+- YELLOW goes to RED when `timer == YELLOW_TIME - 1`
+- RED goes to GREEN when `timer == RED_TIME - 1`
+
+Run `make` again. TEST 2 should now pass, with 12, 4, and 10 ticks.
+
+If a number is off by one, check the `- 1`. If the light flickers between two states, you
+forgot to clear the timer on one of the transitions.
+
+### Round 3: the button
+
+Add TODO 2. Then give GREEN a second way out. Green now goes to yellow when **either** the
+timer runs out, **or** `ped_req` is set and `timer >= MIN_GREEN - 1`.
+
+Run `make`. TESTS 3, 4, and 5 should pass.
+
+If TEST 4 fails and says green lasted 12 ticks when it should have been 4, the button press
+is getting forgotten. Go back to the "remembering something" section of Lesson 2. Working
+this out yourself is the point of the exercise, so it's worth the effort.
+
+### Round 4: everything passes
+
+```bash
+make
+```
+
+The test prints six numbered tests, which together make ten checks. You're done when the
+end of the output says:
 
 ```
   ALL 10 CHECKS PASSED
@@ -151,44 +152,49 @@ You want:
 
 ## When a test fails, look at the waveform
 
-The tests tell you *what* is wrong. The waveform tells you *why*.
+The test output tells you *what* is wrong. The waveform tells you *why*.
 
 ```bash
 make wave
 ```
 
-Add `clk`, `rst_n`, `ui_in[0]`, `state`, `timer`, and `uo_out[3:0]`. Find the moment the
-test complained about and look at what `state` and `timer` are doing right there.
+In GTKWave, click `tb_traffic_light`, then `dut`, and add `clk`, `rst_n`, `ui_in`, `state`,
+`timer`, and `uo_out`. Find the moment the test complained about, and look at what `state`
+and `timer` are doing right there.
 
-Nine times in ten the bug is visible in three seconds once you're looking at the right
+Most of the time, the bug is obvious within a few seconds once you're looking at the right
 tick.
 
 ---
 
 ## Take your screenshot
 
-Once all ten pass, you still need `waveform.png`.
+Once all ten checks pass, you still need `waveform.png`.
 
-Get a view showing at least one full cycle and one pedestrian interrupt, with `state`,
-`timer`, and the four outputs visible. Crop it so the signal names are readable. Save it
-in your submission folder.
+In GTKWave, set up a view that shows at least one full green-yellow-red cycle and one
+pedestrian button press, with `state`, `timer`, and the light outputs visible. Make sure
+the signal names are readable. Take a screenshot and save it in your submission folder as
+`waveform.png`.
+
+> **How to screenshot:** on Windows, press Windows+Shift+S and drag a box. On a Mac, press
+> Cmd+Shift+4 and drag a box. Then save the image into your submission folder. On Windows,
+> your Ubuntu files show up in File Explorer under **Linux** in the left sidebar.
 
 ---
 
 ## Write it up
 
-Copy the template:
+Copy the template into your folder:
 
 ```bash
 cp ../../../digital-design/submission-template/WRITEUP.md .
 ```
 
-300–500 words, in your own words. The questions are in the template. The one that matters
-most is **"what broke and how did you figure out what was wrong."**
+Open it and answer the questions in your own words, 300 to 500 words total. The most
+important question is **"what broke, and how did you figure out what was wrong?"**
 
-Answer that one honestly and specifically. "Nothing broke" isn't a strong answer, it's an
-unexamined one — and being able to describe how you found a bug is more of what this club
-is about than getting it right the first time.
+Be honest and specific there. "Nothing broke" is a weak answer. Being able to describe how
+you tracked down a bug matters more in this club than getting it right the first time.
 
 ---
 
@@ -198,23 +204,23 @@ is about than getting it right the first time.
 make check
 ```
 
-This runs the same checks a lead runs: files present, design compiles, all ten behaviors
-pass, write-up long enough and free of template placeholders.
+This runs the same checks a lead does: all your files are there, the design compiles, all
+ten checks pass, and the write-up is long enough with no template text left in it.
 
-Get it to say `READY TO SUBMIT`.
+Keep fixing things until it says `READY TO SUBMIT`.
 
 ---
 
 ## If you finish early
 
-Optional, no extra credit, but these are the natural next questions:
+These are optional and don't earn extra credit, but they're the natural next questions:
 
-1. **Add a second road.** Two lights that must never both be green — the interlock problem
-   in every real controller.
-2. **Night mode** on `ui_in[1]`: red blinks, no cycling.
-3. **Make the timing programmable** from `uio_in` instead of `localparam`s, then think
-   about what that costs you in gates.
+1. **Add a second road.** Two lights that must never both be green at the same time. Every
+   real traffic controller has to solve this.
+2. **Night mode** on `ui_in[1]`: red blinks on and off, and nothing cycles.
+3. **Make the timing adjustable** from `uio_in` instead of fixed `localparam`s. Then think
+   about how many more gates that costs.
 
 ---
 
-**Next:** [Lesson 4 — Submit your work](04-submit.md).
+**Next:** [Lesson 4: Turn in your work](04-submit.md).

@@ -1,13 +1,13 @@
-// Silicon Aggies -- Block 1 starter.
-// Copy this into submissions/digital-design/YOUR-USERNAME/ and fill in the TODOs.
-// Do not change the port list. It is the Tiny Tapeout pin contract and we use it
-// everywhere, including on the tile you tape out in December.
+// ASIC Block 1 starter.
+// Copy this into submissions/digital-design/YOUR-GITHUB-USERNAME/ and fill in the TODOs.
+// Do not change the port list. It is the Tiny Tapeout pin contract, and we use it
+// everywhere, including on the tile you tape out.
 
 `default_nettype none
 
 module tt_um_traffic_light (
-    input  wire [7:0] ui_in,    // dedicated inputs   -- ui_in[0] is the ped button
-    output wire [7:0] uo_out,   // dedicated outputs  -- the lights
+    input  wire [7:0] ui_in,    // dedicated inputs: ui_in[0] is the ped button
+    output wire [7:0] uo_out,   // dedicated outputs: the lights
     input  wire [7:0] uio_in,   // bidirectional, unused this block
     output wire [7:0] uio_out,  // bidirectional, unused this block
     output wire [7:0] uio_oe,   // bidirectional enable, unused this block
@@ -16,13 +16,13 @@ module tt_um_traffic_light (
     input  wire       rst_n     // active LOW, synchronous
 );
 
-    // ---------------- timing, in clock ticks ----------------
+    // ================ timing, in clock ticks ================
     localparam GREEN_TIME  = 12;
     localparam YELLOW_TIME = 4;
     localparam RED_TIME    = 10;
     localparam MIN_GREEN   = 4;   // cars always get at least this much green
 
-    // ---------------- state encoding ----------------
+    // ================ state encoding ================
     localparam S_GREEN  = 2'b00;
     localparam S_YELLOW = 2'b01;
     localparam S_RED    = 2'b10;
@@ -40,15 +40,15 @@ module tt_um_traffic_light (
     //
     // Write ONE always @(posedge clk) block. Use <= (nonblocking), never =.
     //
-    // TODO 1 -- reset.
+    // TODO 1: reset.
     //     When rst_n is low: state <= S_RED, timer <= 0, ped_req <= 0.
     //
-    // TODO 2 -- latch the pedestrian request.
+    // TODO 2: latch (remember) the pedestrian request.
     //     ped_req goes high when ped_button pulses.
     //     ped_req is cleared while the light is RED.
     //     (Think about why you cannot just test ped_button inside the GREEN state.)
     //
-    // TODO 3 -- the state machine and the timer.
+    // TODO 3: the state machine and the timer.
     //     Each tick, either increment timer, or change state and clear timer to 0.
     //
     //       S_GREEN  -> S_YELLOW  when timer == GREEN_TIME - 1
@@ -64,7 +64,7 @@ module tt_um_traffic_light (
     // ==========================================================
 
 
-    // ---------------- outputs ----------------
+    // ================ outputs ================
     // TODO 4: drive these from `state`. Exactly one of red/yellow/green, always.
     //         walk is high for the whole RED state.
     assign uo_out[0]   = 1'b0;   // car_red
@@ -73,7 +73,7 @@ module tt_um_traffic_light (
     assign uo_out[3]   = 1'b0;   // walk
     assign uo_out[7:4] = 4'b0000;
 
-    // ---------------- unused ----------------
+    // ================ unused ================
     assign uio_out = 8'b0;
     assign uio_oe  = 8'b0;
 

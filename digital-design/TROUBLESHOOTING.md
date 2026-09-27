@@ -1,134 +1,152 @@
-# Troubleshooting
+# Troubleshooting (Block 1)
 
-Check here before posting in `#help`. There's a good chance your error is below.
+Look for your error here before you ask in the GroupMe. It's probably below.
 
-If it isn't, post with **what you ran**, **the full error text** (copy-paste, not a
-photo), and **your OS**.
+If it isn't, post the command you ran, the full error text (copy and paste it, don't send a
+photo), and your operating system.
+
+**The most useful habit:** when you get a long list of errors, read only the **first** one.
+The rest are usually side effects of it. Fix the first one and run again.
 
 ---
 
 ## Tools won't install or run
 
 **`iverilog: command not found`**
-Not installed, or you're in the wrong shell. On Windows, everything happens inside the
-Ubuntu window, never PowerShell or Git Bash. See [`../setup/README.md`](../setup/README.md).
+Either it isn't installed, or you're in the wrong window. On Windows, every command goes
+in the Ubuntu window, never PowerShell or Git Bash. See the [setup guide](../setup/README.md),
+Part B.
 
 **`make: command not found`**
-`sudo apt install make` on Ubuntu/WSL2, `brew install make` on macOS.
+Run `sudo apt install make` on Ubuntu or WSL, or `brew install make` on a Mac.
 
-**GTKWave opens nothing / won't launch (Windows)**
-WSLg isn't available on Windows 10. Two options: install VcXsrv as an X server, or skip
-GTKWave entirely and upload your `.vcd` to [Surfer](https://surfer-project.org/) in your
-browser. Same information, nothing to install.
+**`make: *** No rule to make target`**
+You're not in your submission folder, or the starter files didn't get copied. Run `ls`. If
+you don't see `Makefile`, go back to Step 1 of [Lesson 1](lessons/01-first-simulation.md).
 
-**Everything is painfully slow (Windows)**
-You're probably working under `/mnt/c/`. Move your work into the Linux filesystem —
-`~/silicon-aggies-onboarding`. Crossing the Windows filesystem boundary is several times
-slower and occasionally breaks tools outright.
+**GTKWave won't open (Windows)**
+Windows 10 can't open Linux windows without extra setup. You can install VcXsrv, but the
+easier fix is to skip GTKWave and open your `.vcd` file in [Surfer](https://surfer-project.org/)
+in your browser. It shows the same waveform.
+
+**Everything is very slow (Windows)**
+You're probably working under `/mnt/c/`, which is your Windows drive. Move your work to the
+Linux side, in `~/silicon-aggies-onboarding`. The tools run much slower across that
+boundary, and some stop working.
 
 ---
 
 ## Compile errors
 
 **`syntax error` on a line that looks fine**
-You forgot `-g2012`. Use `make`, which includes it. If you're calling iverilog by hand:
+You ran `iverilog` without `-g2012`. Use `make`, which includes it. If you're running
+iverilog yourself, use:
 `iverilog -g2012 -o sim.out tb_traffic_light.v tt_um_traffic_light.v`
 
-**A wall of errors**
-Read the **first** one only. The rest are almost always fallout. Fix the first, recompile.
+**`Could not find variable` or `Unable to bind wire/reg/memory`**
+There's a typo in a signal name, or you used a signal you never declared. Verilog cares about
+capital letters: `ped_req` and `ped_Req` are two different signals.
 
-**`identifier not declared`**
-Typo in a signal name, or you used a signal you never declared. Verilog is case-sensitive:
-`ped_req` and `ped_Req` are different signals.
+**`Unknown module type: tt_um_traffic_light`**
+The module name at the top of your design file changed. It has to be exactly
+`module tt_um_traffic_light (`.
 
-**`cannot perform procedural assignment to a net`**
-You assigned to something declared `wire` inside an `always` block. It needs to be `reg`.
+**`... is not a valid l-value`** or **`cannot perform procedural assignment to a net`**
+You assigned to something declared as `wire` inside an `always` block. Declare it as `reg`
+instead.
 
 **`port not connected` warnings**
-Usually harmless here. If it's a real port you meant to use, check your spelling.
+Usually harmless here. If it's a port you meant to use, check the spelling.
 
 ---
 
 ## Simulation problems
 
-**`TIMEOUT -- the light never reached a state the test was waiting for`**
-Your design never turns green (or never leaves a state). If you just copied the starter,
-that's expected — fill in the TODOs. If you've written code, your state machine is stuck:
-check that every state has a way out and that you cleared the timer on transitions.
+**`TIMEOUT: the light never reached a state the test was waiting for`**
+Your light never turns green, or gets stuck in some state. If you just copied the starter
+file, that's expected. Fill in the TODOs. If you've written code, your state machine is
+stuck: check that every state has a way out, and that you clear the timer on every
+transition.
 
-**Everything is `x` in the waveform, forever**
-A register with no reset path, or you never assigned to it at all. Every `reg` needs a
-value in the `if (!rst_n)` branch.
+**Everything shows as `x` in the waveform, forever**
+A `reg` never gets a value, usually because it's missing from reset. Every `reg` needs a
+line in the `if (!rst_n)` branch.
 
-**Test 2 fails, timing off by one** — green is 11 or 13 instead of 12
-The `- 1`. Your timer starts at 0, so counting to `GREEN_TIME - 1` gives you exactly
-`GREEN_TIME` ticks. Comparing against `GREEN_TIME` gives you one too many.
+**TEST 2 fails with timing off by one** (green is 11 or 13 instead of 12)
+Check the `- 1`. The timer starts at 0, so counting to `GREEN_TIME - 1` gives exactly
+`GREEN_TIME` ticks. Comparing against `GREEN_TIME` gives one tick too many.
 
-**The light flickers rapidly between two states**
-You changed state on some path but didn't clear the timer. Every transition needs
-`timer <= 0`.
+**The light flickers quickly between two states**
+Somewhere you changed state but didn't clear the timer. Every transition needs `timer <= 0`.
 
-**Test 4 fails: "an early press is REMEMBERED..." and green lasted 12**
-Your button press is being dropped. You're testing `ped_button` directly somewhere instead
-of a latched `ped_req`. The pulse is one tick long and gone. Re-read the latching section
-in [Lesson 2](lessons/02-state-machines.md).
+**TEST 4 fails ("an early press is REMEMBERED...") and green lasted 12**
+The button press is getting lost. Somewhere you're checking `ped_button` directly instead of
+`ped_req`. The pulse only lasts one tick. Reread the "remembering something" section of
+[Lesson 2](lessons/02-state-machines.md).
 
-**Test 3 fails: a mid-green press doesn't cut green short**
-Either the same latching problem, or your GREEN exit condition only checks the timer. It
-needs *two* reasons to leave: timer expired, **or** request pending and min-green met.
+**TEST 3 fails: a press in the middle of green doesn't end green early**
+Either it's the same problem as TEST 4, or your GREEN state only checks the timer. It needs
+two ways out: the timer ran out, **or** a request is waiting and the minimum green time has
+passed.
 
-**Test 5 fails: a press during red shortens the next green**
+**TEST 5 fails: a press during red shortens the next green**
 `ped_req` isn't being cleared during RED, so it's still set when green starts.
 
-**Test 6 fails: one-hot violation**
-Two lights on at once, or none. Almost always because outputs are stored in separate
-registers instead of derived from `state`. Drive them with
-`assign uo_out[2] = (state == S_GREEN);` and the problem disappears by construction.
+**TEST 6 fails: more or fewer than one light on**
+Two lights are on at once, or none are. This almost always means the outputs are stored in
+their own registers instead of coming from `state`. Drive them like
+`assign uo_out[2] = (state == S_GREEN);` and this problem can't happen.
 
 **Results change between runs**
-Shouldn't happen here. If it does, you probably mixed `=` and `<=` in a clocked block.
+That shouldn't happen here. If it does, you probably mixed `=` and `<=` in a clocked block.
 Use `<=` everywhere inside `always @(posedge clk)`.
 
 ---
 
 ## Waveform problems
 
-**GTKWave window is empty**
-You opened it but haven't added signals. Click the module in the top-left panel, select
-signals in the panel below, click **Append**. Then **Shift+Alt+F** to zoom to fit.
+**The GTKWave window is empty**
+You opened it but haven't added any signals yet. Click the module in the top-left panel,
+select signals in the panel below, and click **Append**. Then press Shift+Alt+F to zoom so
+everything fits.
 
-**No `.vcd` file exists**
-Run `make` first. The simulation has to run before there's anything to view.
+**There's no `.vcd` file**
+Run `make` first. The simulation has to run before there's a waveform to look at.
 
 **The waveform is a solid block of color**
-You're zoomed out too far. Shift+Alt+F, then zoom in with the magnifier buttons.
+You're zoomed out too far. Press Shift+Alt+F, then zoom in with the magnifying glass
+buttons.
+
+**I changed my design but the waveform looks the same**
+GTKWave doesn't notice new results on its own. Run `make` again, then press Ctrl+Shift+R in
+GTKWave to reload.
 
 ---
 
 ## Git and GitHub
 
-**`git push` asks for a password and then rejects it**
-GitHub stopped accepting account passwords. You need a personal access token: GitHub →
-Settings → Developer settings → Personal access tokens → Fine-grained tokens. Give it repo
-access, then use the token as your password. Or set up SSH keys.
+**`git push` asks for a password, then rejects it**
+GitHub stopped accepting account passwords for this. Run `gh auth login` (see Part A4 of
+the [setup guide](../setup/README.md)), then push again.
 
 **`git push` says "rejected" or "does not appear to be a git repository"**
-You're pushing to the org repo instead of your fork. Run `git remote -v` — `origin` should
-be *your* username. If not, see [`../setup/README.md`](../setup/README.md).
+You might be pushing to the main repo instead of your fork. Run `git remote -v`. The
+`origin` lines should have *your* username in them. If they don't, redo Part A6 of the
+setup guide.
 
 **`git status` shows thousands of files**
-You're about to commit simulation output. Make sure the repo's `.gitignore` is present and
-that you're running git from the repo root, not from somewhere unexpected.
+You're about to commit simulation output. Make sure you're running git from
+`~/silicon-aggies-onboarding`, and that the `.gitignore` file is there (`ls -a` shows it).
 
 **I committed to `main` by accident**
-Not a disaster. Post in `#help`, a lead will walk you through moving it to a branch. Don't
-try to fix it with commands you found online — that's how small problems become big ones.
+That's fixable. Ask in the GroupMe and a lead will walk you through moving it to a branch.
+Don't try commands you found online. That's how small problems turn into big ones.
 
 ---
 
-## Still stuck
+## Still stuck?
 
-Post in `#help`. Include what you ran, the full error, and your OS.
+Ask in the GroupMe with the command you ran, the full error text, and your operating system.
 
-Nobody here thinks less of you for asking. Most of us learned this six months ago and hit
-every single error on this page.
+Nobody here will think less of you for asking. Most of us hit every error on this page
+when we started.

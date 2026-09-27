@@ -1,22 +1,22 @@
-# Lesson 0 — Verilog in 30 minutes
+# Lesson 0: Verilog in 30 minutes
 
-You need five ideas. That's genuinely it for this block.
+You need five ideas for this block. This lesson covers all of them. You don't run anything
+yet; just read, and look closely at the code examples.
 
 ---
 
-## The one big idea first
+## The big idea first
 
-**Verilog is not a programming language.** It looks like C, and that's a trap.
+Verilog looks like a programming language such as C or Python. It isn't one, and treating
+it like one is where most beginner confusion comes from.
 
-When you write Python, you're writing a list of steps that happen one after another.
-When you write Verilog, you're **describing hardware that already exists and is all
-running at the same time.** Every line you write is a piece of circuitry that is
-permanently there, doing its thing, continuously, in parallel with every other line.
+When you write Python, you write a list of steps that happen one after another. When you
+write Verilog, you describe **hardware**: a circuit that already exists, where every part
+runs at the same time. Each line you write becomes a piece of circuitry that is always
+there, always doing its job, in parallel with every other line.
 
-There is no "now do this, then do that." There is only "here is what this wire is
-connected to" and "here is what this flip-flop does on every clock tick."
-
-Hold onto that. Most beginner confusion comes from forgetting it.
+So there's no "do this, then do that." There's "this wire is connected to that gate" and
+"this flip-flop does this on every clock tick." Keep that in mind as you read the rest.
 
 ---
 
@@ -28,54 +28,54 @@ module my_thing (
     input  wire       a,
     output wire       y
 );
-    // the guts go here
+    // the insides go here
 endmodule
 ```
 
-A module has a name and a list of ports — the wires going in and out. That's the box.
-Everything between `module` and `endmodule` is what's inside it.
+A module has a name and a list of **ports**, which are the wires going in and out. That's
+the box. Everything between `module` and `endmodule` is what's inside it.
 
-**In this block you don't get to choose the ports.** Every Silicon Aggies design uses the
-same port list, because it's the pin contract of the actual chip we're taping out:
+In this block you don't choose the ports. Every ASIC design uses the same port list,
+because it's the pin layout of the real chip we're taping out:
 
 ```verilog
 module tt_um_traffic_light (
     input  wire [7:0] ui_in,     // 8 input pins
     output wire [7:0] uo_out,    // 8 output pins
-    input  wire [7:0] uio_in,    // 8 more, bidirectional (we don't use them here)
+    input  wire [7:0] uio_in,    // 8 more that can go either way (not used here)
     output wire [7:0] uio_out,
     output wire [7:0] uio_oe,
-    input  wire       ena,       // "you are switched on"
+    input  wire       ena,       // "your design is switched on"
     input  wire       clk,       // the clock
-    input  wire       rst_n      // reset. active LOW -- see below
+    input  wire       rst_n      // reset, active LOW (see below)
 );
 ```
 
-`[7:0]` means "this is 8 wires bundled together," numbered 7 down to 0. `ui_in[0]` is the
-lowest one.
+`[7:0]` means "8 wires bundled together," numbered 7 down to 0. `ui_in[0]` is the lowest
+one.
 
-`rst_n` — the `_n` means **active low**. The signal is *normally* 1, and reset happens
-when it goes to **0**. This trips up everybody once. It's a real hardware convention, not
-us being difficult.
+The `_n` at the end of `rst_n` means **active low**. The signal normally sits at 1, and
+reset happens when it drops to **0**. This trips everyone up at least once. It's a common
+hardware convention.
 
 ---
 
-## 2. `wire` versus `reg`
+## 2. `wire` and `reg`
 
-Two ways to hold a value.
+There are two ways to hold a value.
 
-**`wire`** is a piece of metal. It doesn't remember anything. Whatever is driving it right
-now is what it is. You drive a wire with `assign`:
+A **`wire`** is like a piece of metal. It doesn't remember anything. Its value is whatever
+is driving it right now. You drive a wire with `assign`:
 
 ```verilog
 wire alarm;
-assign alarm = too_hot | too_loud;    // alarm is ALWAYS this. Continuously. Forever.
+assign alarm = too_hot | too_loud;    // alarm always equals this
 ```
 
-That `assign` is not an action that happens once. It's a permanent connection. If
-`too_hot` changes, `alarm` changes, instantly, with no clock involved.
+That `assign` isn't something that happens once. It's a permanent connection. If `too_hot`
+changes, `alarm` changes right away, with no clock involved.
 
-**`reg`** is something that can remember — usually a flip-flop. You drive it inside an
+A **`reg`** can remember a value. Usually it becomes a flip-flop. You set a `reg` inside an
 `always` block:
 
 ```verilog
@@ -86,8 +86,8 @@ always @(posedge clk) begin
 end
 ```
 
-The name `reg` is honestly a bad name and it confuses everyone. Just remember: **if you
-assign to it inside an `always` block, it has to be declared `reg`.**
+`reg` is a confusing name, so don't read too much into it. The rule to remember: **if you
+assign to something inside an `always` block, declare it as `reg`.**
 
 ---
 
@@ -95,15 +95,14 @@ assign to it inside an `always` block, it has to be declared `reg`.**
 
 ```verilog
 always @(posedge clk) begin
-    // this happens once per rising clock edge
+    // this happens once, on every rising edge of the clock
 end
 ```
 
-Read it as: "on every rising edge of the clock, do this." That's how you build anything
-that remembers — a counter, a state machine, anything that has to know what happened last
-tick.
+Read it as "every time the clock goes from 0 to 1, do this." It's how you build anything
+that remembers what happened last tick, like a counter or a state machine.
 
-Add reset like this:
+Reset goes inside it like this:
 
 ```verilog
 always @(posedge clk) begin
@@ -115,20 +114,20 @@ always @(posedge clk) begin
 end
 ```
 
-`!rst_n` means "rst_n is 0," which is when reset is happening. Read it out loud as "if
-not-reset-n" or just "if we're being reset."
+`!rst_n` means "rst_n is 0," which is when reset is happening. You can read the line as
+"if we're being reset."
 
 ---
 
-## 4. `<=` versus `=` — the rule that will save you an hour
+## 4. `<=` versus `=`
 
 Inside `always @(posedge clk)`, **always use `<=`. Never use `=`.**
 
-`<=` is called a nonblocking assignment. It means "at the next clock edge, this becomes
-that." All of the `<=` in a block happen simultaneously, using the values from *before*
-the edge.
+`<=` is called a nonblocking assignment. It means "at this clock edge, this becomes that."
+Every `<=` in the block happens at the same moment, using the values from *before* the
+edge.
 
-Here's why it matters:
+Here's why that matters:
 
 ```verilog
 always @(posedge clk) begin
@@ -137,14 +136,14 @@ always @(posedge clk) begin
 end
 ```
 
-With `<=`, `c` gets the **old** `b` — the value from before this clock edge. That's two
-flip-flops in a row, a shift register. Correct.
+With `<=`, `c` gets the **old** value of `b`, from before this clock edge. That builds two
+flip-flops in a row, which is a shift register. That's what you'd draw, and it's correct.
 
-With `=`, `c` would get the **new** `b`, which is `a`. One flip-flop, and `b` and `c` are
-just copies. Not what you drew, not what you wanted, and it can even simulate differently
-than it behaves in real silicon.
+If you used `=` instead, `c` would get the **new** `b`, which is just `a`. You'd get one
+flip-flop, with `b` and `c` as copies of each other. That's not what you drew, and it can
+even simulate differently from how the real chip behaves.
 
-**The rule: `<=` inside `always @(posedge clk)`. Don't think about it, just do it.**
+The rule is simple: `<=` inside `always @(posedge clk)`, every time.
 
 ---
 
@@ -154,7 +153,7 @@ A `case` statement picks one branch based on a value:
 
 ```verilog
 case (state)
-    S_GREEN:  begin
+    S_GREEN: begin
         // what to do while green
     end
     S_YELLOW: begin
@@ -164,46 +163,48 @@ case (state)
         // what to do while red
     end
     default: begin
-        // catch-all: anything not listed above
+        // anything not listed above
     end
 endcase
 ```
 
-**Always include a `default`.** In simulation it barely matters. In real silicon, a
-circuit can end up in a state you never intended, and without a `default` it can sit there
-stuck forever with no way out. Point it back at a safe state.
+**Always include a `default`.** In simulation it hardly matters. In a real chip, a glitch
+can knock the circuit into a state you never planned for. Without a `default`, it can get
+stuck there forever. Point `default` back to a safe state.
 
 ---
 
 ## Two more things you'll see
 
-**`localparam`** is a named constant. Use them instead of scattering magic numbers:
+**`localparam`** is a named constant. Use them instead of typing the same number in many
+places:
 
 ```verilog
 localparam GREEN_TIME = 12;
 localparam S_GREEN    = 2'b00;
 ```
 
-`2'b00` means "a 2-bit binary value, `00`." The format is *width* `'` *base* *value*.
-So `8'd255` is 8 bits, decimal, 255. `4'hF` is 4 bits, hex, F.
+`2'b00` means "a 2-bit number, written in binary, with value 00." The format is width, then
+`'`, then the base, then the value. So `8'd255` is 8 bits, decimal, 255, and `4'hF` is 4
+bits, hexadecimal, F.
 
-**Comparisons** work like you'd expect: `==`, `!=`, `<`, `>=`. Logic operators are `&&`
-(and), `||` (or), `!` (not) for single true/false values, and `&`, `|`, `~` when you're
-operating on every bit of a bundle.
+**Comparisons** work the way you'd expect: `==`, `!=`, `<`, `>=`. For single true/false
+values, the logic operators are `&&` (and), `||` (or), and `!` (not). When you're working
+on every bit of a bundle, use `&`, `|`, and `~` instead.
 
 ---
 
-## That's the whole language, for now
+## That's all you need for now
 
-Really. There's a lot more Verilog, but those five ideas cover everything in this block
+There's a lot more Verilog out there, but these five ideas cover everything in this block
 and most of what you'll write in the next two.
 
-**One habit to start right now:** when you write a line, ask yourself *what hardware is
-this?* `assign y = a & b;` is an AND gate — a physical thing with two inputs and one
-output that exists on the chip. `count <= count + 1;` is a register plus an adder. If you
-can't answer what a line builds, that line is probably wrong.
+One habit worth starting now: when you write a line, ask yourself what hardware it builds.
+`assign y = a & b;` is an AND gate, a physical thing on the chip with two inputs and one
+output. `count <= count + 1;` is a register plus an adder. If you can't say what a line
+builds, it's probably wrong.
 
 ---
 
-**Next:** [Lesson 1 — Your first simulation](01-first-simulation.md). Time to actually run
-something.
+**Next:** [Lesson 1: Your first simulation](01-first-simulation.md), where you run
+something for real.
