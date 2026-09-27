@@ -88,8 +88,8 @@ git push -u origin block2-YOUR-GITHUB-USERNAME
 2. Check that it goes from your `block2-...` branch into `main` on
    `zjohnson2005/silicon-aggies-onboarding`.
 3. Title it: `Block 2: Your Name (your-github-username)`
-4. Fill in the form in the description. Drag **both** waveform screenshots into the
-   Screenshots section, keep only the Block 2 checklist, and fill it in.
+4. In the description, write one or two sentences on what you did, plus anything you'd like
+   a lead to look at closely.
 5. Click **Create pull request**.
 
 If a lead asks for changes, see [how to respond](../../SUBMITTING.md#how-to-respond).

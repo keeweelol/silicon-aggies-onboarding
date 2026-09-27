@@ -125,10 +125,8 @@ If `git push` asks for a password, run `gh auth login` (setup Part A4) and push 
    ```
 
    That's the block number, your full name, and your GitHub username in parentheses.
-4. **Fill in the description.** It opens pre-filled with a short form. Fill in every section.
-   Delete the checklists for the other two blocks. The form asks you to drag your
-   screenshots into the description, which lets a lead see your results without opening any
-   files.
+4. **Write a short description:** one or two sentences on what you did, plus anything you'd
+   like a lead to look at closely. If something is missing or late, say so here.
 5. Click **Create pull request**.
 
 You've turned in the block.

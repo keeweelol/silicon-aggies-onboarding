@@ -86,14 +86,8 @@ Part A4 explains the answers), then push again.
    Block 1: Jane Smith (jsmith)
    ```
 
-4. The description box opens with a short form. Fill in every section:
-   - your name, username, and about how many hours it took,
-   - two or three sentences on what you built,
-   - **drag `waveform.png` from your folder into the Screenshots section** so the lead sees
-     it right away (on Windows, your Ubuntu files are under **Linux** in File Explorer),
-   - the last line of `make check`,
-   - the Block 1 checklist, with an `x` in each box. Delete the Block 2 and Block 3
-     checklists.
+4. In the description, write one or two sentences on what you built, plus anything you'd
+   like a lead to look at closely.
 5. Click **Create pull request**.
 
 You've turned in Block 1.

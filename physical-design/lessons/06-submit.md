@@ -73,9 +73,8 @@ git push -u origin block3-YOUR-GITHUB-USERNAME
 2. Check it goes from your `block3-...` branch into `main` on
    `zjohnson2005/silicon-aggies-onboarding`.
 3. Title it: `Block 3: Your Name (your-github-username)`
-4. Fill in the form in the description. Drag `layout.png` and `layout-zoom.png` into the
-   Screenshots section, fill in the DRC, LVS, and WNS line under Results, and keep only the
-   Block 3 checklist.
+4. In the description, write one or two sentences on what you did, plus your DRC error
+   count, LVS error count, and WNS.
 5. Click **Create pull request**.
 
 If a lead asks for changes, see [how to respond](../../SUBMITTING.md#how-to-respond).
