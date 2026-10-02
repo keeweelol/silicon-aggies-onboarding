@@ -6,6 +6,15 @@ don't write any code in this lesson.
 The main point is to prove your tools work now, while there's no deadline pressure. If
 something is broken, today is the best day to find out.
 
+> **New to the terminal?** Read
+> [How to use the terminal](../../setup/README.md#how-to-use-the-terminal-read-this-if-you-never-have)
+> in the setup guide first. It's five minutes, and it covers almost everything that trips
+> people up in this lesson.
+>
+> **Using VS Code?** You can run everything from its built-in terminal. Setup has
+> [a short section on it](../../setup/README.md#using-the-terminal-inside-vs-code). On
+> Windows, make sure VS Code is connected to Ubuntu first.
+
 ---
 
 ## Step 1: Set up your folder
@@ -101,18 +110,57 @@ time, and it's also a place where bugs hide when you didn't mean for it to happe
 ## Step 4: Open the waveform
 
 The simulation also wrote a file called `blinker.vcd`. It's a recording of every signal at
-every moment. Open it:
+every moment. You'll open it in a **waveform viewer**, a program that draws those
+recordings as pictures. On Ubuntu and Windows the viewer is GTKWave. On a Mac it's Surfer.
+
+### First, make sure you're in the right folder
+
+The viewer can only open `blinker.vcd` if your terminal is in the folder where that file is.
+Run:
 
 ```bash
-gtkwave blinker.vcd &    # Ubuntu / Windows
-surfer blinker.vcd &     # Mac
+ls
 ```
 
-The `&` at the end runs GTKWave in the background, so you can keep using your terminal.
+You should see `blinker.vcd` in the list. If you don't, you're in the wrong folder, or
+`make warmup` didn't finish. Go back to your folder and run it again:
 
-> **On a Mac,** use the `surfer` line. The steps below are written for GTKWave. The
-> [Surfer quick guide](../../setup/README.md#surfer-quick-guide-mac) shows how to add signals, zoom to fit,
-> and reload in Surfer. Keep it open for the rest of this block and the next.
+```bash
+cd ~/silicon-aggies-onboarding/submissions/digital-design/YOUR-GITHUB-USERNAME
+make warmup
+ls
+```
+
+> **Where am I?** Your prompt shows the name of the folder you're in, just before the `%` or
+> `$`. If it says `YOUR-GITHUB-USERNAME` (your actual username), you're in the right place.
+> `pwd` prints the full path if you want to be sure.
+
+### Then open it
+
+Run **only the line for your computer**. Don't paste both.
+
+On Ubuntu or Windows:
+
+```bash
+gtkwave blinker.vcd &
+```
+
+On a Mac:
+
+```bash
+surfer blinker.vcd &
+```
+
+A new window opens. The `&` at the end keeps your terminal free while the viewer is open.
+The terminal may print something like `[1] 12345`. That's normal. Press Enter if you don't
+see your prompt again.
+
+If you get `command not found`, the viewer isn't installed. Go back to Part B of the
+[setup guide](../../setup/README.md).
+
+The window starts out empty. That's expected. You have to pick which signals to show.
+
+### Show the signals in GTKWave (Ubuntu and Windows)
 
 GTKWave isn't pretty, and it isn't obvious how to use it. Here's what you need:
 
@@ -123,6 +171,22 @@ GTKWave isn't pretty, and it isn't obvious how to use it. Here's what you need:
    black area.)
 5. Press **Shift+Alt+F** to zoom so the whole simulation fits. The toolbar button that looks
    like a magnifying glass with a square does the same thing.
+
+### Show the signals in Surfer (Mac)
+
+1. The left side of the window has two lists. The top one, **Scopes**, shows the parts of
+   your design. Click **`tb_blinker`**, then click **`dut`** under it. (If you don't see
+   `dut`, click the small arrow next to `tb_blinker` to open it.)
+2. The bottom list, **Variables**, fills with signal names.
+3. Click `clk`, `rst_n`, `counter`, and `led`, one at a time. Each one appears in the big
+   area on the right as soon as you click it.
+4. Open the **View** menu at the top and choose **Zoom to fit**, so the whole simulation
+   fits on screen.
+
+The [Surfer quick guide](../../setup/README.md#surfer-quick-guide-mac) has the rest of the
+Surfer steps you'll need later, like reloading and showing numbers in decimal.
+
+### What you should see
 
 Now you should see the signals drawn as waves: `clk` ticking up and down, `counter` climbing
 from 0 to 7 and rolling over, and `led` flipping every eighth tick.

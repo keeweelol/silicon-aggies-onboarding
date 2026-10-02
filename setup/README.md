@@ -79,11 +79,15 @@ A few things that help:
 
 - Run commands **one line at a time**, in order. Copy a line, paste it into the terminal,
   press Enter, and wait for it to finish before doing the next one. You know a command is
-  done when you see the prompt (the line ending in `$`) again.
+  done when you see the prompt again. That's the line ending in `$` on Ubuntu, or `%` on a
+  Mac.
 - To paste in the Ubuntu window, right-click or press Ctrl+Shift+V. Plain Ctrl+V often
   doesn't work there. On a Mac, Cmd+V works.
 - Anything after a `#` in a command box is a note for you to read. You can paste it along
   with the command. The terminal ignores it.
+- Some boxes have a line for each kind of computer, marked `# Mac` or
+  `# Ubuntu / Windows`. Run **only the line for yours**. The other one will just say
+  `command not found`.
 - When you see `YOUR-GITHUB-USERNAME` or `yourname` in a command, replace it with your own
   before pressing Enter.
 - `sudo` at the start of a command means "run this as administrator." It asks for the
@@ -100,6 +104,52 @@ Four commands you'll use constantly:
 
 `~` is short for your home folder. On Ubuntu it's `/home/yourname`, and on a Mac it's
 `/Users/yourname`.
+
+Three shortcuts that save a lot of typing:
+
+| Key | What it does |
+|---|---|
+| Up arrow | Brings back the last command you ran, so you can run it again |
+| Tab | Finishes a file or folder name for you. Type `cd sil` and press Tab |
+| Ctrl+C | Stops a command that's stuck or taking forever (Ctrl+C on a Mac too, not Cmd+C) |
+
+### Using the terminal inside VS Code
+
+If you'd rather stay in VS Code, it has a terminal built in, and every command in this repo
+works there the same way.
+
+1. **Open the repo folder, not a single file.**
+   - **Mac:** in VS Code, choose **File**, then **Open Folder**, and pick
+     `silicon-aggies-onboarding` in your home folder.
+   - **Windows:** open the Ubuntu window and run `cd ~/silicon-aggies-onboarding`, then
+     `code .`. VS Code opens connected to Ubuntu. The bottom-left corner should say
+     **WSL: Ubuntu-24.04**. If it doesn't, you opened the Windows copy of VS Code by itself,
+     and the tools won't be found. Close it and open it again from the Ubuntu window.
+2. **Open the terminal:** **Terminal**, then **New Terminal**. It appears at the bottom of
+   the window, already inside the repo folder.
+3. **Check that it's the right kind of terminal.** The prompt should end in `$` (Windows,
+   through Ubuntu) or `%` (Mac). If it starts with `PS C:\`, that's PowerShell, and none of
+   the commands here will work. On Windows, go back to step 1.
+
+A few differences from a normal terminal window:
+
+- Paste with Ctrl+V (Cmd+V on a Mac).
+- If you paste several lines at once, VS Code asks whether you really want to. It's safer to
+  paste one line at a time anyway.
+- GTKWave and Surfer still open in their own windows, outside VS Code.
+- The terminal's folder doesn't follow the file you have open. If you open a file in the
+  sidebar, the terminal stays where it was. Check your prompt, and `cd` if you need to.
+
+### If you get lost
+
+Almost every confusing error comes from being in the wrong folder. `No such file or
+directory`, `No rule to make target`, and a missing file are all usually this. Your prompt
+shows the folder you're in, just before the `$` or `%`. If it's not the folder the lesson
+expects, the lesson always gives you a `cd` command near the top to get back. Run that one,
+then try again.
+
+If that doesn't fix it, post in the GroupMe with the command you ran and everything it
+printed. Copy and paste the text instead of sending a photo.
 
 ---
 
@@ -345,6 +395,9 @@ on the left:
 - **WSL** (Windows only). It lets VS Code open files inside Ubuntu. From the Ubuntu window,
   `cd` into a folder and type `code .` to open it.
 - **Verilog-HDL/SystemVerilog** by mshr-h, for syntax colors in `.v` and `.sv` files.
+
+You can run every command in this repo from VS Code's built-in terminal instead of a
+separate window. See [Using the terminal inside VS Code](#using-the-terminal-inside-vs-code).
 
 ---
 
