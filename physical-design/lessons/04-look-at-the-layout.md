@@ -4,7 +4,7 @@
 two screenshots.
 
 > **Windows 10:** KLayout can't open a window from WSL on Windows 10 without extra setup. Do
-> this lesson on a lab machine or on a Windows 11 or Mac laptop. Copy your `.gds` file over,
+> this lesson on a Windows 11 or Mac laptop (a friend's is fine). Copy your `.gds` file over,
 > or clone your fork there.
 
 ---

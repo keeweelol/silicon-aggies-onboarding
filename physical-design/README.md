@@ -29,10 +29,10 @@ love that and some don't, and both are useful to find out before you pick a team
 
 | When | What |
 |---|---|
-| Before Nov 2 | Make sure LibreLane is installed (setup Part D). If it won't install, ask a lead for a lab machine **now**. |
+| Before Nov 2 | Make sure LibreLane is installed (setup Part D). If it won't install, tell a lead **now** so there's time to work out another option. |
 | Monday, week 1 | 30-minute kickoff. A lead starts a run and shows a finished layout. |
 | Week 1 | Lessons 0, 1, and 2: learn the stages, run the tutorial, run your design. |
-| Middle weekend | Open lab. Leads are in the room. |
+| Middle weekend | Online help session with the leads. |
 | Week 2 | Lessons 3 to 6: read the reports, look at the layout, change one setting, turn it in. |
 | Friday, Nov 13, 11:59 PM | Pull request due. |
 
@@ -64,11 +64,11 @@ ls ~/Su26LLEX
 
 If `nix` isn't found, or the `Su26LLEX` folder doesn't exist, go back to setup Part D.
 This block is mostly about getting the tools to run, so get that sorted before Nov 2. If
-Nix won't install on your laptop, tell a lead so they can reserve you a lab machine.
+Nix won't install on your laptop, tell a lead early so there's time to work out another option.
 
 > **Windows 10:** KLayout needs to open a window, and WSL on Windows 10 can't do that
-> without extra setup. Plan to do Lesson 4 on a lab machine or a friend's Windows 11 or Mac
-> laptop.
+> without extra setup. Plan to do Lesson 4 on a friend's Windows 11 or Mac laptop, or tell a
+> lead early so you can work out another option.
 
 ## What you turn in
 

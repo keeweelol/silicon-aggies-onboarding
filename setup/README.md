@@ -19,7 +19,7 @@ the full error text. Don't skip a step and hope it works out later.
 | Windows | Install WSL (below). You'll do **everything** for ASIC inside it. |
 | Mac | Use the Terminal app. Install Homebrew (below). |
 | Linux | You're ready. Use Ubuntu 24.04 or newer if you can. |
-| Chromebook or tablet | Talk to a lead. We'll get you on a lab machine. |
+| Chromebook or tablet | Talk to a lead early so we can figure out a computer you can use. |
 
 You need about 20 GB of free disk space and at least 8 GB of RAM.
 
@@ -304,8 +304,8 @@ seconds after the first time.
 > with a tutorial added on top, so the folder inside it is expected. Paths in the tutorial
 > like `librelane/examples/...` are correct.
 
-**If Nix fails, or your laptop doesn't have the space,** tell a lead before Block 3 starts.
-Lab machines in the ADEPT lab have everything installed already.
+**If Nix fails, or your laptop doesn't have the space,** tell a lead before Block 3 starts
+so there's time to work out another option.
 
 ---
 
@@ -330,5 +330,5 @@ cd ~/silicon-aggies-onboarding
 bash setup/check.sh
 ```
 
-It prints `ok` or `MISSING` for each tool. Bring that output to open lab if anything says
-`MISSING`.
+It prints `ok` or `MISSING` for each tool. If anything says `MISSING`, paste that output in
+the GroupMe or bring it to the help session.

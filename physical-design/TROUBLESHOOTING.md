@@ -13,8 +13,8 @@ Most problems in this block are about the tools, not your design. That's normal.
 ## Installing and starting
 
 **Nix install fails, or you run out of disk space**
-You need about 20 GB free. If your laptop doesn't have room, or Nix won't install, ask a
-lead for a lab machine. Do this before the block starts if you can.
+You need about 20 GB free. If your laptop doesn't have room, or Nix won't install, tell a
+lead so you can work out another option. Do this before the block starts if you can.
 
 **`nix-shell` takes forever the first time**
 The first run downloads the whole toolchain, which can take 10 to 40 minutes. If it seems
@@ -84,8 +84,8 @@ Or use a new tag, like `--run-tag second`, and use that name in every later comm
 ## KLayout
 
 **KLayout won't open (Windows 10)**
-WSL on Windows 10 can't open windows without extra setup. Use a lab machine, or a Windows 11
-or Mac laptop, for Lesson 4.
+WSL on Windows 10 can't open windows without extra setup. Use a Windows 11 or Mac laptop
+(a friend's is fine) for Lesson 4, or tell a lead early.
 
 **KLayout shows only a few empty boxes with names in them**
 Press `*` (or **Display**, then **Full Hierarchy**) to draw everything inside the cells.

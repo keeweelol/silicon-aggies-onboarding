@@ -169,7 +169,7 @@ You should be able to say yes to all of these:
 - [ ] You changed the design and saw the waveform change.
 
 If any of these isn't true yet, sort it out before Lesson 3. Ask in the GroupMe or bring
-your laptop to open lab.
+it to the help session.
 
 ---
 

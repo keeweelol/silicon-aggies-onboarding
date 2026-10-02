@@ -29,13 +29,13 @@ conversation.
 
 ## How the two weeks run
 
-There's no lecture. There's a demo, an open lab, and the lessons in this folder.
+There's no lecture. There's a demo, a help session, and the lessons in this folder.
 
 | When | What |
 |---|---|
 | Monday, week 1 | 30-minute kickoff. A lead builds a small design live. Come to this. |
 | Week 1 | Lessons 0, 1, and 2. Get the tools working, run a design that already works, learn state machines. |
-| Middle weekend | Open lab. Leads are in the room. Bring your laptop and whatever is broken. |
+| Middle weekend | Online help session. Bring whatever is broken and a lead will work through it with you. |
 | Week 2 | Lesson 3 (build the traffic light) and Lesson 4 (turn it in). |
 | Friday, Oct 16, 11:59 PM | Pull request due. |
 

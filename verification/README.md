@@ -40,7 +40,7 @@ in Block 3.
 |---|---|
 | Monday, week 1 | 30-minute kickoff. A lead runs the golden counter and the buggy counter side by side. |
 | Week 1 | Lessons 0, 1, and 2: the counter. |
-| Middle weekend | Open lab. Leads are in the room. |
+| Middle weekend | Online help session with the leads. |
 | Week 2 | Lessons 3, 4, and 5: the counter-SRAM, then turn it in. |
 | Friday, Oct 30, 11:59 PM | Pull request due. |
 
