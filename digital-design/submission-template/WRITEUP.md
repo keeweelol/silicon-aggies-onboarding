@@ -38,6 +38,6 @@ have checked first if it hadn't.*
 ## Anything else
 
 *Optional. Stretch goals you tried, something you're unsure about, or something you'd do
-differently next time.*
+differently next time. If you skip it, delete this whole section, heading included.*
 
 <your answer here>

@@ -21,3 +21,5 @@ __pycache__/
 # editors / OS
 .vscode/
 .DS_Store
+# Windows adds these when you copy a file into WSL with File Explorer.
+*Zone.Identifier

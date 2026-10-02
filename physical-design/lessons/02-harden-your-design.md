@@ -12,6 +12,9 @@ git checkout main
 git pull upstream main
 ```
 
+Your Block 2 folder will look nearly empty on `main`. That's expected. Your work is on your
+Block 2 branch, and Step 2 copies the one file you need out of it.
+
 ## Step 2: Set up your folder
 
 Replace `YOUR-GITHUB-USERNAME` with your GitHub username:
@@ -101,6 +104,11 @@ should say the flow completed. Your results are in `runs/first`.
 If it stops with an error, look at the last 20 lines of output. The name of the step that
 failed is there. Check [TROUBLESHOOTING.md](../TROUBLESHOOTING.md), then post in the GroupMe
 with those lines.
+
+> **Running it again after a fix?** Add `--overwrite`:
+> `librelane config.yaml --run-tag first --overwrite`. Without it, LibreLane quietly adds the
+> new run on top of the old one in the same folder, and the commands in Lesson 3 end up
+> reading both.
 
 ## Step 6: Find your results
 

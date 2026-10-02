@@ -94,8 +94,14 @@ git status
 (Use `verification` or `physical-design` instead of `digital-design` for Blocks 2 and 3.)
 
 Read the list under **Changes to be committed**. It should show only files inside your
-folder, and roughly the number of files listed in step 1. If you see files from anywhere
-else, or hundreds of files, stop and ask in the GroupMe.
+folder. Expect about this many:
+
+- **Block 1:** 9 files: your 4, plus the 5 starter files you copied in.
+- **Block 2:** 9 files: your 7, plus the 2 `README.md` files that came with the exercises.
+- **Block 3:** 7 files.
+
+A file or two more or less is fine. If you see files from anywhere else, any `.vcd`,
+`.out`, or `runs/` files, or hundreds of files, stop and ask in the GroupMe.
 
 ## 4. Commit and push
 
@@ -160,21 +166,42 @@ Only **Must fix** comments block your merge.
 
 ### How to respond
 
-1. Make the fixes in the same folder, on the same branch. Don't make a new branch, and don't
-   open a new pull request.
-2. Save and upload:
+1. **Switch to that block's branch first.** By the time comments arrive, you're usually
+   working on the next block, on `main` or a newer branch. If you commit there, your fix
+   lands in the wrong place and the pull request never sees it.
 
    ```bash
    cd ~/silicon-aggies-onboarding
+   git checkout block1-YOUR-GITHUB-USERNAME
+   ```
+
+   Use `block2-...` or `block3-...` for those blocks. If you have files for the newer block
+   that you haven't committed yet, that's fine. Git carries them along and leaves them
+   alone.
+2. Make the fixes in the same folder. Don't make a new branch, and don't open a new pull
+   request.
+3. Save and upload:
+
+   ```bash
    git add submissions/digital-design/YOUR-GITHUB-USERNAME
+   git status
+   ```
+
+   (Use `verification` or `physical-design` for Blocks 2 and 3.) Check that everything under
+   **Changes to be committed** is inside this block's folder. If files from another block
+   show up there, stop and ask in the GroupMe. Otherwise:
+
+   ```bash
    git commit -m "Address review comments"
    git push
    ```
 
    The pull request updates by itself.
-3. On GitHub, reply to each **Must fix** comment with a short note, like "Fixed: moved the
+4. Go back to what you were working on, with `git checkout main` or your newer block's
+   branch.
+5. On GitHub, reply to each **Must fix** comment with a short note, like "Fixed: moved the
    timer reset into every transition." Then click **Resolve conversation**.
-4. Near the top right of the pull request, next to the lead's name under **Reviewers**,
+6. Near the top right of the pull request, next to the lead's name under **Reviewers**,
    click the circular arrow icon to **re-request review**. That tells the lead you're ready
    for another look.
 

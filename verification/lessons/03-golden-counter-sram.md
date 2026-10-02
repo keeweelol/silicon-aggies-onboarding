@@ -107,8 +107,13 @@ Here's what you should see:
 | Phase | `write_en` | `address` | `read_data` |
 |---|---|---|---|
 | reset | 0 | 0 | 0 |
-| write | 1 | 1, 2, 3 ... 15, 0 | 0 (nothing useful yet) |
-| read | 0 | 1, 2, 3 ... 15, 0 | 0, 1, 2 ... 14, 15 |
+| write | 1 | 0, 1, 2 ... 15 | 0 (nothing useful yet) |
+| read | 0 | 0, 1, 2 ... 15, then 0 again at the very end | 0, 0, 1, 2 ... 14, 15 |
+
+The read phase starts back at address 0, because by the end of the write phase the counter
+has already rolled over from 15 to 0. And `read_data` starts with two 0s: the first is left
+over from the write phase, and the second is box 0's value, arriving one clock after
+`address` was 0.
 
 Zoom in on the read phase and look closely at `address` and `read_data` together.
 `read_data` is always **one clock behind** `address`. When the address changes to 5,
@@ -141,7 +146,9 @@ Try these one at a time, rebuilding and reloading each time.
    `read_data` show in the read phase? Predict first, then check.
 2. Now change it to `write_data = 8'd100 + i[7:0];`. Predict, then check.
 3. In the design, change `posedge` to `negedge` in the SRAM's `always_ff` line only. What
-   changes about the one-clock delay between `address` and `read_data`?
+   changes about the one-clock delay between `address` and `read_data`? (Watch the timing,
+   not the exact values. The testbench changes `write_data` on the falling edge too, so
+   which one goes first at that instant is up to the simulator.)
 
 Put everything back when you're done:
 

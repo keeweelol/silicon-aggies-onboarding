@@ -82,7 +82,7 @@ verification/
 ├── README.md              you are here
 ├── lessons/               Lessons 0 to 5
 ├── golden_counter/        Lesson 1: the working counter and its testbench
-├── buggy_counter/         Lesson 2: the counter with bugs (no testbench, you write it)
+├── buggy_counter/         Lesson 2: the counter with bugs, and a testbench outline you fill in
 ├── golden_counter_sram/   Lesson 3: the working counter-SRAM and its testbench
 ├── buggy_counter_sram/    Lesson 4: the counter-SRAM with bugs and a half-written testbench
 └── submission-template/   the write-up you fill in for Lesson 5

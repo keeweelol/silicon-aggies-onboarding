@@ -126,7 +126,8 @@ Zoom in until you can see single clock edges. Notice that `counter` only changes
 when `clk` rises, never in between. That's what `always @(posedge clk)` means, drawn as a
 picture.
 
-> **GTKWave won't open?** On Windows 10 it can't open a window without extra setup. Use
+> **GTKWave won't open?** On Windows 10 it can't open a window without extra setup, and some
+> Macs won't run it either. Use
 > [Surfer](https://surfer-project.org/) in your browser instead. Open the site, load your
 > `.vcd` file, and you'll see the same thing.
 
@@ -136,10 +137,19 @@ This is the most useful part of the lesson.
 
 1. Open `blinker.v` and change `if (counter == 3'd7)` to `if (counter == 3'd3)`. Save the
    file.
-2. Run `make warmup` again.
-3. The LED should now flip every 4 ticks instead of 8. In GTKWave, press **Ctrl+Shift+R** (or
-   use File, then Reload Waveform) and check that the picture changed the way you expected.
-4. Change it back to `3'd7`.
+2. **Before you run it,** write down your prediction. Will the LED flip faster, slower, or at
+   the same speed?
+3. Run `make warmup` again. In GTKWave, press **Ctrl+Shift+R** (or use File, then Reload
+   Waveform) and check your prediction.
+4. Most people predict "every 4 ticks," and most people are wrong. The LED still flips every
+   8 ticks. It just flips at a different moment: the first flip now comes at tick 3 instead
+   of tick 7. Look at `counter` in the waveform to see why. It still counts all the way up to
+   7 and rolls over, so it only equals 3 once every 8 ticks. Changing the number you compare
+   against moves *when* the LED flips, not *how often*. That's the rollover from Step 3 again.
+5. To really make it flip every 4 ticks, compare only the bottom two bits of the counter,
+   which roll over every 4 ticks: `if (counter[1:0] == 2'd3)`. Try it, then check the
+   waveform.
+6. Change it back to `if (counter == 3'd7)`.
 
 Now try one more. Change `led <= ~led;` to `led <= 1'b1;`. **Before you run it,** write down
 what you think will happen. Then run it and see if you were right. Change it back when

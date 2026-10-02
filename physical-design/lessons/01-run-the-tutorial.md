@@ -51,9 +51,11 @@ cd runs/tutorial
 ls
 ```
 
-You'll see a long list of numbered folders, like `01-verilator-lint`,
-`06-yosys-synthesis`, `12-openroad-floorplan`, and so on. There's one folder for every step
-the flow took, in order.
+You'll see a long list of numbered folders, with names like `05-yosys-synthesis` and
+`11-openroad-floorplan`. There's one folder for every step the flow ran, in order. Your
+numbers won't match these exactly. Steps that are turned off in the config get no folder
+and no number. (This tutorial turns off the linter, for example, so there's no lint
+folder. Your own design in Lesson 2 will have one.)
 
 Scroll through the names. That list is the flow. Try to find the six stages from Lesson 0 in
 it: synthesis, floorplan, placement, clock tree (`cts`), routing, and the signoff checks

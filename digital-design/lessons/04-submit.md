@@ -106,16 +106,33 @@ Getting comments is normal. Leads label every comment so you know what matters:
 - **Question:** reply with an answer.
 - **Nice:** something you did well.
 
-To respond, fix things in the same folder, then:
+To respond, switch back to your Block 1 branch **first**. Comments often arrive after
+you've started Block 2, and if you commit on `main`, your fix never reaches the pull
+request:
 
 ```bash
 cd ~/silicon-aggies-onboarding
-git add submissions/digital-design/YOUR-GITHUB-USERNAME
-git commit -m "Address review comments"
-git push
+git checkout block1-YOUR-GITHUB-USERNAME
 ```
 
-The pull request updates by itself. Don't open a new one. Reply to each **Must fix**
+Then fix things in the same folder, and save and upload:
+
+```bash
+git add submissions/digital-design/YOUR-GITHUB-USERNAME
+git status
+```
+
+Everything under **Changes to be committed** should be in your `digital-design` folder. If
+anything else is listed, stop and ask in the GroupMe. Otherwise:
+
+```bash
+git commit -m "Address review comments"
+git push
+git checkout main
+```
+
+The last line takes you back to `main`, where Block 2 starts. The pull request updates by
+itself. Don't open a new one. Reply to each **Must fix**
 comment saying what you changed, then click **re-request review** (the circular arrow next
 to the lead's name, under **Reviewers**). [SUBMITTING.md](../../SUBMITTING.md#6-what-happens-next)
 has more detail.

@@ -22,6 +22,15 @@ git pull upstream main
 Block 1 work is safe on its branch. `git pull upstream main` downloads anything new from
 the main ASIC repo.
 
+Two things that look wrong but aren't:
+
+- Your Block 1 folder now looks almost empty, with only a few `.vcd` and `.out` files
+  left. Your real files are saved on your Block 1 branch, not on `main`. They come back
+  whenever you `git checkout block1-YOUR-GITHUB-USERNAME`.
+- `git status` may say `Your branch is ahead of 'origin/main'`. That only means your
+  computer has newer files from the ASIC repo than your fork on GitHub does. Leave it. You
+  never push `main`.
+
 If `git pull` says `fatal: 'upstream' does not appear to be a git repository`, you skipped
 the last part of setup step A6. Run this, then try again:
 

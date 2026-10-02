@@ -68,8 +68,16 @@ still gives WNS of zero or more, and put that in your write-up.
 These are common. The flow usually fixes them itself by adding small diodes. Note them in
 your write-up and mention them to a lead.
 
-**The flow asks whether to overwrite a run, or complains the run already exists**
-You reused a run tag. Pick a new one, like `--run-tag second` or `--run-tag third`.
+**I reran with the same run tag, and now there are two synthesis folders (or the numbers look doubled)**
+LibreLane doesn't warn you when you reuse a run tag. It quietly adds the new run's steps to
+the end of the old run's folder and keeps numbering from where it stopped, so `runs/first`
+ends up with two `yosys-synthesis` folders, and `final/` holds whichever run came last. Lesson
+3's commands then read both reports at once.
+
+Fix it by starting that run over cleanly. Add `--overwrite` to the same command, which
+deletes the old folder first:
+`librelane config.yaml --run-tag first --overwrite`
+Or use a new tag, like `--run-tag second`, and use that name in every later command.
 
 ---
 

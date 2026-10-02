@@ -32,7 +32,8 @@ librelane config.yaml --run-tag second
 ```
 
 (Remember: you need to be inside `nix-shell ~/Su26LLEX/shell.nix`, in your submission
-folder.)
+folder. And if you rerun with a tag you've already used, add `--overwrite`, so the old run
+is replaced instead of mixed in with the new one.)
 
 If the flow fails this time, that's a result too, not a disaster. Note which step failed and
 what the error said. That goes in your write-up. Then set the value partway back (for
@@ -51,7 +52,7 @@ Fill it in with the same commands as Lesson 3, but with `second` in place of `fi
 path. For example:
 
 ```bash
-grep -E "^(design__instance__count|design__die__area|timing__setup__ws|timing__setup__tns|route__wirelength|route__drc_errors|magic__drc_error__count|design__lvs_error__count)," runs/second/final/metrics.csv
+grep -E "^(design__instance__count|design__die__area|timing__setup__ws|timing__setup__tns|timing__hold__ws|route__wirelength|route__drc_errors|magic__drc_error__count|klayout__drc_error__count|design__lvs_error__count)," runs/second/final/metrics.csv
 ```
 
 Under the table, write one line saying which setting you changed and from what to what.

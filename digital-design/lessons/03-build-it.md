@@ -21,7 +21,7 @@ GREEN (12 ticks) → YELLOW (4 ticks) → RED (10 ticks) → back to GREEN
 reset, the light goes to RED, the timer goes to 0, and the pedestrian request is cleared.
 
 **Walk.** The `walk` output is on for the whole time the light is RED, whether or not anyone
-pressed the button.
+pressed the button, and off the rest of the time.
 
 **Exactly one light.** Exactly one of red, yellow, and green is on at every tick. Never zero,
 never two.
@@ -107,8 +107,8 @@ drive the outputs from `state`.
 make
 ```
 
-TEST 1 should pass: the light is red after reset and walk is on. The rest will fail and
-the run ends with a `TIMEOUT` message. That's expected at this point. You have a light that
+TEST 1 should pass: the light is red after reset and walk is on. Then TEST 2 waits for a
+green light that never comes, and the run ends with a `TIMEOUT` message. That's expected at this point. You have a light that
 turns on, which is real progress.
 
 ### Round 2: make it cycle
@@ -129,7 +129,9 @@ forgot to clear the timer on one of the transitions.
 Add TODO 2. Then give GREEN a second way out. Green now goes to yellow when **either** the
 timer runs out, **or** `ped_req` is set and `timer >= MIN_GREEN - 1`.
 
-Run `make`. TESTS 3, 4, and 5 should pass.
+Run `make`. TESTS 3 through 7 should pass. TESTS 5, 6, and 7 press the button during red,
+during yellow, and on the very last tick of red. All three check that the next green still
+gets its full 12 ticks.
 
 If TEST 4 fails and says green lasted 12 ticks when it should have been 4, the button press
 is getting forgotten. Go back to the "remembering something" section of Lesson 2. Working
@@ -141,11 +143,11 @@ this out yourself is the point of the exercise, so it's worth the effort.
 make
 ```
 
-The test prints six numbered tests, which together make ten checks. You're done when the
-end of the output says:
+The test prints nine numbered tests, which together make fifteen checks. You're done when
+the end of the output says:
 
 ```
-  ALL 10 CHECKS PASSED
+  ALL 15 CHECKS PASSED
 ```
 
 ---
@@ -169,7 +171,7 @@ tick.
 
 ## Take your screenshot
 
-Once all ten checks pass, you still need `waveform.png`.
+Once all fifteen checks pass, you still need `waveform.png`.
 
 In GTKWave, set up a view that shows at least one full green-yellow-red cycle and one
 pedestrian button press, with `state`, `timer`, and the light outputs visible. Make sure
@@ -205,7 +207,7 @@ make check
 ```
 
 This runs the same checks a lead does: all your files are there, the design compiles, all
-ten checks pass, and the write-up is long enough with no template text left in it.
+fifteen checks pass, and the write-up is long enough with no template text left in it.
 
 Keep fixing things until it says `READY TO SUBMIT`.
 

@@ -18,16 +18,19 @@ in the Ubuntu window, never PowerShell or Git Bash. See the [setup guide](../set
 Part B.
 
 **`make: command not found`**
-Run `sudo apt install make` on Ubuntu or WSL, or `brew install make` on a Mac.
+On Ubuntu or WSL, run `sudo apt install make`. On a Mac, run `xcode-select --install`, which
+installs Apple's developer tools, including `make`. (Don't use `brew install make`. Homebrew
+installs it under the name `gmake`, so `make` still won't be found.)
 
 **`make: *** No rule to make target`**
 You're not in your submission folder, or the starter files didn't get copied. Run `ls`. If
 you don't see `Makefile`, go back to Step 1 of [Lesson 1](lessons/01-first-simulation.md).
 
-**GTKWave won't open (Windows)**
-Windows 10 can't open Linux windows without extra setup. You can install VcXsrv, but the
-easier fix is to skip GTKWave and open your `.vcd` file in [Surfer](https://surfer-project.org/)
-in your browser. It shows the same waveform.
+**GTKWave won't open (Windows 10 or Mac)**
+Windows 10 can't open Linux windows without extra setup, and recent macOS versions sometimes
+refuse to run GTKWave. On Windows 10 you can install VcXsrv, but on either one the easier
+fix is to skip GTKWave and open your `.vcd` file in [Surfer](https://surfer-project.org/) in
+your browser. It shows the same waveform.
 
 **Everything is very slow (Windows)**
 You're probably working under `/mnt/c/`, which is your Windows drive. Move your work to the
@@ -39,9 +42,10 @@ boundary, and some stop working.
 ## Compile errors
 
 **`syntax error` on a line that looks fine**
-You ran `iverilog` without `-g2012`. Use `make`, which includes it. If you're running
-iverilog yourself, use:
-`iverilog -g2012 -o sim.out tb_traffic_light.v tt_um_traffic_light.v`
+The mistake is almost always on the line *before* the one it points to: a missing `;` at
+the end of a statement, or a `begin` without a matching `end`. Look one or two lines up.
+Also check that you're running `make`, not typing the `iverilog` command yourself, so you
+get the same settings as everyone else.
 
 **`Could not find variable` or `Unable to bind wire/reg/memory`**
 There's a typo in a signal name, or you used a signal you never declared. Verilog cares about
@@ -64,9 +68,12 @@ Usually harmless here. If it's a port you meant to use, check the spelling.
 
 **`TIMEOUT: the light never reached a state the test was waiting for`**
 Your light never turns green, or gets stuck in some state. If you just copied the starter
-file, that's expected. Fill in the TODOs. If you've written code, your state machine is
-stuck: check that every state has a way out, and that you clear the timer on every
-transition.
+file, that's expected. Fill in the TODOs. If you've written code, the last `TEST` line
+printed before the timeout is the one that got stuck. Open the waveform and check:
+
+- Does `timer` or `state` show `x`? Then your reset doesn't set it. `state`, `timer`, and
+  `ped_req` all need a line in the `if (!rst_n)` branch.
+- Does every state have a way out, and do you clear the timer on every transition?
 
 **Everything shows as `x` in the waveform, forever**
 A `reg` never gets a value, usually because it's missing from reset. Every `reg` needs a
@@ -89,10 +96,29 @@ Either it's the same problem as TEST 4, or your GREEN state only checks the time
 two ways out: the timer ran out, **or** a request is waiting and the minimum green time has
 passed.
 
-**TEST 5 fails: a press during red shortens the next green**
+**TEST 5 or TEST 6 fails: a press during red or yellow shortens the next green**
 `ped_req` isn't being cleared during RED, so it's still set when green starts.
 
-**TEST 6 fails: more or fewer than one light on**
+**TEST 7 fails: a press on the last tick of red shortens the next green**
+Your clearing works, but on the last tick of red the press wins. Look at the order of the
+two lines that set and clear `ped_req`. When two `<=` assignments to the same signal happen
+on the same clock edge, the one written **later** in the block wins. On that tick, the
+press sets `ped_req` and the RED state clears it. Which one do you want to win?
+
+If the line that sets `ped_req` is in a **different** `always` block from the line that clears
+it, the order of the lines doesn't decide anything, and neither does anything else you can
+control. Move both into your one `always` block.
+
+**TEST 8 fails: a reset in the middle of a run**
+Your reset only works at the very start. Check that `if (!rst_n)` is the first thing in your
+`always` block, outside the `case`, so it wins no matter what state you're in. If red lasts
+the wrong number of ticks after the reset, your reset isn't clearing `timer`.
+
+**TEST 9 fails: walk doesn't match red**
+`walk` has to be on for every tick of RED and off for every tick of GREEN and YELLOW. Drive
+it straight from `state`, the same way as the lights: `assign uo_out[3] = (state == S_RED);`
+
+**TEST 9 fails: more or fewer than one light on**
 Two lights are on at once, or none are. This almost always means the outputs are stored in
 their own registers instead of coming from `state`. Drive them like
 `assign uo_out[2] = (state == S_GREEN);` and this problem can't happen.

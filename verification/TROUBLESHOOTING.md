@@ -34,9 +34,12 @@ the same waveform in your browser.
 
 ## Build errors (from the `verilator` command)
 
-**`Can't find definition of variable: 'clk'`**
+**`%Warning-IMPLICIT: ... Signal definition not found, creating implicitly: 'clk'`**
+(usually followed by `Procedural assignment to wire` errors)
 You haven't declared that signal yet. In your own testbench, that means Part 1 isn't filled
-in. Add `logic clk;` (and the other signals) near the top of the module.
+in, or a name is misspelled. Add `logic clk;` (and the other signals) near the top of the
+module. The `Procedural assignment to wire` errors after it go away once the signal is
+declared.
 
 **`syntax error, unexpected logic, expecting ',' or ';'`**
 The line *before* the one it points to is missing a semicolon. Every `logic ...` line ends
@@ -50,12 +53,16 @@ A comma is missing between two port connections, like `.rst_n(rst_n) .en(en)`. I
 There's an extra comma after the **last** port connection, like `.count(count),);`. Remove
 the last comma.
 
-**`Pin not found: 'cnt'`** (with some name in quotes)
-A port name after the dot is misspelled. The name after the dot has to match the DUT's port
-name exactly. Check the `module` line of the design file.
-
 **`Cell has missing pin: 'count'`**
-You didn't connect one of the DUT's ports. Add a connection for it.
+Look at the **next** message before you do anything. This is the one time the first message
+can mislead you.
+
+- If the next line says **`Pin not found: 'cnt'`** (some other name in quotes), you didn't
+  forget a port. You misspelled it. The name after the dot has to match the DUT's port name
+  exactly, so `.cnt(count)` should be `.count(count)`. Check the `module` line of the
+  design file.
+- If there's no `Pin not found` line, you really did leave a port out. Add a connection for
+  it.
 
 **`%Warning-WIDTHTRUNC ... Exiting due to 1 warning(s)`**
 Verilator stops on warnings. This one means you put a wider value into a narrower signal,

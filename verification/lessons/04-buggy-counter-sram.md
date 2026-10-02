@@ -92,8 +92,11 @@ And here's what the golden design did with this same testbench:
 | Phase | `write_en` | `address` | `read_data` |
 |---|---|---|---|
 | reset | 0 | 0 | 0 |
-| write | 1 | 1, 2, 3 ... 15, 0 | 0 |
-| read | 0 | 1, 2, 3 ... 15, 0 | 0, 1, 2 ... 15, one clock behind `address` |
+| write | 1 | 0, 1, 2 ... 15 | 0 |
+| read | 0 | 0, 1, 2 ... 15, then 0 again at the very end | 0, 0, 1, 2 ... 14, 15, one clock behind `address` |
+
+(Lesson 3, Step 6 explains why the read phase starts at address 0 and why `read_data` starts
+with two 0s.)
 
 Compare your waveform against the table and write down everything that's different.
 
@@ -138,6 +141,11 @@ write?
 Once the data shows up, look at the timing. In the golden design, `read_data` was one clock
 *behind* `address`. Is it still? If `read_data` lines up with `address` instead, something is
 changing on the wrong edge of the clock. Lesson 3, Step 8 had you try exactly this.
+
+One warning while you're at this stage: the testbench changes `write_data` on the falling
+edge. If the memory is also acting on the falling edge, the two happen at the same instant,
+and which one goes first is up to the simulator. So don't trust the *values* you see in
+`read_data` until this bug is fixed. Trust the timing.
 
 </details>
 

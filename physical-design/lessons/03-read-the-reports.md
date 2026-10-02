@@ -32,8 +32,10 @@ you go, and add a second column in Lesson 5.
 | Die area (µm²) | |
 | Worst slack, WNS (ns) | |
 | Total negative slack, TNS (ns) | |
+| Worst hold slack (ns) | |
 | Total wire length (µm) | |
-| DRC errors | |
+| DRC errors (router, Magic) | |
+| DRC errors (KLayout) | |
 | LVS errors | |
 ```
 
@@ -76,7 +78,7 @@ The flow collects almost every number it measured into one file, `final/metrics.
 has hundreds of lines, so pull out just the ones you need:
 
 ```bash
-grep -E "^(design__instance__count|design__die__area|timing__setup__ws|timing__setup__tns|route__wirelength|route__drc_errors|magic__drc_error__count|design__lvs_error__count)," runs/first/final/metrics.csv
+grep -E "^(design__instance__count|design__die__area|timing__setup__ws|timing__setup__tns|timing__hold__ws|route__wirelength|route__drc_errors|magic__drc_error__count|klayout__drc_error__count|design__lvs_error__count)," runs/first/final/metrics.csv
 ```
 
 It prints lines like `design__die__area,12345.6`: the name of the metric, a comma, and its
@@ -88,8 +90,10 @@ value. Here's what each one means and where it goes in your table:
 | `design__die__area` | Die area | How big the whole chip is, in square micrometers |
 | `timing__setup__ws` | WNS | Worst slack: the least spare time on any path (see below) |
 | `timing__setup__tns` | TNS | Total negative slack: all the negative slack added up |
+| `timing__hold__ws` | Worst hold slack | The same idea as WNS, but for the opposite problem: a signal arriving *too early*, before the flip-flop has finished grabbing the previous value |
 | `route__wirelength` | Total wire length | How much metal wire the router drew, in micrometers |
-| `route__drc_errors` and `magic__drc_error__count` | DRC errors | Places where the layout breaks the factory's rules |
+| `route__drc_errors` and `magic__drc_error__count` | DRC errors (router, Magic) | Places where the layout breaks the factory's rules. The first is the router's own count, the second is Magic's final check. Write both numbers, like `0, 0` |
+| `klayout__drc_error__count` | DRC errors (KLayout) | The same check, done a second time by a different tool. Signoff runs both, and both need to be 0 |
 | `design__lvs_error__count` | LVS errors | Places where the layout doesn't match the netlist |
 
 If a metric isn't printed, that step may have been skipped, or its name is slightly
@@ -117,9 +121,12 @@ clock period and see what happens to it.
 
 For your design to count as done, these need to be true:
 
-- [ ] DRC errors: **0**
+- [ ] DRC errors: **0** in all three counts (router, Magic, and KLayout)
 - [ ] LVS errors: **0**
 - [ ] WNS: **zero or positive**
+
+Also look at the worst hold slack. It should be zero or positive too. If it's negative, the
+flow normally stops on its own before it gets this far. If it didn't, tell a lead.
 
 If any of these fail, check [TROUBLESHOOTING.md](../TROUBLESHOOTING.md) and post in the
 GroupMe.

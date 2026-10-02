@@ -66,7 +66,7 @@ module tt_um_traffic_light (
 
     // ================ outputs ================
     // TODO 4: drive these from `state`. Exactly one of red/yellow/green, always.
-    //         walk is high for the whole RED state.
+    //         walk is high for the whole RED state, and low in GREEN and YELLOW.
     assign uo_out[0]   = 1'b0;   // car_red
     assign uo_out[1]   = 1'b0;   // car_yellow
     assign uo_out[2]   = 1'b0;   // car_green

@@ -53,6 +53,6 @@ confident," explain why.*
 ## Anything else
 
 *Optional. Stretch goals you tried, something you're unsure about, or something you'd do
-differently.*
+differently. If you skip it, delete this whole section, heading included.*
 
 <your answer here>

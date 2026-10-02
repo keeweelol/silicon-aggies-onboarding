@@ -109,11 +109,22 @@ You have to **remember** the press:
 ```verilog
 reg ped_req;                       // "somebody pressed, and we owe them a walk"
 
-always @(posedge clk) begin
-    if (ped_button) ped_req <= 1'b1;    // catch the press whenever it arrives
-    // ... and clear it somewhere, once you've given them their walk
+always @(posedge clk) begin        // your ONE always block, the same one as the state machine
+    if (!rst_n) begin
+        ...
+    end else begin
+        if (ped_button) ped_req <= 1'b1;    // catch the press whenever it arrives
+        // ... and clear it somewhere, once you've given them their walk
+        case (state)
+            ...
+        endcase
+    end
 end
 ```
+
+Keep this inside the same `always` block as your state machine, not in a second one. If two
+`always` blocks both assign `ped_req`, the simulator picks one of them unpredictably, and
+the synthesis tool that builds the chip rejects it outright.
 
 Now the state machine checks `ped_req`, which stays 1 until you clear it, instead of
 `ped_button`, which disappears after one tick.
