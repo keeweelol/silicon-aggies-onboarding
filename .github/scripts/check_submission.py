@@ -395,7 +395,9 @@ def check_block1(rep, folder):
         s = line.strip()
         if s.startswith("[ok]"):
             rep.ok(s[4:].strip())
-        elif s.startswith("[PROBLEM]") or s.startswith("[MISSING]"):
+        elif s.startswith("[MISSING]"):
+            rep.bad("missing " + s.split("]", 1)[1].strip())
+        elif s.startswith("[PROBLEM]"):
             rep.bad(s.split("]", 1)[1].strip())
         elif s.startswith("[FAIL]"):
             rep.lines[-1] = (rep.lines[-1][0], rep.lines[-1][1],
