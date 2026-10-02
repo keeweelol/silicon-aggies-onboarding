@@ -88,4 +88,4 @@ If a lead asks for changes, see [how to respond](../../SUBMITTING.md#how-to-resp
 That's the whole rotation. You've written a design, found and fixed bugs in one, and turned
 one into a chip layout. The MAC tile in November uses all three.
 
-Next up is team placement, the week of Nov 2.
+Next up is team placement, the week of Nov 16.

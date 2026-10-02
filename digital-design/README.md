@@ -1,6 +1,6 @@
 # Block 1: Digital Design (traffic light controller)
 
-**Two weeks, Sep 21 to Oct 2.**
+**Two weeks, Oct 5 to Oct 16.**
 
 You'll describe a traffic light in a hardware language called Verilog, run it in a
 simulator, and watch it work. You don't need to know any Verilog yet. If you've taken
@@ -37,7 +37,7 @@ There's no lecture. There's a demo, an open lab, and the lessons in this folder.
 | Week 1 | Lessons 0, 1, and 2. Get the tools working, run a design that already works, learn state machines. |
 | Middle weekend | Open lab. Leads are in the room. Bring your laptop and whatever is broken. |
 | Week 2 | Lesson 3 (build the traffic light) and Lesson 4 (turn it in). |
-| Friday, Oct 2, 11:59 PM | Pull request due. |
+| Friday, Oct 16, 11:59 PM | Pull request due. |
 
 You can finish faster than this. The schedule is the slowest you should go.
 
@@ -84,7 +84,7 @@ Five things, in `submissions/digital-design/YOUR-GITHUB-USERNAME/`:
 - [ ] `state-diagram.jpg`: a photo of the state diagram you drew on paper
 - [ ] `waveform.png`: a screenshot from GTKWave
 - [ ] `WRITEUP.md`: 300 to 500 words, using the template we give you
-- [ ] a pull request, opened by Friday Oct 2
+- [ ] a pull request, opened by Friday Oct 16
 
 You can check your own work before you turn it in. Run `make check` in your folder. It
 tells you what's missing or broken, which are the same things a lead checks. When it says

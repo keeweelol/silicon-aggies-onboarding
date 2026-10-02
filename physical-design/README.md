@@ -1,6 +1,6 @@
 # Block 3: Physical Design (from code to layout)
 
-**Two weeks, Oct 19 to Oct 30.**
+**Two weeks, Nov 2 to Nov 13.**
 
 So far your designs have been text. In this block you turn text into geometry: the actual
 rectangles of metal and silicon, at exact positions, that a factory can build. You run the
@@ -29,12 +29,12 @@ love that and some don't, and both are useful to find out before you pick a team
 
 | When | What |
 |---|---|
-| Before Oct 19 | Make sure LibreLane is installed (setup Part D). If it won't install, ask a lead for a lab machine **now**. |
+| Before Nov 2 | Make sure LibreLane is installed (setup Part D). If it won't install, ask a lead for a lab machine **now**. |
 | Monday, week 1 | 30-minute kickoff. A lead starts a run and shows a finished layout. |
 | Week 1 | Lessons 0, 1, and 2: learn the stages, run the tutorial, run your design. |
 | Middle weekend | Open lab. Leads are in the room. |
 | Week 2 | Lessons 3 to 6: read the reports, look at the layout, change one setting, turn it in. |
-| Friday, Oct 30, 11:59 PM | Pull request due. |
+| Friday, Nov 13, 11:59 PM | Pull request due. |
 
 ## The lessons
 
@@ -63,7 +63,7 @@ ls ~/Su26LLEX
 ```
 
 If `nix` isn't found, or the `Su26LLEX` folder doesn't exist, go back to setup Part D.
-This block is mostly about getting the tools to run, so get that sorted before Oct 19. If
+This block is mostly about getting the tools to run, so get that sorted before Nov 2. If
 Nix won't install on your laptop, tell a lead so they can reserve you a lab machine.
 
 > **Windows 10:** KLayout needs to open a window, and WSL on Windows 10 can't do that
@@ -81,7 +81,7 @@ In `submissions/physical-design/YOUR-GITHUB-USERNAME/`:
 - [ ] `layout-zoom.png`: KLayout screenshot zoomed in far enough to see single cells
 - [ ] `metrics.md`: the filled-in metrics table, for both runs
 - [ ] `WRITEUP.md`: 300 to 500 words
-- [ ] a pull request, opened by Friday Oct 30
+- [ ] a pull request, opened by Friday Nov 13
 
 **Don't turn in the `runs/` folder.** It's hundreds of megabytes. Lesson 6 shows you how to
 copy out only the file you need.

@@ -1,6 +1,6 @@
 # Block 2: Verification (find the bug)
 
-**Two weeks, Oct 5 to Oct 16.**
+**Two weeks, Oct 19 to Oct 30.**
 
 In Block 1 we gave you a testbench that checked your design. In this block you learn to
 write your own, and you use it to find bugs someone planted in a design on purpose.
@@ -42,7 +42,7 @@ in Block 3.
 | Week 1 | Lessons 0, 1, and 2: the counter. |
 | Middle weekend | Open lab. Leads are in the room. |
 | Week 2 | Lessons 3, 4, and 5: the counter-SRAM, then turn it in. |
-| Friday, Oct 16, 11:59 PM | Pull request due. |
+| Friday, Oct 30, 11:59 PM | Pull request due. |
 
 ## The lessons
 
@@ -99,7 +99,7 @@ In `submissions/verification/YOUR-GITHUB-USERNAME/`:
 - [ ] `waveform-counter.png`: GTKWave screenshot of your fixed counter
 - [ ] `waveform-counter-sram.png`: GTKWave screenshot of your fixed counter-SRAM
 - [ ] `WRITEUP.md`: your bug report
-- [ ] a pull request, opened by Friday Oct 16
+- [ ] a pull request, opened by Friday Oct 30
 
 ## When you're done
 
