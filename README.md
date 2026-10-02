@@ -54,7 +54,10 @@ silicon-aggies-onboarding/
 │   ├── verification/YOUR-GITHUB-USERNAME/
 │   └── physical-design/YOUR-GITHUB-USERNAME/
 │
-└── SUBMITTING.md              how to turn in work, for every block
+├── SUBMITTING.md              how to turn in work, for every block
+│
+└── .github/                   the automatic check that runs on every pull request
+    └── CHECKS.md              what it checks (for leads)
 ```
 
 ## Where to look

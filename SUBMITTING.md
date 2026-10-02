@@ -139,7 +139,32 @@ You've turned in the block.
 
 ---
 
-## 6. What happens next
+## 6. The automatic check
+
+A few minutes after you open the pull request, a check runs on it by itself. Near the bottom
+of the pull request page you'll see either a green check mark (**All checks have passed**) or a
+red X.
+
+- **Green:** your files are all there and your designs behave correctly. A lead reviews it
+  next.
+- **Red X:** click **Details**, then **Summary** on the left. It lists every problem, with
+  what to fix. Fix them in your folder, then commit and push the same way as in
+  [How to respond](#how-to-respond). The check runs again on its own.
+
+The check tests more than your own testbench does. For Block 2, it runs your testbench on
+copies of the design that each have only one of the bugs, to make sure it catches every one
+of them. It also runs your fixed design on random inputs and compares it with the golden one.
+
+You can run the same check on your own computer before you push, from the top of the repo:
+
+```bash
+python3 .github/scripts/check_submission.py submissions/verification/YOUR-GITHUB-USERNAME
+```
+
+(Use your block's folder.) On your very first pull request, the check may wait for a lead to
+approve it before it starts. That's a GitHub rule for new contributors.
+
+## 7. What happens next
 
 A lead reviews your pull request within **72 hours**. You'll get an email from GitHub when
 they do, and it also shows up on the pull request page.

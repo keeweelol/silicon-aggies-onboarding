@@ -92,6 +92,10 @@ git push -u origin block2-YOUR-GITHUB-USERNAME
    a lead to look at closely.
 5. Click **Create pull request**.
 
+Within a few minutes, an automatic check runs on your pull request and shows a green check
+or a red X near the bottom of the page. If it's red, click **Details**, then **Summary**, to
+see what to fix. [SUBMITTING.md](../../SUBMITTING.md#6-the-automatic-check) explains it.
+
 If a lead asks for changes, see [how to respond](../../SUBMITTING.md#how-to-respond).
 
 ---

@@ -1,0 +1,56 @@
+# Runs the automatic submission check on every pull request that touches
+# submissions/. Students see a green check or a red X on their pull request
+# within a few minutes, with the details under "Details" -> "Summary".
+#
+# This runs on `pull_request`, so pull requests from forks get a read-only
+# token and no secrets. That's what makes it safe to build and run code that
+# students wrote. Don't change the trigger to `pull_request_target`.
+#
+# What it checks, and how to run it locally: .github/CHECKS.md
+
+name: Check submission
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "submissions/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-submission-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Get the pull request
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2      # the merge commit and its parents, enough to diff
+
+      - name: List the files this pull request changes
+        run: |
+          git diff --name-only HEAD^1 HEAD > "$RUNNER_TEMP/changed.txt"
+          cat "$RUNNER_TEMP/changed.txt"
+
+      - name: Install the simulators
+        run: |
+          sudo apt-get update -qq
+          # Ubuntu 24.04's versions, the same ones the setup guide installs:
+          # Icarus Verilog 12 and Verilator 5.020.
+          sudo apt-get install -y -qq --no-install-recommends iverilog verilator g++ make python3-yaml
+          iverilog -V 2>&1 | head -1
+          verilator --version
+
+      - name: Check the submission
+        env:
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: |
+          python3 .github/scripts/check_submission.py \
+            --changed "$RUNNER_TEMP/changed.txt" \
+            --author "$PR_AUTHOR"
