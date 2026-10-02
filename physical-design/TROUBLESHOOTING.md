@@ -92,7 +92,7 @@ Press `*` (or **Display**, then **Full Hierarchy**) to draw everything inside th
 
 **KLayout opens, but the window is blank**
 All the layers may be hidden. Right-click the layer panel on the right and choose
-**Show All**, then press F2 to fit. If it's still blank, check that you opened
+**Show All**, then press F2 (fn+F2 on a Mac) to fit. If it's still blank, check that you opened
 `counter_sram.gds` from the `final/gds` folder.
 
 ---

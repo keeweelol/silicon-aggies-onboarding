@@ -134,6 +134,9 @@ Use `<=` everywhere inside `always @(posedge clk)`.
 
 ## Waveform problems
 
+These fixes are written for GTKWave. On a Mac, the [Surfer quick guide](../setup/README.md#surfer-quick-guide-mac) has
+the Surfer version of each one.
+
 **The GTKWave window is empty**
 You opened it but haven't added any signals yet. Click the module in the top-left panel,
 select signals in the panel below, and click **Append**. Then press Shift+Alt+F to zoom so

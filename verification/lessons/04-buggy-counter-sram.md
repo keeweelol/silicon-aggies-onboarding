@@ -66,7 +66,8 @@ Look back at Lesson 0 for the `for` loop format, and at Lesson 3, Step 4 for how
 ```bash
 verilator --binary --timing --trace --top-module test buggy_design/counter_sram.sv testbench/buggy_cosram_tb.sv
 ./obj_dir/Vtest
-gtkwave dump.vcd &
+gtkwave dump.vcd &    # Ubuntu / Windows
+surfer dump.vcd &     # Mac
 ```
 
 Add the same seven signals as Lesson 3, with `write_data`, `address`, and `read_data` in
@@ -154,6 +155,8 @@ and which one goes first is up to the simulator. So don't trust the *values* you
 Show all seven signals, with the three buses in decimal, zoomed so the whole run fits.
 Save the screenshot as `waveform-counter-sram.png` in your submission folder
 (`submissions/verification/YOUR-GITHUB-USERNAME/`, one folder up from `buggy_counter_sram`).
+On a Mac, run `mv ~/Desktop/Screenshot*.png ../waveform-counter-sram.png` from
+`buggy_counter_sram`.
 
 ## Step 7: Prove your testbench catches the bugs
 

@@ -25,13 +25,15 @@ If you only see a few empty boxes with names in them, press `*` (or go to **Disp
 **Full Hierarchy**). KLayout starts by showing only the top level of the design, and `*`
 tells it to draw everything inside.
 
-Press **F2** (or **Display**, then **Zoom Fit**) to fit the whole chip on screen.
+Press **F2** (or **Display**, then **Zoom Fit**) to fit the whole chip on screen. On most Mac
+laptops, F2 changes the screen brightness instead, so hold **fn** and press F2, or use the
+menu.
 
 ## Step 2: Find your way around
 
 - **Zoom** with the mouse scroll wheel. It zooms toward wherever the mouse is pointing.
 - **Pan** by holding the middle mouse button and dragging, or with the arrow keys.
-- **Zoom to fit** with F2 whenever you get lost.
+- **Zoom to fit** with F2 (fn+F2 on a Mac) whenever you get lost.
 
 ## Step 3: Turn layers on and off
 
@@ -92,7 +94,9 @@ The zoomed-in one is the picture that makes sense to someone who's never seen a 
 before. It's worth making it a good one.
 
 > **How to screenshot:** on Windows, press Windows+Shift+S and drag a box, then paste into
-> Paint and save. On a Mac, press Cmd+Shift+4 and drag a box. It lands on your desktop. On
+> Paint and save. On a Mac, press Cmd+Shift+4 and drag a box. It lands on your Desktop.
+> Move each one into your submission folder right after you take it, with
+> `mv ~/Desktop/Screenshot*.png layout.png` (then `layout-zoom.png` for the second one). On
 > Linux, KLayout can also save the view directly: **File**, then **Screenshot**.
 
 ---

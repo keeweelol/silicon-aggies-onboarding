@@ -155,12 +155,13 @@ waveform file called `dump.vcd`.
 **Command 3: look.**
 
 ```bash
-gtkwave dump.vcd &
+gtkwave dump.vcd &    # Ubuntu / Windows
+surfer dump.vcd &     # Mac
 ```
 
-> **On a Mac,** type `surfer` instead of `gtkwave`, here and in every later lesson:
-> `surfer dump.vcd &`. Pick `test` in the panel on the left and click signal names to add
-> them. To reload after a rerun, use Surfer's reload option instead of Ctrl+Shift+R.
+> **On a Mac,** use the `surfer` line, here and in every later lesson. The steps below are
+> written for GTKWave. The [Surfer quick guide](../../setup/README.md#surfer-quick-guide-mac) shows how to
+> add signals, zoom to fit, switch to decimal, and reload in Surfer.
 
 > **The rule for this whole block:** if you change *any* `.sv` file, run all three
 > commands again, starting with `verilator`. `./obj_dir/Vtest` keeps running the old program
@@ -234,7 +235,8 @@ Icarus Verilog from Block 1 can run this too:
 ```bash
 iverilog -g2012 -o sim.out counter_design/counter.sv testbench/counter_tb.sv
 vvp sim.out
-gtkwave dump.vcd &
+gtkwave dump.vcd &    # Ubuntu / Windows
+surfer dump.vcd &     # Mac
 ```
 
 You'll see the same waveform. Now open the testbench and change `initial rst_n = 0;` to

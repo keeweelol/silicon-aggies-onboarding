@@ -15,7 +15,8 @@ Build, run, and look, from inside this folder:
 ```bash
 verilator --binary --timing --trace --top-module test counter_design/counter.sv testbench/counter_tb.sv
 ./obj_dir/Vtest
-gtkwave dump.vcd &
+gtkwave dump.vcd &    # Ubuntu / Windows
+surfer dump.vcd &     # Mac
 ```
 
 Exercise by Bryson Fields. Questions: the ASIC GroupMe, or email Bryson Fields

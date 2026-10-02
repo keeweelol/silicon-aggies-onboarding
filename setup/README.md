@@ -98,7 +98,8 @@ Four commands you'll use constantly:
 | `cd foldername` | Moves into a folder. `cd ..` goes up one level. `cd ~` goes to your home folder |
 | `nano filename` | Opens a file in a simple text editor. Save with Ctrl+O then Enter, quit with Ctrl+X |
 
-`~` is short for your home folder. On Ubuntu it's `/home/yourname`.
+`~` is short for your home folder. On Ubuntu it's `/home/yourname`, and on a Mac it's
+`/Users/yourname`.
 
 ---
 
@@ -222,6 +223,29 @@ prints a GTKWave version on Ubuntu, or a path ending in `surfer` on a Mac.
 > that without extra setup. Windows 11 works out of the box. On Windows 10, use the
 > [Surfer web viewer](https://surfer-project.org/) instead. You open your waveform file in
 > your browser and nothing needs installing.
+
+
+### Surfer quick guide (Mac)
+
+The lessons give GTKWave steps. Here's how to do the same things in Surfer:
+
+| To do this | In Surfer |
+|---|---|
+| Open a waveform | `surfer dump.vcd &` (or whatever the `.vcd` file is called) |
+| Add signals | In the left sidebar, click the testbench (`tb_blinker`, `tb_traffic_light`, or `test`), and `dut` under it if the lesson says so. Its signals are listed below. Click a signal name to add it, or drag it into the waveform area. |
+| Zoom so everything fits | **View**, then **Zoom to fit**, or the zoom-to-fit button in the toolbar |
+| Show a number in decimal | Right-click the signal's name next to the waveform, choose **Format**, then **Unsigned** |
+| Reload after you rerun the simulation | Press `r`, or **File**, then **Reload**. Surfer may also offer to reload on its own when the file changes. |
+
+**Screenshots on a Mac.** Press Cmd+Shift+4 and drag a box. The picture lands on your Desktop
+with a long name like `Screenshot 2026-10-12 at 9.41.12 PM.png`. Move it into the folder
+you're in and rename it in one step, using the file name the lesson asks for:
+
+```bash
+mv ~/Desktop/Screenshot*.png waveform.png
+```
+
+Do this right after each screenshot, while it's the only one on your Desktop.
 
 ---
 

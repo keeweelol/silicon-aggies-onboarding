@@ -90,7 +90,8 @@ The same three commands as always, with this exercise's file names:
 ```bash
 verilator --binary --timing --trace --top-module test counter_sram_design/counter_sram.sv testbench/counter_sram_tb.sv
 ./obj_dir/Vtest
-gtkwave dump.vcd &
+gtkwave dump.vcd &    # Ubuntu / Windows
+surfer dump.vcd &     # Mac
 ```
 
 The run should print `Verilog $finish`.
@@ -98,7 +99,7 @@ The run should print `Verilog $finish`.
 In GTKWave, click `test` and add all seven signals: `clk`, `rst_n`, `en`, `write_en`,
 `write_data`, `address`, and `read_data`. Set `write_data`, `address`, and `read_data` to
 decimal (right-click, **Data Format**, **Decimal**). You can select all three and change
-them at once. Then press Shift+Alt+F.
+them at once. Then press Shift+Alt+F. (On a Mac, see the [Surfer quick guide](../../setup/README.md#surfer-quick-guide-mac).)
 
 ## Step 6: Read the waveform
 

@@ -29,7 +29,8 @@ Build, run, and look, from inside your copy:
 ```bash
 verilator --binary --timing --trace --top-module test buggy_design/counter_sram.sv testbench/buggy_cosram_tb.sv
 ./obj_dir/Vtest
-gtkwave dump.vcd &
+gtkwave dump.vcd &    # Ubuntu / Windows
+surfer dump.vcd &     # Mac
 ```
 
 Exercise by Bryson Fields. Questions: the ASIC GroupMe, or email Bryson Fields

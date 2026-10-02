@@ -104,16 +104,15 @@ The simulation also wrote a file called `blinker.vcd`. It's a recording of every
 every moment. Open it:
 
 ```bash
-gtkwave blinker.vcd &
+gtkwave blinker.vcd &    # Ubuntu / Windows
+surfer blinker.vcd &     # Mac
 ```
 
 The `&` at the end runs GTKWave in the background, so you can keep using your terminal.
 
-> **On a Mac,** open it with Surfer instead: `surfer blinker.vcd &`. The steps below are
-> written for GTKWave, but Surfer works the same way: pick `tb_blinker`, then `dut`, in the
-> panel on the left, and click the signal names to add them. Wherever a lesson says
-> `gtkwave`, type `surfer`, and to reload after a rerun, use Surfer's reload option instead of
-> Ctrl+Shift+R.
+> **On a Mac,** use the `surfer` line. The steps below are written for GTKWave. The
+> [Surfer quick guide](../../setup/README.md#surfer-quick-guide-mac) shows how to add signals, zoom to fit,
+> and reload in Surfer. Keep it open for the rest of this block and the next.
 
 GTKWave isn't pretty, and it isn't obvious how to use it. Here's what you need:
 
@@ -144,7 +143,7 @@ This is the most useful part of the lesson.
    file.
 2. **Before you run it,** write down your prediction. Will the LED flip faster, slower, or at
    the same speed?
-3. Run `make warmup` again. In GTKWave, press **Ctrl+Shift+R** (or use File, then Reload
+3. Run `make warmup` again. In GTKWave, press **Ctrl+Shift+R** (in Surfer, press `r`) (or use File, then Reload
    Waveform) and check your prediction.
 4. Most people predict "every 4 ticks," and most people are wrong. The LED still flips every
    8 ticks. It just flips at a different moment: the first flip now comes at tick 3 instead

@@ -103,17 +103,18 @@ After each step, run all three commands:
 ```bash
 verilator --binary --timing --trace --top-module test buggy_design/counter.sv testbench/counter_tb.sv
 ./obj_dir/Vtest
-gtkwave dump.vcd &
+gtkwave dump.vcd &    # Ubuntu / Windows
+surfer dump.vcd &     # Mac
 ```
 
 If GTKWave is already open, you don't need to open it again. Press Ctrl+Shift+R in GTKWave
-to reload the new waveform.
+to reload the new waveform. (In Surfer, press `r`.)
 
 ## Step 5: Compare the waveform to the spec
 
 Add `clk`, `rst_n`, `en`, and `count` to the waveform (click `test`, select the signals,
 click Append, then Shift+Alt+F). Set `count` to decimal: right-click it, choose
-**Data Format**, then **Decimal**.
+**Data Format**, then **Decimal**. (In Surfer, see the [Surfer quick guide](../../setup/README.md#surfer-quick-guide-mac).)
 
 Here's what a **correct** counter would do with your test steps:
 
@@ -184,6 +185,9 @@ fits. Take a screenshot and save it as `waveform-counter.png` in your submission
 `submissions/verification/YOUR-GITHUB-USERNAME/`. That's one folder up from
 `buggy_counter`.
 
+> **Saving on a Mac:** press Cmd+Shift+4, then move it into your submission folder with
+> `mv ~/Desktop/Screenshot*.png ../waveform-counter.png` (run that from `buggy_counter`).
+>
 > **Saving from Windows:** press Windows+Shift+S to take the screenshot. To find your
 > Ubuntu folders in File Explorer, click **Linux** in the left sidebar, then **Ubuntu-24.04**,
 > **home**, your username, and **silicon-aggies-onboarding**.

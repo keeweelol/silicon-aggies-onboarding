@@ -162,7 +162,7 @@ make wave
 
 In GTKWave, click `tb_traffic_light`, then `dut`, and add `clk`, `rst_n`, `ui_in`, `state`,
 `timer`, and `uo_out`. Find the moment the test complained about, and look at what `state`
-and `timer` are doing right there.
+and `timer` are doing right there. (On a Mac, see the [Surfer quick guide](../../setup/README.md#surfer-quick-guide-mac).)
 
 Most of the time, the bug is obvious within a few seconds once you're looking at the right
 tick.
@@ -180,7 +180,9 @@ the signal names are readable. Take a screenshot and save it in your submission 
 
 > **How to screenshot:** on Windows, press Windows+Shift+S and drag a box. On a Mac, press
 > Cmd+Shift+4 and drag a box. Then save the image into your submission folder. On Windows,
-> your Ubuntu files show up in File Explorer under **Linux** in the left sidebar.
+> your Ubuntu files show up in File Explorer under **Linux** in the left sidebar. On a Mac,
+> the screenshot lands on your Desktop. Move it into your folder with
+> `mv ~/Desktop/Screenshot*.png waveform.png`.
 
 ---
 

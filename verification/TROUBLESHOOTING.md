@@ -104,6 +104,9 @@ the `initial begin` block.
 
 ## Waveform problems
 
+These fixes are written for GTKWave. On a Mac, the [Surfer quick guide](../setup/README.md#surfer-quick-guide-mac) has
+the Surfer version of each one.
+
 **I fixed the code but the waveform didn't change**
 Two things have to happen. First rerun **all three commands**, starting with `verilator`.
 (`./obj_dir/Vtest` runs the old program until you rebuild.) Then press Ctrl+Shift+R in
