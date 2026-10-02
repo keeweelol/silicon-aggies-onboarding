@@ -20,7 +20,12 @@ echo ""
 check "git"       "git --version"                    "everything"
 check "gh"        "gh --version"                     "turning in work"
 check "iverilog"  "iverilog -V 2>&1 | head -1"       "Block 1"
-check "gtkwave"   "gtkwave --version | grep -i analyzer" "Blocks 1 and 2"
+# The waveform viewer: GTKWave on Ubuntu and Windows, Surfer on a Mac.
+if [ "$(uname)" = "Darwin" ]; then
+    check "surfer" "echo installed"                 "Blocks 1 and 2"
+else
+    check "gtkwave" "gtkwave --version | grep -i analyzer" "Blocks 1 and 2"
+fi
 check "python3"   "python3 --version"                "Block 1"
 check "make"      "make --version"                   "Block 1"
 check "verilator" "verilator --version"              "Block 2"

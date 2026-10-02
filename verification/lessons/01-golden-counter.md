@@ -24,9 +24,11 @@ the main ASIC repo.
 
 Two things that look wrong but aren't:
 
-- Your Block 1 folder now looks almost empty, with only a few `.vcd` and `.out` files
-  left. Your real files are saved on your Block 1 branch, not on `main`. They come back
-  whenever you `git checkout block1-YOUR-GITHUB-USERNAME`.
+- If your Block 1 pull request hasn't been merged yet, your Block 1 folder now looks almost
+  empty, with only a few `.vcd` and `.out` files left. Your real files are saved on your
+  Block 1 branch, not on `main`. They come back whenever you
+  `git checkout block1-YOUR-GITHUB-USERNAME`. (If it has been merged, your files are on
+  `main` too, and the folder looks normal.)
 - `git status` may say `Your branch is ahead of 'origin/main'`. That only means your
   computer has newer files from the ASIC repo than your fork on GitHub does. Leave it. You
   never push `main`.
@@ -155,6 +157,10 @@ waveform file called `dump.vcd`.
 ```bash
 gtkwave dump.vcd &
 ```
+
+> **On a Mac,** type `surfer` instead of `gtkwave`, here and in every later lesson:
+> `surfer dump.vcd &`. Pick `test` in the panel on the left and click signal names to add
+> them. To reload after a rerun, use Surfer's reload option instead of Ctrl+Shift+R.
 
 > **The rule for this whole block:** if you change *any* `.sv` file, run all three
 > commands again, starting with `verilator`. `./obj_dir/Vtest` keeps running the old program

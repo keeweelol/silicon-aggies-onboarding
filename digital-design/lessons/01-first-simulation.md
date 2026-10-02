@@ -109,6 +109,12 @@ gtkwave blinker.vcd &
 
 The `&` at the end runs GTKWave in the background, so you can keep using your terminal.
 
+> **On a Mac,** open it with Surfer instead: `surfer blinker.vcd &`. The steps below are
+> written for GTKWave, but Surfer works the same way: pick `tb_blinker`, then `dut`, in the
+> panel on the left, and click the signal names to add them. Wherever a lesson says
+> `gtkwave`, type `surfer`, and to reload after a rerun, use Surfer's reload option instead of
+> Ctrl+Shift+R.
+
 GTKWave isn't pretty, and it isn't obvious how to use it. Here's what you need:
 
 1. In the top-left panel, click **`tb_blinker`**, then click **`dut`** under it.
@@ -126,8 +132,7 @@ Zoom in until you can see single clock edges. Notice that `counter` only changes
 when `clk` rises, never in between. That's what `always @(posedge clk)` means, drawn as a
 picture.
 
-> **GTKWave won't open?** On Windows 10 it can't open a window without extra setup, and some
-> Macs won't run it either. Use
+> **GTKWave won't open?** On Windows 10 it can't open a window without extra setup. Use
 > [Surfer](https://surfer-project.org/) in your browser instead. Open the site, load your
 > `.vcd` file, and you'll see the same thing.
 

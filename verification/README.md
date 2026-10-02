@@ -38,7 +38,7 @@ in Block 3.
 
 | When | What |
 |---|---|
-| Monday, week 1 | 30-minute kickoff. A lead runs the golden counter and the buggy counter side by side. |
+| Monday, week 1 | 30-minute kickoff (time and place posted in the GroupMe). A lead runs the golden counter and the buggy counter side by side. |
 | Week 1 | Lessons 0, 1, and 2: the counter. |
 | Middle weekend | Online help session with the leads. |
 | Week 2 | Lessons 3, 4, and 5: the counter-SRAM, then turn it in. |
@@ -65,11 +65,11 @@ Keep these open while you work:
 ## Before you start
 
 You need two tools from the [setup guide](../setup/README.md): Verilator (Part C) and
-GTKWave (Part B). Check them:
+GTKWave (Part B; Surfer on a Mac). Check them:
 
 ```bash
 verilator --version
-gtkwave --version
+gtkwave --version      # on a Mac: which surfer
 ```
 
 Verilator must be **5.0 or newer**. If it says 4.something, see setup Part C before you do

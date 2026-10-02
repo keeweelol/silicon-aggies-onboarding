@@ -26,10 +26,13 @@ installs it under the name `gmake`, so `make` still won't be found.)
 You're not in your submission folder, or the starter files didn't get copied. Run `ls`. If
 you don't see `Makefile`, go back to Step 1 of [Lesson 1](lessons/01-first-simulation.md).
 
-**GTKWave won't open (Windows 10 or Mac)**
-Windows 10 can't open Linux windows without extra setup, and recent macOS versions sometimes
-refuse to run GTKWave. On Windows 10 you can install VcXsrv, but on either one the easier
-fix is to skip GTKWave and open your `.vcd` file in [Surfer](https://surfer-project.org/) in
+**GTKWave won't install or open on a Mac**
+Homebrew no longer offers GTKWave for Mac. Use Surfer instead: `brew install surfer`, then
+`surfer traffic.vcd &` (or `make wave`, which opens Surfer when GTKWave isn't there).
+
+**GTKWave won't open (Windows 10)**
+Windows 10 can't open Linux windows without extra setup. You can install VcXsrv, but the
+easier fix is to skip GTKWave and open your `.vcd` file in [Surfer](https://surfer-project.org/) in
 your browser. It shows the same waveform.
 
 **Everything is very slow (Windows)**

@@ -33,7 +33,7 @@ There's no lecture. There's a demo, a help session, and the lessons in this fold
 
 | When | What |
 |---|---|
-| Monday, week 1 | 30-minute kickoff. A lead builds a small design live. Come to this. |
+| Monday, week 1 | 30-minute kickoff (time and place posted in the GroupMe). A lead builds a small design live. Come to this. |
 | Week 1 | Lessons 0, 1, and 2. Get the tools working, run a design that already works, learn state machines. |
 | Middle weekend | Online help session. Bring whatever is broken and a lead will work through it with you. |
 | Week 2 | Lesson 3 (build the traffic light) and Lesson 4 (turn it in). |
@@ -63,14 +63,14 @@ Keep these open while you work:
 ## Before you start
 
 Finish the [setup guide](../setup/README.md) first. For this block you need `git`,
-`iverilog`, `gtkwave`, `python3`, and `make`. On Windows, everything happens inside the
+`iverilog`, `gtkwave` (Surfer on a Mac), `python3`, and `make`. On Windows, everything happens inside the
 Ubuntu window.
 
 Check that the tools work:
 
 ```bash
 iverilog -V | head -1
-gtkwave --version
+gtkwave --version      # on a Mac: which surfer
 ```
 
 If either one says `command not found`, go back to setup. Don't start Lesson 1 with broken

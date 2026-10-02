@@ -12,8 +12,10 @@ git checkout main
 git pull upstream main
 ```
 
-Your Block 2 folder will look nearly empty on `main`. That's expected. Your work is on your
-Block 2 branch, and Step 2 copies the one file you need out of it.
+If your Block 2 pull request hasn't been merged yet, your Block 2 folder will look nearly
+empty on `main`. That's expected. Your work is on your Block 2 branch, and Step 2 copies the
+one file you need out of it. (If it has been merged, the folder looks normal, and Step 2
+still works.)
 
 ## Step 2: Set up your folder
 

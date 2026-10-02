@@ -30,7 +30,7 @@ love that and some don't, and both are useful to find out before you pick a team
 | When | What |
 |---|---|
 | Before Nov 2 | Make sure LibreLane is installed (setup Part D). If it won't install, tell a lead **now** so there's time to work out another option. |
-| Monday, week 1 | 30-minute kickoff. A lead starts a run and shows a finished layout. |
+| Monday, week 1 | 30-minute kickoff (time and place posted in the GroupMe). A lead starts a run and shows a finished layout. |
 | Week 1 | Lessons 0, 1, and 2: learn the stages, run the tutorial, run your design. |
 | Middle weekend | Online help session with the leads. |
 | Week 2 | Lessons 3 to 6: read the reports, look at the layout, change one setting, turn it in. |

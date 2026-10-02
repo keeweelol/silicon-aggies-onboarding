@@ -188,8 +188,8 @@ and two for `upstream` (the main repo).
 ## Part B: Simulation tools (Blocks 1 and 2)
 
 A simulator runs your hardware design in software so you can see what it would do before
-it's a real chip. GTKWave draws the results as a picture of signals over time, which is
-called a waveform. Python and `make` run the Block 1 self-checker.
+it's a real chip. A waveform viewer draws the results as a picture of signals over time,
+which is called a waveform. You'll use GTKWave on Ubuntu and Windows, and Surfer on a Mac. Python and `make` run the Block 1 self-checker.
 
 ```bash
 # Ubuntu / WSL
@@ -197,8 +197,7 @@ sudo apt install -y iverilog gtkwave python3 make
 
 # Mac
 xcode-select --install          # Apple's developer tools, which include make
-brew install icarus-verilog python
-brew install --cask gtkwave
+brew install icarus-verilog python surfer
 ```
 
 (On a Mac, `xcode-select --install` may say the tools are already installed. That's fine.
@@ -208,17 +207,21 @@ Check they installed:
 
 ```bash
 iverilog -V | head -1
-gtkwave --version
+gtkwave --version      # Ubuntu / WSL
+which surfer           # Mac
 ```
 
-The first should print `Icarus Verilog version 12.0` (11 or newer is fine). The second
-prints a GTKWave version.
+The first should print `Icarus Verilog version 12.0` or newer (11 is fine too). The second
+prints a GTKWave version on Ubuntu, or a path ending in `surfer` on a Mac.
 
-> **GTKWave on Windows 10, or on a Mac where it won't install or open:** GTKWave needs to
-> open a window, and WSL on Windows 10 can't do that without extra setup. Windows 11 works
-> out of the box. Recent macOS versions sometimes refuse to install or open the GTKWave
-> app. In either case, use the [Surfer web viewer](https://surfer-project.org/) instead. You
-> open your waveform file in your browser and nothing needs installing.
+> **Why Surfer on a Mac?** Homebrew no longer offers GTKWave for Mac, so don't try
+> `brew install --cask gtkwave`. Surfer shows the same waveforms. The lessons are written
+> for GTKWave, so wherever they say `gtkwave`, type `surfer`.
+>
+> **GTKWave on Windows 10:** GTKWave needs to open a window, and WSL on Windows 10 can't do
+> that without extra setup. Windows 11 works out of the box. On Windows 10, use the
+> [Surfer web viewer](https://surfer-project.org/) instead. You open your waveform file in
+> your browser and nothing needs installing.
 
 ---
 

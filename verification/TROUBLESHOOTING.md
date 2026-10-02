@@ -26,6 +26,10 @@ Verilator needs a C++ compiler to build your simulation. Run:
 It isn't installed, or you're in the wrong window. On Windows, use the Ubuntu window. See
 setup Part C.
 
+**GTKWave won't install or open on a Mac**
+Use Surfer instead (`brew install surfer`), and type `surfer dump.vcd &` wherever a lesson
+says `gtkwave dump.vcd &`.
+
 **GTKWave won't open (Windows 10)**
 Open `dump.vcd` in the [Surfer web viewer](https://surfer-project.org/) instead. It shows
 the same waveform in your browser.
