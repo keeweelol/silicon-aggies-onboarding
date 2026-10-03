@@ -201,30 +201,35 @@ picture.
 
 ## Step 5: Break it on purpose
 
-This is the most useful part of the lesson.
+This is the most useful thing you'll do today.
 
-1. Open `blinker.v` and change `if (counter == 3'd7)` to `if (counter == 3'd3)`. Save the
-   file.
-2. **Before you run it,** write down your prediction. Will the LED flip faster, slower, or at
-   the same speed?
-3. Run `make warmup` again. In GTKWave, press **Ctrl+Shift+R** (in Surfer, press `r`) (or use File, then Reload
-   Waveform) and check your prediction.
-4. Most people predict "every 4 ticks," and most people are wrong. The LED still flips every
-   8 ticks. It just flips at a different moment: the first flip now comes at tick 3 instead
-   of tick 7. Look at `counter` in the waveform to see why. It still counts all the way up to
-   7 and rolls over, so it only equals 3 once every 8 ticks. Changing the number you compare
-   against moves *when* the LED flips, not *how often*. That's the rollover from Step 3 again.
-5. To really make it flip every 4 ticks, compare only the bottom two bits of the counter,
-   which roll over every 4 ticks: `if (counter[1:0] == 2'd3)`. Try it, then check the
-   waveform.
-6. Change it back to `if (counter == 3'd7)`.
+Open `blinker.v` and change `if (counter == 3'd7)` to `if (counter == 3'd3)`.
 
-Now try one more. Change `led <= ~led;` to `led <= 1'b1;`. **Before you run it,** write down
-what you think will happen. Then run it and see if you were right. Change it back when
-you're done.
+**Before you run it, write down your prediction:** when will the LED flip now?
 
-Change something, predict what will happen, run it, check. You'll do that loop for the
-rest of this block, and for the rest of any hardware job.
+Then run:
+
+```bash
+make warmup
+```
+
+Most people predict "every 4 ticks." It isn't. The LED flips **earlier the first time**, at tick 3, and then **every 8 ticks after that**: 3, 11, 19, 27.
+
+Why: `counter` is still 3 bits, so it still counts 0 through 7 and wraps. It hits 3 exactly once per 8 ticks, the same as it hit 7. You changed *when* in the cycle the flip happens, not *how often*.
+
+Now make it actually flip every 4 ticks. Compare only the bottom two bits, which cycle 0, 1, 2, 3:
+
+```verilog
+if (counter[1:0] == 2'd3)
+```
+
+Run `make warmup` again. The LED should now flip at ticks 3, 7, 11, 15.
+
+**The lesson:** the width of a counter sets how often it repeats. Changing the value you compare against moves an event around inside the cycle. Changing the width changes the rate. You'll use both constantly.
+
+Put the line back to `if (counter == 3'd7)` before moving on.
+
+That loop of predict, run, check, and explain the surprise is the entire job. Not just this block. The job.
 
 ---
 
